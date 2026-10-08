@@ -1,0 +1,8 @@
+{
+  "recap_text": "You updated a hidden-layer weight with the output error directly. In backpropagation, the output error cannot be applied straight to hidden weights. The error signal must first pass back through the next layer's weights and activation derivatives via the chain rule before reaching earlier layers.",
+  "key_points": [
+    "Output error is specific to the final layer neurons and must not be applied directly to hidden units.",
+    "Hidden-layer gradients require multiplying downstream error by intermediate layer connection weights.",
+    "The calculus chain rule systematically scales error backward layer by layer."
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "answer": "In neural networks, backpropagation calculates how much each weight contributed to the final output error. Instead of applying output error directly to hidden-layer weights, the algorithm uses the calculus chain rule to propagate error backwards from the output layer through each consecutive hidden layer. At each neuron, the incoming error signal is multiplied by the downstream weights and the derivative of the activation function. This determines the precise gradient for updating hidden weights during gradient descent.",
+  "topic": "Backpropagation",
+  "source": "Neural Networks — Course Material",
+  "label": "Grounded in approved course material",
+  "mode": "FALLBACK"
+}

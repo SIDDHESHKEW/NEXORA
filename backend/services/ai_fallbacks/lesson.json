@@ -1,0 +1,132 @@
+{
+  "title": "Neural Networks and the Mechanics of Backpropagation",
+  "blocks": [
+    {
+      "seq": 1,
+      "type": "TITLE",
+      "title": "Neural Networks: Architecture, Forward Computation, and Backpropagation",
+      "content": {
+        "text": "Comprehensive introduction to artificial neural networks, forward pass signal flow, non-linear activation functions, and gradient-based backpropagation."
+      },
+      "outcome_ids": [],
+      "origin": "AI"
+    },
+    {
+      "seq": 2,
+      "type": "OBJECTIVES",
+      "title": "Learning Objectives",
+      "content": {
+        "items": [
+          "Understand the structural components: input, hidden, and output layers.",
+          "Compute activations systematically along the forward pass.",
+          "Analyze the mathematical role of non-linear activation functions.",
+          "Derive and explain the backpropagation algorithm using the chain rule."
+        ]
+      },
+      "outcome_ids": [1, 2, 3, 4],
+      "origin": "AI"
+    },
+    {
+      "seq": 3,
+      "type": "EXPLANATION",
+      "title": "1. Neural Network Structure",
+      "content": {
+        "text": "An artificial neural network consists of interconnected processing units arranged in layers: an input layer receiving features, one or more hidden layers transforming representations, and an output layer generating predictions. Weighted connections govern signal transfer."
+      },
+      "outcome_ids": [1],
+      "origin": "AI"
+    },
+    {
+      "seq": 4,
+      "type": "EXPLANATION",
+      "title": "2. The Forward Pass",
+      "content": {
+        "text": "In the forward pass, data flows unidirectionally from input to output. At each neuron, an affine combination z = Wx + b is computed across inputs, followed by a non-linear activation function a = sigma(z), propagating intermediate feature activations layer by layer."
+      },
+      "outcome_ids": [2],
+      "origin": "AI"
+    },
+    {
+      "seq": 5,
+      "type": "EXPLANATION",
+      "title": "3. Activation Functions",
+      "content": {
+        "text": "Non-linear activations (such as Sigmoid, ReLU, and Tanh) enable neural networks to approximate arbitrary non-linear functions. Without non-linearities, any multi-layer architecture collapses mathematically into a single linear transformation."
+      },
+      "outcome_ids": [3],
+      "origin": "AI"
+    },
+    {
+      "seq": 6,
+      "type": "EXPLANATION",
+      "title": "4. Backpropagation Mechanics",
+      "content": {
+        "text": "Backpropagation computes the gradient of the loss function with respect to every weight in the network by applying the calculus chain rule backwards from the output layer through hidden layers. Gradients scale weight updates during gradient descent."
+      },
+      "outcome_ids": [4],
+      "origin": "AI"
+    },
+    {
+      "seq": 7,
+      "type": "KEY_CONCEPTS",
+      "title": "Core Theoretical Concepts",
+      "content": {
+        "items": [
+          "Affine transformation: Linear aggregation of weighted inputs with additive bias.",
+          "Non-linearity: Essential mapping property that prevents dimensional collapse.",
+          "Loss gradient: Partial derivative of target discrepancy propagated backwards.",
+          "Chain rule: Successive product of local partial derivatives across layers."
+        ]
+      },
+      "outcome_ids": [1, 2, 3, 4],
+      "origin": "AI"
+    },
+    {
+      "seq": 8,
+      "type": "EXAMPLE",
+      "title": "Worked Example: Backpropagation Error Flow",
+      "content": {
+        "setup": "Consider a 3-layer network (Input -> Hidden -> Output). Compute gradient for weight W_hidden.",
+        "steps": [
+          "Calculate loss gradient at output: delta_out = dLoss/dy * sigma'(z_out).",
+          "Propagate error backwards to hidden neuron: delta_hidden = (delta_out * W_out) * sigma'(z_hidden).",
+          "Compute weight gradient: dLoss/dW_hidden = delta_hidden * x_input."
+        ],
+        "takeaway": "Output error must pass through intermediate layer weights and derivatives; it cannot be applied directly to hidden layers."
+      },
+      "outcome_ids": [4],
+      "origin": "AI"
+    },
+    {
+      "seq": 9,
+      "type": "MISCONCEPTION",
+      "title": "Common Misconception: Direct Output Error Assignment",
+      "content": {
+        "text": "A frequent misconception is applying the final output error directly to update hidden-layer weights. In reality, hidden weights influence the loss exclusively through downstream layer weights and activations, necessitating backwards chain-rule propagation."
+      },
+      "outcome_ids": [4],
+      "origin": "AI"
+    },
+    {
+      "seq": 10,
+      "type": "QUICK_CHECK",
+      "title": "Quick Knowledge Check",
+      "content": {
+        "question": "Why can output loss not update hidden layer weights directly without downstream weights?",
+        "answer": "Because the chain rule dictates that the gradient with respect to hidden weights depends on the weights connecting the hidden layer to the output."
+      },
+      "outcome_ids": [4],
+      "origin": "AI"
+    },
+    {
+      "seq": 11,
+      "type": "SOURCE",
+      "title": "Academic Reference",
+      "content": {
+        "citation": "SGSU CSE-501 Neural Networks Course Reader, 2026"
+      },
+      "outcome_ids": [],
+      "origin": "AI"
+    }
+  ]
+}

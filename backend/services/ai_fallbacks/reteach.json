@@ -1,0 +1,54 @@
+{
+  "title": "10-Minute Conceptual Recap: Error Flow in Backpropagation",
+  "duration_min": 10,
+  "outline": [
+    {
+      "minute_range": "00:00 - 02:00",
+      "activity": "Core intuition: Why final output error cannot directly update hidden weights without downstream projection."
+    },
+    {
+      "minute_range": "02:00 - 06:00",
+      "activity": "Step-by-step chain rule demonstration: Propagating gradient across a 2-layer network."
+    },
+    {
+      "minute_range": "06:00 - 08:30",
+      "activity": "Interactive class check questions on downstream weight dependencies."
+    },
+    {
+      "minute_range": "08:30 - 10:00",
+      "activity": "Summary takeaway and transition to independent practice."
+    }
+  ],
+  "worked_example": {
+    "setup": "A neuron in hidden layer H connects to output neuron O via weight W_ho. Output error is delta_o.",
+    "steps": [
+      "Step 1: Compute output error gradient delta_o = (y_pred - y_true) * sigma'(z_o).",
+      "Step 2: Propagate back to hidden neuron: delta_h = (delta_o * W_ho) * sigma'(z_h).",
+      "Step 3: Update input-to-hidden weight W_ih: Delta W_ih = -eta * delta_h * x_in."
+    ],
+    "takeaway": "The hidden weight update depends strictly on W_ho and sigma'(z_h), proving output error must be mediated by downstream parameters."
+  },
+  "check_items": [
+    {
+      "stem": "If the weight connecting a hidden neuron to the output is zero, what is the backpropagated error to that hidden neuron?",
+      "options": [
+        "Zero, because error must pass through the connecting weight",
+        "Equal to the full output error directly",
+        "Infinite due to division by zero",
+        "Unchanged from the input feature magnitude"
+      ],
+      "answer": "Zero, because error must pass through the connecting weight"
+    },
+    {
+      "stem": "Which component directly bridges the output layer loss to a hidden layer weight update?",
+      "options": [
+        "The chain rule product incorporating downstream weights and derivatives",
+        "A direct assignment of the output loss value",
+        "The learning rate without derivative terms",
+        "The sum of bias terms across input features"
+      ],
+      "answer": "The chain rule product incorporating downstream weights and derivatives"
+    }
+  ],
+  "generation_mode": "FALLBACK"
+}

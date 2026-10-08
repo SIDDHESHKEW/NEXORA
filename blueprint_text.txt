@@ -1,0 +1,5079 @@
+PRODUCT & ARCHITECTURE BLUEPRINT VERSION 1.0 · OCTOBER 2026
+AI-Native University
+Teaching, Learning &
+Career Ecosystem
+How four layers and 89 features become one connected,
+secure, buildable university platform
+Techer Studio, Smrt Clssroom, Student & Creer Intelligence nd
+University Intelligence re four surfces. Wht mkes them one product is
+the lyer underneth:  curriculum grph, one lerning-evidence store nd
+ governed AI gtewy. This document defines tht lyer, tests every
+feture ginst it, nd sets out wht cn be built now, lter, nd only with
+university support.
+PREPARED FOR
+Scope Globl Skills
+University SGSU, Bhopl
+ Office of the Den
+INITIAL SCOPE
+B.Tech nd BCA;
+rchitecture extensible to
+ll progrmmes
+STAGE
+Idetion nd product
+rchitecture; pre-
+development
+DATA STATUS
+Dummy dt throughout;
+rel inputs mrked
+Requires SGSU dt]
+--- PAGE ---
+2AI-Native University Platform · Product & Architecture Blueprint · v1.0
+FRONT MATTER
+Contents
+PART I — PRODUCT
+01 Executive Summry 3
+02 Bckground, Problem nd Vision 4
+03 Trget Users 6
+04 Product Principles 7
+PART II — THE PLATFORM
+05 Product Architecture: Four Lyers on One Core 8
+06 Feture Consolidtion: 8 Fetures, 1 Cpbilities 10
+07 Lyer 1  AI Techer Studio 12
+08 Lyer 2  AI Smrt Clssroom 14
+09 Lyer   AI Student nd Creer Intelligence 17
+10 Lyer   University Intelligence 19
+11 Cross-Lyer Connections: The Intelligence Loop 21
+PART III — ARCHITECTURE
+12 System Architecture 23
+13 Dt Architecture nd Dtbse Model 25
+14 The Lerning Evidence nd Mstery Model 27
+15 Knowledge Pipeline nd RAG Architecture 29
+16 AI Architecture: Orchestrtion nd the Question of
+Agents
+31
+17 AI Model Lndscpe nd Decision Mtrix 33
+18 API Architecture 36
+19 Event Architecture nd Rel-Time Flow 38
+20 Identity, Authentiction nd Access Control 40
+21 Security, Privcy nd Dt Protection 42
+22 Responsible AI nd Acdemic Integrity 44
+23 Sclbility, Relibility nd Offline Opertion 46
+24 Technology Stck 47
+25 UX Structure nd User Journeys 48
+PART IV — DELIVERY
+26 Wht Cn Actully Be Built 49
+27 Gp Anlysis: Wht We Are Currently Missing 51
+28 The MVP One Closed Loop 54
+29 Demonstrtion Scenrio 56
+30 Development Rodmp 58
+31 Tem Structure 60
+32 Risks nd Mitigtions 61
+33 Future Scope 62
+34 Finl Product Definition 63
+APPENDICES
+35 Appendix A  Wht Is Needed From SGSU 64
+36 Appendix B  Sources 65
+How to read this document
+Sttements re lbelled so tht  reder cn tell evidence from design from opinion.
+SOURCE-DERIVED  A fct from  vendor document, regultion or
+published source, checked in October 202 nd listed in
+Section . These go stle fstest.
+PRODUCT DESIGN  A decision bout how this product should
+work; the min content of the document.
+RECOMMENDATION  A judgement cll where resonble tems
+could choose differently. The resoning is given so it cn be
+chllenged.
+[REQUIRES SGSU DATA]  Rel university dt, policy or
+infrstructure is needed. Nothing internl to SGSU hs been
+invented; Section 5 lists every request.
+Feasibility classes and delivery phases used in every feature table
+A  Buildble now Stndrd web engineering or  single
+well-understood model cll.
+B  Moderte Severl components must work
+together; needs creful design nd
+testing.
+C  Advnced but fesible Works in good conditions; needs
+tuning, evlution nd fllbcks.
+D  Significnt R&D Outcome uncertin; needs dt tht does
+not exist yet.
+E  Needs SGSU Blocked on university dt, hrdwre,
+integrtion or policy.
+F  Future technology Not dependble with tody's technology.
+MVP  in the conference demonstrtor · PH2  first working relese, used in  pilot course · PH3  deprtment nd university rollout ·
+LONG  long-term, fter t lest two semesters of rel dt. All student, techer, course nd score vlues in exmples re DUMMY DATA .
+--- PAGE ---
+3AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 01 · PART I
+Executive Summary
+The brief sks one question: how do four lyers nd their fetures become one techniclly
+connected, intelligent, secure nd sclble university pltform? The nswer is tht the four
+lyers re not the pltform. They sit on it.
+89
+fetures in the current brief
+cross four lyers
+14
+shred cpbilities tht those
+fetures reduce to
+4 + 1
+four user-fcing lyers on one
+Pltform Core
+1
+closed loop the demonstrtor
+must prove end to end
+What the analysis found
+The fetures re sound; the lyer tht connects them is missing. Red s  list, the brief describes four pplictions.
+Six fetures re n AI ssistnt, five re  quiz engine, ten detect wekness in some form, nd nine del with skills nd
+creers. Built s listed, they would become four products with no shred memory. Section  mps ll 8 onto 1
+cpbilities tht re built once nd shown to ech role through its own screen.
+Three design decisions turn the ide into  system. Ech is chep to mke now nd expensive to retrofit.
+DECISION 1
+The learning outcome is the join key
+Every slide, note, question, poll, nswer,
+skill nd report crries  topic nd
+lerning-outcome identifier from one
+Curriculum Grph. Without it, nothing in
+one lyer cn be relted to nother.
+DECISION 2
+The lesson is structured data, not a
+file
+The AI produces  Lesson Document of
+typed blocks. Slides, notes nd quizzes
+re views of it, which mkes per-slide
+regenertion, review, versioning, live
+sync nd nlytics possible.
+DECISION 3
+One evidence store, one learner
+model
+Every response becomes  lerning
+event in one store, red by one
+explinble mstery model. All four
+lyers show the sme numbers.
+Understnding is inferred from nswers,
+never from cmers.
+What can actually be built
+By primry clss, 1 fetures re buildble now, 50 need moderte engineering, 5 re dvnced, nd  re blocked
+on university dt. None needs technology tht does not exist, once "understnding detection" is redefined s
+evidence from responses nd the "digitl twin" s  session timeline. Fourteen depend on SGSU dt or infrstructure.
+The hrd prts re integrtion, dt discipline nd fculty doption; the AI is the esier prt.
+What is recommended
+Build the Pltform Core first, s  modulr monolith
+on PostgreSQL, with the Curriculum Grph, identity,
+the evidence store nd n AI gtewy Sections 5,
+12.
+Demonstrte one closed loop:  techer pproves n
+AI-drfted lesson nd teches it; students nswer;
+the wek outcome is found; ech student gets
+trgeted prctice, the techer  re-tech crd, the
+dministrtor the ggregte Sections 28, 2.
+Use workflows, not gents, for ll but two functions,
+nd route every model cll through one gtewy with
+ nmed fllbck nd n evlution set built from
+SGSU content Sections 1, 17.
+Tret DPDP s  design input. The university is the
+dt fiduciry; some first-yers re under 18; min
+duties fll due round My 2027 Section 21.
+Strt with two pilot courses, nd mesure
+preprtion time nd outcome ttinment, not usge
+Section 0.
+THE ONE-SENTENCE DEFINITION
+An AI-ntive cdemic pltform in which every lesson, question, nswer nd skill is tied to the university's own
+lerning outcomes, so tht wht is tught, wht is lerned nd wht grdutes cn do re mesured by one
+system nd ech improves the next.
+--- PAGE ---
+4AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 02 · PART I
+Background, Problem and Vision
+The project begn s  request from the Den of Scope Globl Skills University to explore n
+AI-enbled teching nd lerning pltform for B.Tech nd BCA. The tem's brinstorm
+widened it into n ecosystem. This section fixes wht problem tht ecosystem solves.
+Background
+SOURCE-DERIVED  SGSU is  privte university in Bhopl, Mdhy Prdesh, estblished in 202 nd listed by public
+directories s offering diplom, undergrdute nd postgrdute progrmmes including B.Tech nd BCA. Beyond tht
+public description, this document ssumes nothing bout its internl systems. [REQUIRES SGSU DATA]
+The tem hs locked four lyers: AI Techer Studio 20 fetures), AI Smrt Clssroom 0, AI Student nd Creer
+Intelligence 28 nd University Intelligence 11. The brief sks tht these be treted s current requirements to be
+preserved, tested, connected nd mde relistic. Tht is wht follows.
+The problem, stated per person
+WHO WHAT HAPPENS TODAY WHAT IT COSTS
+Techer Prepres slides, notes, exmples, quizzes nd
+ssignments seprtely nd lrgely by hnd, for every
+lecture, every semester. Lerns how the clss
+understood  topic weeks lter, from n exm.
+Preprtion crowds out teching. Re-teching hppens
+too lte or not t ll.
+Student Receives the sme lecture nd the sme notes s
+everyone else. Uses generl AI tools tht do not know the
+syllbus, the techer's mteril or the student's own
+gps. Sees no line from  course to  job.
+Wek prerequisites compound silently. Skills re
+discovered missing in finl yer.
+Hed of
+deprtment
+Sees syllbus coverge nd results s seprte
+spredsheets. Assembles outcome-ttinment evidence
+by hnd t ccredittion time.
+Problems surfce per semester, not per week.
+Accredittion work is repeted every cycle.
+University
+ledership
+Hs results nd plcement figures but little evidence of
+wht ws lerned in between. Cnnot see whether AI is
+being used sfely.
+Curriculum decisions rest on necdote. AI use is
+unmnged.
+Why the usual answers fall short
+A learning management system
+Stores files, dedlines nd mrks. It
+records tht  PDF ws uploded, not
+wht it teches or whether it ws
+understood. Adding  chtbot to it does
+not chnge wht it knows.
+An AI tutor
+Helps one student in one converstion. It
+hs no view of the syllbus, the clss,
+the techer's intent or the ssessment,
+nd nothing it lerns bout the student
+reches the techer.
+An AI course generator
+Produces content once. It hs no
+clssroom, no evidence of lerning nd
+no wy for outcomes to improve the next
+lesson.
+Vision
+Syllabus, teaching, classroom, learning, assessment, skills and careers become one
+connected system, in which each step produces evidence that improves the others.
+--- PAGE ---
+5AI-Native University Platform · Product & Architecture Blueprint · v1.0
+Figure 1  The chin the brief describes. Ech stge reds from nd writes to the sme Pltform Core, which is wht lets the lst stge chnge
+the first.
+What success looks like
+These re the mesures the pilot should report. Trgets re delibertely left open until  bseline exists.
+[REQUIRES SGSU DATA]
+OUTCOME MEASURE SOURCE
+Techers prepre fster Medin time from "select topic" to "pproved lesson" Pltform logs ginst  techer-
+reported bseline
+Gps re found erly Dys between teching  topic nd the techer
+seeing its ttinment
+Pltform events
+Students close gps Shre of students moving from Wek to Mstered on
+ flgged outcome within two weeks
+Lerner model
+Evidence is redy Hours to produce  course outcome-ttinment
+report
+Pltform ginst the current mnul
+process
+AI stys trustworthy Shre of AI nswers with  vlid cittion; techer edit
+rte on drfts
+Evlution set nd review logs
+CORE
+Curriculum
+Progrmme,
+course, unit,
+topic, lerning
+outcome
+→
+LAYER 1
+Prepre
+AI drfts, techer
+vlidtes →
+LAYER 2
+Tech
+Live clss with
+checks for
+understnding
+→
+LAYER 3
+Lern
+Prctice imed t
+ech student's
+gps
+→
+LAYER 3
+Grow
+Skills, projects,
+creer pth →
+LAYER 4
+Improve
+Course,
+deprtment nd
+curriculum
+decisions
+--- PAGE ---
+6AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 03 · PART I
+Target Users
+Seven roles use the pltform. The brief nmes them for ccess control; this section nmes
+wht ech needs, becuse  role without  cler job produces  dshbord nobody opens.
+ROLE PRIMARY JOB WHAT THEY NEED FROM THE PLATFORM WHAT THEY MUST NEVER BE GIVEN
+Student Lern the course; become
+employble
+A cler next ction; nswers grounded
+in their own course; honest view of
+gps;  record of skills they cn show
+Other students' dt; fculty-only mteril;
+nswers to grded work
+Techer Prepre, tech, ssess,
+djust
+A drft lesson in minutes; live red on
+understnding;  short list of wht to re-
+tech nd who needs help
+Other techers' privte drfts; students'
+privte tutor converstions
+Hed of
+deprtment
+Run courses nd people in
+one deprtment
+Coverge nd ttinment by course nd
+section; erly sight of struggling
+courses; ccredittion evidence
+Individul student records outside the
+deprtment
+Deprtment
+dmin
+Operte rosters, sections
+nd timetbles
+Clen dt entry nd imports; error
+reports
+Acdemic nlytics; AI interction logs
+Acdemic
+dmin Den's
+office, IQAC
+Qulity, curriculum nd
+ccredittion
+Cross-deprtment outcomes; curriculum
+gp evidence; policy controls
+Routine ccess to nmed-student detil
+University
+dmin
+Institutionl decisions nd
+resources
+Aggregtes, trends nd intervention
+needs
+Nmed-student or nmed-techer drill-
+down by defult
+Super dmin Run the pltform Tennt, identity, model nd policy
+configurtion; udit
+Acdemic content uthority; silent ccess to
+personl dt
+Roles the brief does not list but the product needs
+RECOMMENDATION  Three more roles pper s soon s rel workflows re drwn. Adding them now is  mtter of  row in
+ tble; dding them fter lunch mens reworking permissions.
+Mentor or faculty advisor
+The only role tht should receive erly-
+risk flgs for nmed students. Without it,
+risk detection hs no sfe recipient.
+Training and placement officer
+Owns compnies, roles nd
+opportunities. The whole creer hlf of
+Lyer  depends on dt this role
+mintins.
+Data protection and AI governance
+officer
+Owns consent, retention, grievnce
+hndling nd the model llow-list. DPDP
+obligtions need  nmed owner.
+--- PAGE ---
+7AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 04 · PART I
+Product Principles
+Six rules decide every lter design choice. The first four come from the brief; the lst two re
+dded becuse the rchitecture cnnot hold together without them.
+FROM THE BRIEF
+1. AI prepares, teacher validates, university controls,
+students learn
+No AI output becomes officil teching mteril without n
+explicit techer pprovl tht is recorded. Which models,
+sources nd behviours re permitted is  university setting, not
+ developer defult.
+FROM THE BRIEF
+2. Evidence, not surveillance
+Understnding is inferred from wht students nswer, sk nd
+submit. The pltform does not use fcil emotion nlysis, gze
+trcking or continuous monitoring, nd does not need them.
+FROM THE BRIEF
+3. One platform
+One identity, one curriculum, one knowledge bse, one evidence
+store, one AI gtewy. A feture tht needs its own copy of ny
+of these hs been designed wrongly.
+FROM THE BRIEF
+4. Grounded by default
+Acdemic nswers come from university, techer nd pproved
+sources nd sy which. When the system nswers from generl
+knowledge it sys so. A wrong nswer delivered confidently in 
+clssroom is the most dmging filure the product cn hve.
+ADDED
+5. Everything is tagged to a learning outcome
+Content tht cnnot be tied to  topic nd outcome cn be
+stored, but it cnnot tke prt in nlytics, recommendtions or
+ccredittion evidence. Tgging hppens t cretion nd is
+checked t publiction.
+ADDED
+6. Advice goes to a person who can act, with the reason
+attached
+Every recommendtion nmes its evidence nd is shown to the
+role tht cn ct on it. Techers decide bout clsses; mentors
+bout individul students; committees bout curriculum. The
+system does not ct on people utomticlly.
+THE TEST THE BRIEF SETS FOR EVERY FEATURE
+Wht problem does it solve, who uses it, wht dt does it need, wht powers it, wht hppens before nd fter it,
+nd how does it connect to the rest? The feture registers in Sections 7 to 10 nswer these for ll 8 fetures.
+Where  feture could not nswer them s written, it hs been redefined nd the chnge is stted.
+--- PAGE ---
+8AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 05 · PART II
+Product Architecture: Four Layers on One Core
+The brief requires tht the four lyers behve s one pltform with shred identity,
+curriculum, knowledge, AI, ssessment, nlytics nd governnce. Tht shred prt is 
+product in its own right. This blueprint clls it the Pltform Core nd trets it s the first thing
+to build.
+FOUR LAYERS
+What each role
+sees. Screens and
+workflows only; no
+private data stores.
+1 · AI Techer Studio
+Techer. Curriculum picker,
+Lecture Builder, review
+workspce, ssessment
+studio, sset librry,
+course insights.
+2 · AI Smrt Clssroom
+Techer nd clss, live.
+Bord view, techer
+console, student join, polls,
+questions, session report.
+ · Student & Creer
+Intelligence
+Student, mentor,
+plcement officer. Course
+spce, tutor, prctice,
+plnner, Skill Pssport,
+creer.
+ · University Intelligence
+Hed of deprtment,
+Den's office,
+dministrtion. Attinment,
+curriculum, skills,
+governnce.
+SHARED CONTRACTS · ONE API · ONE EVENT STREAM · ONE IDENTIFIER SCHEME: TENANT → COURSE → TOPIC → LEARNING OUTCOME
+PLATFORM CORE
+14 capabilities, built
+once, used by every
+layer.
+C1 Curriculum
+Grph
+Progrmme to
+lerning outcome,
+prerequisites,
+outcome nd skill
+mppings.
+C2 Lesson &
+Content
+Lesson Documents,
+renderings, versions,
+sset librry.
+C Knowledge
+Bse
+Ingestion, retrievl
+with ccess control,
+cittions.
+C Grounded
+Assistnt
+One ssistnt
+service, four
+persons.
+C5 Assessment
+Engine
+Item bnk, delivery,
+scoring, rubrics.
+C Live Session
+Engine
+Rel-time clss
+stte, presence,
+polls, questions.
+C7 Evidence Store
+Every lerning
+event, one schem,
+ppend-only.
+C8 Lerner Model
+Mstery per student
+nd outcome; gps;
+risk.
+C
+Recommendtion &
+Plnning
+Next best ction,
+pths, revision
+schedule.
+C10 Coverge &
+Attinment
+Syllbus coverge,
+outcome ttinment,
+complince.
+C11 Skills Grph &
+Creer
+Skills, roles,
+evidence,
+opportunities.
+C12 Lnguge &
+Accessibility
+Trnsltion, speech,
+cptions, ccessible
+views.
+C1 Anlytics &
+Decision Support
+Aggregtes,
+dshbords,
+governed questions.
+C1 Governnce,
+Identity & Audit
+Roles, consent, AI
+policy, udit tril.
+Utilities
+Notifictions,
+scheduling, files,
+serch.
+AI GATEWAY
+The only path to any
+model.
+Router nd fllbcks
+Function-to-model tble;
+retries; provider filover.
+Prompt nd schem
+registry
+Versioned prompts nd
+output schems.
+Gurdrils
+Personl-dt redction,
+modertion, injection
+defence, policy modes.
+Logging nd evlution
+Trces, qulity scores,
+budgets, regression tests.
+DATA
+One system of
+record.
+PostgreSQL
+Reltionl dt,
+JSON content,
+vectors.
+Object storge
+Uplods, exports,
+medi.
+Redis
+Cche, presence,
+queues, pub/sub.
+Event log
+Outbox tble, then 
+strem.
+Anlytics store
+Views first;
+columnr store t
+scle.
+UNIVERSITY
+SYSTEMS
+All require SGSU
+input.
+ERP or student
+system
+Roster, timetble,
+mrks, ttendnce.
+Single sign-on
+University emil
+identity.
+Clssroom
+hrdwre
+Smrtbords,
+projectors,
+microphones, Wi-Fi.
+Integrity tools
+Existing similrity-
+checking service.
+Plcement dt
+Employers, roles,
+opportunities,
+outcomes.
+Figure 2  Product rchitecture. The four lyers own screens nd workflows. Everything they know lives in the Pltform Core, which is why 
+quiz nswered in Lyer 2 cn chnge  recommendtion in Lyer  nd  dshbord in Lyer  without ny lyer clling nother.
+Why a core, and why first
+PRODUCT DESIGN  Ech lyer in the brief describes its own intelligence: the Techer Studio hs n "intelligence loop", the
+clssroom hs "post-clss intelligence", the student hs  "success engine", the university hs "cdemic intelligence".
+These re one thing seen from four sets. If ech lyer computes its own version,  techer nd  student will be
+--- PAGE ---
+9AI-Native University Platform · Product & Architecture Blueprint · v1.0
+shown different numbers for the sme quiz. Plcing mstery, coverge nd recommendtions in the core mens there
+is one nswer, nd ech lyer filters nd ggregtes it for its role.
+RECOMMENDATION  The core is lso wht mkes the product sellble to  second university. Lyers re screens tht cn be
+re-skinned; the curriculum grph, evidence schem nd governnce model re the sset.
+The three objects every layer shares
+OBJECT WHAT IT IS WRITTEN BY READ BY
+Lerning outcome A node in the Curriculum Grph with 
+stble identifier,  prent topic,
+prerequisite links,  mpped course
+outcome nd mpped skills
+Acdemic dmin nd hed of
+deprtment, from the syllbus
+[REQUIRES SGSU DATA]
+Everything. It is the tg on every
+lesson block, item, event,
+recommendtion nd report
+Lesson Document A versioned, structured lesson: ordered
+blocks (explntion, exmple, digrm,
+ctivity, check), ech tgged to
+outcomes nd crrying its sources
+Techer, with AI drfting;
+pproved by the techer
+Clssroom (to present), students
+(s notes), knowledge bse (s
+n pproved source), coverge
+(s proof of teching)
+Lerning event One immutble record: who did wht to
+which item, with wht result, in which
+session nd course, tgged to n
+outcome
+Clssroom, quiz engine,
+ssignments, tutor, mrks import
+Lerner model,
+recommendtions, techer
+insights, ttinment reports,
+university nlytics
+--- PAGE ---
+10AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 06 · PART II
+Feature Consolidation: 89 Features, 14
+Capabilities
+The brief sks for overlps nd duplictes to be identified without removing nything
+importnt. Nothing is removed here. Fetures re kept s user-visible behviours; wht is
+consolidted is the mchinery behind them.
+Feture references use lyer nd number s given in the brief: L17 is Techer Studio feture 7, AI Assessment Studio.
+CORE CAPABILITY BRIEF FEATURES IT SERVES WHAT IS BUILT ONCE
+C1 Curriculum Grph L12 Acdemic Librry · L My Course Spce · L7
+Knowledge Grph
+The progrmme-to-outcome tree, prerequisite edges,
+outcome nd skill mppings. The "knowledge grph" is this
+model plus its reltions, not  seprte system.
+C2 Lesson nd Content L1 Lecture Cretor · L1 Uplod · L15 Notes · L1
+Presenttion · L18 Level control · L111 Review · L112
+Versions · L11 Publishing · L118 Assets · L11
+Collbortion · L217 Cpture · L218 Clss Summry ·
+L5 Lecture Compnion · L Personlised Notes
+One Lesson Document formt; one genertion pipeline; one
+set of trnsformtions (slides, notes, summries, revision
+sheets). Notes for techers, students nd revision re
+renderings of the sme pproved source.
+C Knowledge Bse L110 Source-Grounded AI · L2 Context-Awre AI ·
+L7 Ask From My Course
+One ingestion pipeline nd one retrievl service with trust
+tiers nd ccess control. "Context-wre" is  property of
+retrievl, not  feture.
+C Grounded Assistnt L1 Teching Assistnt · L2 Live Assistnt · L211
+Dynmic Explntion · L21 Visul Genertor · L21
+Exmples nd Simultions · L Lerning Assistnt ·
+L8 Decision Support
+One ssistnt service with four persons: preprtion, live
+clss, tutor, nlyst. They differ in context, tools, tone nd
+policy, not in code.
+C5 Assessment Engine L17 Assessment Studio · L28 Polls · L210 Concept
+Check · L21 Activity Engine · L1 Quiz Engine · L
+1 Assignment Workspce
+One item bnk; every item tgged to outcome, level nd
+difficulty; one delivery nd scoring service. A poll,  concept
+check, n exit ticket nd  prctice quiz re the sme object
+with different settings.
+C Live Session Engine L21 Live Mode · L22 Smrtbord · L25 QR Join · L2
+ Questions · L27 Anonymous Mode · L212
+Whitebord · L215 Attendnce · L220 Offline · L22
+Groups · L227 Subject Modes
+One rel-time session stte shred by bord, techer console
+nd student devices.
+C7 Evidence Store nd
+C8 Lerner Model
+L11 Adptive Teching · L2 Understnding
+Detection · L21 Post-Clss · L221 Live Adptive ·
+L22 Digitl Twin · L20 Risk Detection · L2
+Acdemic Profile · L8 Adptive Engine · L1
+Mistke Intelligence · L15 Gp Detection · L2
+Performnce · L25 Attendnce · L27 Growth
+Timeline
+One event schem nd one mstery clcultion. Ten fetures
+tht "detect wekness" re one model viewed per student,
+per session, per section nd per progrmme.
+C Recommendtion nd
+Plnning
+L11 Techer Dshbord · L1 Student Dshbord ·
+L Lerning Pth · L10 Study Plnner · L11
+Smrt Revision · L12 Spced Revision · L28
+Success Engine
+One next-best-ction service. Pth decides wht; plnner
+decides when; revision is  schedule over the sme items. L
+11 nd L12 merge.
+C10 Coverge nd
+Attinment
+L115 Course Progress · L117 Complince · L222
+Objective Trcker · L22 Pce Mngement · L
+Accredittion
+One clcultion of wht ws plnned, tught, ssessed nd
+ttined, per outcome.
+C11 Skills Grph nd
+Creer
+L17 Pssport · L18 Skill Gp · L1 Rodmp ·
+L20 Industry Mpping · L21 Opportunities · L22
+Portfolio · L2 Resume · L Institutionl Skill Gp ·
+L11 Grdute Outcomes
+One skills txonomy linked to outcomes on one side nd roles
+on the other. The institutionl view is the sum of pssports.
+C12 Lnguge nd
+Accessibility
+L225 Accessibility · L22 Multilingul · L2
+Multilingul nd Accessibility
+One trnsltion, speech nd cption service; one ccessible
+design stndrd.
+C1 Anlytics nd
+Decision Support
+L11 Fculty Anlytics · L120 Intelligence Loop · L1
+Acdemic Intelligence · L2 Curriculum Intelligence ·
+L Fculty Intelligence · L5 Deprtment
+Intelligence · L10 Resource Intelligence
+One ggregtion lyer with role-scoped views. L11 nd L
+ re the sme dt under different governnce.
+--- PAGE ---
+11AI-Native University Platform · Product & Architecture Blueprint · v1.0
+CORE CAPABILITY BRIEF FEATURES IT SERVES WHAT IS BUILT ONCE
+C1 Governnce, Identity
+nd Audit
+L228 Integrity nd AI Sfety · L AI Governnce Roles, consent, policy modes, model llow-list, udit log.
+Changes made to the brief, and why
+Redefined
+Understnding Detection L2 is evidence from responses:
+correctness, time tken,  "lost" tp, question volume. Never
+cmers.
+Clssroom Digitl Twin L22 is  session timeline: 
+replyble record of slides, polls, questions nd mstery
+chnge. A sensor-bsed twin dds cost nd privcy risk for
+no teching benefit.
+Automtic Pce Mngement L22 dvises; it does not
+chnge the lesson by itself.
+Fculty Performnce Intelligence L reports on courses
+nd outcomes. It is not  rnking of people.
+Merged, or not a feature
+Smrt Revision nd Spced Revision L11, L12 re one
+scheduler.
+Polls nd Instnt Concept Check L28, L210 re one item
+type.
+Context-Awre AI L2 nd Source-Grounded AI L110 re
+properties every ssistnt must hve.
+The Intelligence Loop L120 is the rchitecture, not 
+screen.
+The University Intelligence list skips number  in the rw
+notes. The first brinstorm included student progress
+nlytics there; Section 10 restores it s  view.
+--- PAGE ---
+12AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 07 · PART II
+Layer 1 — AI Teacher Studio
+The preprtion environment for fculty. Its job is to tke  techer from  selected topic to n pproved, outcome-tgged lesson
+with slides, notes, ctivities nd ssessment, nd then to tell the techer how the clss responded.
+DESIGN NOTE: THE LESSON DOCUMENT
+The single most useful decision in this lyer is tht the
+model returns typed blocks, not  file. A block hs 
+type, content, outcome tgs, sources nd  review
+stte. Tht one structure delivers fetures 5, , 11, 12,
+1 nd 17 with little extr work.
+DESIGN NOTE: MISCONCEPTION TAGS
+Ech wrong option in  multiple-choice item is written
+to revel  specific misunderstnding nd is tgged
+with it. This is wht lter llows the system to sy why
+ student is wrong, not only tht they re.
+THE ADOPTION TEST
+A techer must rech  usble first drft in under ten
+minutes on first use, or the Studio will not be dopted.
+Every design choice here is subordinte to tht.
+# FEATURE WHAT IT IS AND THE PROBLEM IT SOLVES DATA IT NEEDS POWERED BY BEFORE → AFTER CLASS PHASE
+1 Techer Dshbord Tody's clsses, lessons witing review, nd clss lerts
+in one plce, so the techer strts from wht needs
+ttention.
+Timetble [REQUIRES SGSU DATA] ;
+lesson sttus; clss mstery
+summries
+C queries; no model cll Evidence nd timetble sync →
+opens Lecture Builder or  re-
+tech crd
+A
+E
+MVP
+2 University Acdemic
+Librry
+The syllbus s  nvigble tree. Removes the need to
+uplod  syllbus for every lecture nd gives every
+rtefct its tg.
+Progrmme, brnch, semester,
+subject, unit, topic, outcomes
+[REQUIRES SGSU DATA]
+C1 Curriculum Grph; model-
+ssisted syllbus import with hed-
+of-deprtment sign-off
+Syllbus ingestion → every other
+feture
+B
+E
+MVP
+ Smrt Lecture Cretor Genertes  complete Lesson Document for  topic,
+durtion, level nd style: objectives, prerequisites,
+sequence, explntions, exmples, misconceptions,
+ctivities, recp.
+Topic nd outcomes; prerequisites;
+retrieved sources; clss mstery if
+vilble
+Authoring-tier model with retrievl
+nd  strict output schem
+Librry nd uplods → review
+workspce
+B MVP
+ Uplod nd Understnd Brings the techer's own PDFs, slides, documents, imges
+nd links into the lesson nd the course knowledge bse.
+Techer files; links Ingestion pipeline: prse, OCR for
+scns, chunk, embed, tg s
+fculty-tier
+Uplod → used by Lecture
+Cretor nd grounded nswers
+B MVP
+5 AI Notes Genertor Techer notes, student notes, revision sheets, definitions
+nd formul sheets produced from the pproved lesson, so
+nothing is prepred twice.
+Approved Lesson Document Trnsformtion prompts over
+pproved content; no new fcts
+introduced
+Approvl  Lecture Compnion
+for students
+A MVP
+ AI Presenttion
+Genertor
+A slide deck tht is  view of the Lesson Document. Any
+single slide cn be regenerted. Exports to PPTX.
+Lesson Document In-browser deck renderer; digrms
+generted s code; PPTX export
+librry
+Lecture Cretor → publishing B MVP
+7 AI Assessment Studio Questions of every type, ech linked Topic  Outcome →
+Question  Difficulty, with wrong options tgged to the
+misconception they revel.
+Lesson; outcomes; pst ppers
+[REQUIRES SGSU DATA]
+Authoring-tier model with schem;
+item bnk C5; techer review
+Lesson → polls, quizzes,
+ssignments → lerner model
+B MVP
+--- PAGE ---
+13AI-Native University Platform · Product & Architecture Blueprint · v1.0
+# FEATURE WHAT IT IS AND THE PROBLEM IT SOLVES DATA IT NEEDS POWERED BY BEFORE → AFTER CLASS PHASE
+8 Difficulty nd Level
+Control
+Beginner, intermedite or dvnced; conceptul, prcticl,
+industry, exm, exmple-hevy or interctive style.
+Techer choice; clss mstery s 
+defult
+Genertion prmeters Set before genertion → shpes
+ll outputs
+A MVP
+ AI Teching Assistnt "Give me  simpler exmple", "why might students misred
+this?" nswered inside the current lesson nd course.
+Current lesson; course knowledge
+bse
+C, preprtion person Any point in preprtion → insert
+result s  block
+A MVP
+10 Source-Grounded AI Distinguishes university, techer, pproved-reference nd
+AI-generted content, shows sources, nd flgs wht
+needs verifiction.
+Knowledge bse with trust tiers C retrievl with cittions nd 
+verifiction pss
+Ingestion → every generted
+block crries sources
+B MVP
+11 Techer Review
+Workspce
+Drft → review → edit → regenerte → pprove, block by
+block. Nothing is officil until pproved.
+AI drft Editor over Lesson Document;
+sttus mchine; pprovl recorded
+in udit log
+Genertion → versioning nd
+publishing
+A MVP
+12 Version Control Drft, revised, finl nd previous-yer versions, so 
+lesson improves ech semester insted of being rebuilt.
+Lesson versions Immutble versions; compre; copy
+forwrd
+Approvl → reuse next term A MVP
+1 Lecture-to-Clssroom
+Publishing
+One ction sends the deck, student notes, ctivity, quiz
+nd ssignment to the right section nd clss slot.
+Approved lesson; section; timetble
+slot
+Publishing service; emits
+lesson.published
+Approvl → clssroom nd
+student course spce
+A MVP
+1 Adptive Teching
+Intelligence
+After clss: "students re wek in outcome X", with the
+evidence, nd  choice of re-tech, nother exmple,
+remedil mteril,  quiz, or move on.
+Clss mstery per outcome;
+misconception counts
+C8 ggregtion nd rules; model
+drfts the remedil mteril
+Session evidence → next lesson
+drft
+B MVP
+15 Course Progress
+Intelligence
+Syllbus, topic nd outcome coverge; lecture hours;
+ssessment coverge; pending topics.
+Sessions delivered; lesson tgs;
+ssessments
+C10, deterministic Sessions → complince nd
+deprtment views
+A PH2
+1 Fculty Anlytics The techer's own view of wht worked cross their
+courses nd sections.
+Coverge nd ttinment for own
+courses
+C1, self-view first Attinment → the techer's own
+plnning
+B PH2
+17 Acdemic Complince
+Lyer
+Checks tht  lesson is within syllbus, outcomes re
+covered, ssessments lign, topics re not skipped, nd AI
+content hs been reviewed.
+Lesson tgs; coverge; review log C10 rules plus similrity check
+ginst outcome text
+Before publishing → wrnings to
+techer; summry to deprtment
+B PH2
+18 Reusble Teching
+Assets
+A personl librry of lessons, slides, notes, questions,
+ctivities nd ssignments, serchble by topic.
+All techer-owned content C2 librry with serch Any pproved content → reuse in
+new lessons
+A PH2
+1 Collbortion Shring, co-uthoring nd peer review of lessons nd
+question bnks; deprtment-level resources.
+Shred content; permissions C2 with shring rules nd review
+workflow
+Personl librry → deprtment
+librry
+B PH3
+20 Intelligence Loop Curriculum → preprtion → review → clssroom →
+response → nlysis → recommendtion → better next
+lecture. This is the rchitecture of Section 11.
+Everything bove Events, evidence store, lerner
+model
+The whole pltform B MVP
+--- PAGE ---
+14AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 08 · PART II
+Layer 2 — AI Smart Classroom
+The live environment. It binds one pproved lesson to one section t one time, connects the bord, the techer's console nd
+students' phones, nd turns the clss into evidence while it hppens.
+THREE SCREENS, ONE STATE
+Bord view, techer console nd student device re
+three clients of one session stte. The techer console
+is the remote control nd the only plce AI suggestions
+pper before the techer chooses to show them.
+LATENCY BUDGET
+A slide chnge must rech every device in under 00
+ms;  poll must open in under one second; the
+ssistnt must begin nswering within bout three
+seconds. These numbers decide the rel-time design
+in Section 1.
+WHAT NEEDS THE ROOM
+Fetures 2, 15, 17 nd 2 depend on hrdwre nd
+networks the tem hs not yet seen. A one-hour
+survey of two clssrooms removes most of this
+uncertinty. [REQUIRES SGSU DATA]
+# FEATURE WHAT IT IS AND THE PROBLEM IT SOLVES DATA IT NEEDS POWERED BY BEFORE → AFTER CLASS PHASE
+1 Live Lecture Mode A session: one lesson version, one section, one time. The
+techer drives from  phone or lptop; the bord follows.
+Published lesson; section; slot C session stte over WebSocket Publishing → every live feture A MVP
+2 Smrtbord
+Presenttion
+The bord is  browser in full-screen. No vendor-specific
+integrtion is required.
+Bord mke, operting system,
+browser [REQUIRES SGSU DATA]
+Web deck renderer Session strt → slide events A
+E
+MVP
+ Live AI Teching
+Assistnt
+Privte to the techer's console during clss;  result cn
+be pushed to the bord with one tp.
+Current slide, lesson, recent questions C, live person; fst-tier model;
+stremed
+Techer prompt → bord or
+discrd
+B MVP
+ Context-Awre AI The ssistnt lwys knows the course, lesson, current
+slide nd wht the clss hs sked.
+Context pck ssembled per request C retrievl scoped to the session Automtic for every ssistnt cll A MVP
+5 Student Connection Rotting QR code or clss code; students join with their
+university login.
+Roster; identity C join tokens; single sign-on Session strt → presence nd
+ttendnce
+A MVP
+ Live Student Questions A queue with upvotes. Similr questions re grouped nd
+tied to the slide nd outcome.
+Question text; slide; student Embedding similrity for grouping During clss → techer console;
+lter → tutor nd summry
+A MVP
+7 Anonymous Question
+Mode
+Anonymous to the clss nd the techer, so hesitnt
+students sk. Identity is retined in the udit store for
+sfety cses only.
+Question text; hidden uthor Modertion filter before disply Sme s questions A MVP
+8 Live Polls Opinion or knowledge polls from the item bnk or written
+on the spot.
+Items; responses C5 delivery; live chrt Techer lunch → evidence
+events
+A MVP
+ Understnding Detection A per-slide, per-outcome red from response correctness,
+response time, "I m lost" tps nd question volume. No
+cmers.
+Responses nd interction events C8 live ggregtion Polls nd checks → live dptive
+suggestions
+B MVP
+--- PAGE ---
+15AI-Native University Platform · Product & Architecture Blueprint · v1.0
+# FEATURE WHAT IT IS AND THE PROBLEM IT SOLVES DATA IT NEEDS POWERED BY BEFORE → AFTER CLASS PHASE
+10 Instnt Concept Check One or two outcome-tgged items offered t checkpoints
+in the lesson.
+Items tgged to the current outcome C5; suggested utomticlly After  concept → mstery
+updte
+A MVP
+11 Dynmic Explntion Simpler wording, n nlogy or nother exmple on
+request, in clss.
+Current block; outcome;
+misconception dt
+C, live person Low check result → new
+explntion on bord
+A MVP
+12 Interctive Whitebord A shred cnvs over or beside slides; strokes sved to
+the session.
+Strokes; session Embedded open-source cnvs During clss → clss summry
+nd notes
+B PH2
+1 AI Visul Genertor Digrms, flowchrts nd plots on request. Technicl
+digrms re generted s code so lbels re correct;
+imge models re used only for illustrtion.
+Prompt; lesson context C with digrm-s-code tools;
+imge model optionl; techer
+preview before disply
+Techer prompt → bord →
+lesson sset
+B PH2
+1 Live Exmples nd
+Simultions
+Run code live; open  simultion from  reviewed librry.
+Model-generted interctive widgets come lter, fter
+review tooling exists.
+Code; simultion librry Sndboxed code runner; curted
+librry
+Techer ction → bord; ctivity
+evidence
+B PH2
+15 Attendnce Integrtion Presence from the rotting code plus  device hertbet
+nd cmpus-network check; techer cn correct. No fce
+recognition.
+Roster; join events; ttendnce rules
+nd ERP interfce
+[REQUIRES SGSU DATA]
+C presence; export or API to ERP Join → ttendnce record →
+student nd deprtment views
+B
+E
+MVP
+1 Clssroom Activity
+Engine
+Timed ctivities: think-pir-shre, quiz rce, worked
+problem, group tsk.
+Activity templtes; groups C5 nd C; timers Lesson ctivity block →
+responses s evidence
+B PH2
+17 Lecture Recording nd
+Cpture
+Audio nd  trnscript ligned to slides. Needs
+microphones, consent nd  retention rule before it is
+switched on.
+Audio [REQUIRES SGSU DATA] ;
+consent; storge
+Speech-to-text; lignment to slide
+timeline
+Clss → trnscript serch, richer
+summries
+C
+E
+PH3
+18 Automtic Clss
+Summry
+Wht ws covered, the checks nd results, questions
+sked, nd wht to revise. Built from the session timeline,
+so it works without udio.
+Session timeline Fst-tier model over structured
+timeline
+Session end → students nd
+techer
+A MVP
+1 Post-Clss Intelligence The session report: mstery per outcome, top
+misconceptions, unnswered questions, students who my
+need help (techer only).
+Session evidence C8 ggregtion; C1 view Session end  Techer Studio
+nd Lyer 
+B MVP
+20 Emergency nd Offline
+Mode
+The lesson pck is cched on the bord before clss.
+Slides nd loclly queued polls keep working; AI fetures
+puse nd sy so.
+Cched lesson pck Instllble web pp; locl queue;
+lter  clssroom hub
+Network loss → sync on
+reconnect
+B PH2
+21 Live Adptive Teching
+Engine
+A suggestion crd in clss: "1% correct on outcome  re-
+explin, peer discussion, or continue." The techer
+chooses.
+Live mstery; lesson pln C8 thresholds; C drfts the
+lterntive
+Check result → techer decision C PH2
+22 Lerning Objective
+Trcker
+A checklist of the lesson's outcomes, ticked when tught
+nd when checked.
+Slide nd check events C10, deterministic During clss → coverge records A MVP
+2 Automtic Pce
+Mngement
+Plnned ginst elpsed time per block, with  suggestion
+for wht to shorten. Advisory only.
+Block durtions; clock C10 rules During clss → techer console B PH2
+2 Group Lerning Mode Forms mixed-bility groups nd collects group nswers. Roster; mstery C8 for grouping; C for rooms Activity strt → group evidence B PH3
+25 Accessibility Mode Cptions, high contrst, text scling nd  screen-reder-
+friendly student view.
+Audio for cptions; user preference C12; ccessible components Alwys vilble B PH2
+--- PAGE ---
+16AI-Native University Platform · Product & Architecture Blueprint · v1.0
+# FEATURE WHAT IT IS AND THE PROBLEM IT SOLVES DATA IT NEEDS POWERED BY BEFORE → AFTER CLASS PHASE
+2 Multilingul Clssroom
+Intelligence
+Hindi-English mixed-speech cptions; trnslted
+summries nd glossries. Depends on udio qulity in the
+room.
+Audio [REQUIRES SGSU DATA] ;
+lnguge preference
+C12 Indic speech-to-text,
+trnsltion
+Clss → cptions, bilingul notes C
+E
+PH3
+27 Subject-Specific Modes Code mode with editor nd runner; mthemtics mode
+with typeset steps; further modes lter.
+Course type Code sndbox; mthemtics
+typesetting
+Lesson type → bord lyout B PH2
+28 Acdemic Integrity nd
+AI Sfety
+Grded checks lock the student view, shuffle items per
+student nd suspend the tutor. All clss input is moderted.
+Session policy mode C1 policy; C5 delivery settings Policy → every live interction B MVP
+2 Clssroom Digitl Twin Redefined s the session timeline:  replyble record of
+slides, polls, questions nd mstery chnge.
+All session events C7 event store; timeline view Session → review, summries,
+reserch
+B PH2
+0 Erly Lerning-Risk
+Detection
+Rules first: low mstery on severl outcomes with missed
+sessions or submissions rises  flg to the mentor.
+Predictive models only fter rel history exists.
+Mstery; ttendnce; submissions C8 rules; lter  trined model Evidence → mentor, never 
+penlty
+B PH2
+--- PAGE ---
+17AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 09 · PART II
+Layer 3 — AI Student and Career Intelligence
+The student's side of the sme dt: ech student's evidence becomes  short list of next ctions nd, over time,  record of
+skills tht leds somewhere.
+TUTOR POLICY MODES
+Open prctice: full help. Grded ssignment: hints
+only. Timed ssessment: unvilble. The techer sets
+the mode on the item; the student cnnot chnge it.
+PRIVACY OF TUTOR CONVERSATIONS
+Privte to the student. Techers see grouped, de-
+identified topics of confusion, which keeps students
+sking wht they would not sk in clss.
+WHY CAREER WAITS
+Fetures 17 to 2 need n outcome-to-skill mp nd
+rel plcement dt. Without them, dvice would be
+the "rndom courses" the brief wrns ginst.
+[REQUIRES SGSU DATA]
+# FEATURE WHAT IT IS AND THE PROBLEM IT SOLVES DATA IT NEEDS POWERED BY BEFORE → AFTER CLASS PHASE
+1 Personlised Dshbord Tody's clsses, wht is due, ttendnce, nd three next
+ctions with resons.
+Timetble; dedlines; mstery C Evidence → opens the
+recommended ctivity
+A MVP
+2 Acdemic Profile Degree, brnch, semester, subjects, history, interests,
+skills.
+ERP record [REQUIRES SGSU DATA]
+; self-declred interests
+C8 profile; ERP sync Enrolment → scopes everything
+the student sees
+A
+E
+MVP
+ Personl AI Lerning
+Assistnt
+A course-wre tutor tht explins nd sets prctice.
+Gives hints, not nswers, on grded work.
+Course knowledge bse; mstery;
+ssignment policy
+C, tutor person Any study moment → tutor events
+feed the lerner model
+B MVP
+ My Course Spce Per subject: syllbus, lessons, notes, ssignments, mrks,
+progress.
+Published content; own results C1 nd C2 views Publishing → the student's home
+for  course
+A MVP
+5 Lecture Compnion After clss: notes, summry, the student's own nswers,
+nd the outcome to revisit.
+Session timeline; own responses C2 nd C8; triggered by
+session.ended
+Clss → prctice set A MVP
+ AI Personlised Notes The pproved lesson re-rendered s quick revision,
+detiled, beginner-friendly or exm-focused.
+Approved lesson C2 trnsformtions; grounded only Lesson → revision A PH2
+7 Ask From My Course Questions nswered from the student's enrolled courses,
+citing the slide or pge.
+Student-visible knowledge bse C with enrolment nd visibility
+filters
+Question → cited nswer →
+evidence of confusion
+B MVP
+8 Adptive Lerning
+Engine
+Ech outcome shown s Lerning, Wek, Known or
+Mstered, with how sure the system is.
+Lerning events C8 mstery model Every response → stte updte B MVP
+ Personl Lerning Pth An ordered sequence of outcomes for this student, using
+prerequisites nd current mstery.
+Prerequisite grph; mstery C over C1 Mstery → plnner nd prctice B PH2
+10 AI Study Plnner A relistic weekly pln from clsses, dedlines, wek
+outcomes nd vilble hours.
+Timetble; dedlines; stted hours C constrint solver; model writes
+the pln
+Pth → reminders B PH2
+11 Smrt Revision System Wht to revise, when nd how deeply, hed of
+ssessments.
+Mstery; ssessment clendr C scheduler Clendr → revision sets B PH2
+--- PAGE ---
+18AI-Native University Platform · Product & Architecture Blueprint · v1.0
+# FEATURE WHAT IT IS AND THE PROBLEM IT SOLVES DATA IT NEEDS POWERED BY BEFORE → AFTER CLASS PHASE
+12 Spced Revision Returns erlier outcomes t widening intervls. Merged
+with feture 11 s one scheduler.
+Item history per student Spced-repetition lgorithm Mstered stte → retined stte A PH2
+1 AI Quiz Engine Prctice imed t wek outcomes. Reviewed items first;
+generted ones lbelled unreviewed.
+Item bnk; mstery C5; genertion for extr items Wek outcome → prctice →
+evidence
+B MVP
+1 Mistke Intelligence Nmes the kind of mistke nd the concept behind it, from
+misconception tgs;  model clssifies open nswers.
+Responses; misconception tgs C8; clssifier model for open
+nswers
+Wrong nswer → trgeted
+explntion
+B MVP
+15 Knowledge Gp
+Detection
+When n outcome is wek, checks its prerequisites nd
+recommends the erliest missing one.
+Prerequisite edges
+[REQUIRES SGSU DATA]  or fculty-
+curted
+C8 over C1 Wek outcome → bridge content B PH2
+1 Assignment Workspce Brief, rubric, submission, feedbck, resubmission, with the
+ssignment's AI-use rule stted on it.
+Assignment; rubric; integrity tool
+[REQUIRES SGSU DATA]
+C5; rubric-ssisted feedbck
+drfted for the techer
+Publishing → submission →
+evidence
+B PH2
+17 Skill Pssport Skills with  level nd the evidence behind ech. Verified
+nd self-declred entries kept prt.
+Outcome-to-skill mp; evidence C11 Mstery nd projects → portfolio,
+resume, institutionl view
+B PH2
+18 Skill Gp Engine Trget role profile minus current pssport, in priority order. Role profiles; pssport C11 Creer gol → rodmp B PH2
+1 Personlised Creer
+Rodmp
+A semester-by-semester pln joining curriculum, gps,
+projects nd internships.
+Curriculum; gps; opportunities C11 nd C Skill gp → plnner B PH3
+20 Industry nd Compny
+Mpping
+Role → skills → sectors → employers, from plcement-cell
+dt nd  curted txonomy. No scrping.
+Employer nd role dt
+[REQUIRES SGSU DATA]
+C11 Plcement dt → rodmp E PH3
+21 Internship nd
+Opportunity Hub
+University-pproved internships, competitions, reserch
+nd plcements mtched to profile.
+Approved listings
+[REQUIRES SGSU DATA]
+C11 mtching Listings → pplictions →
+outcomes
+E PH3
+22 Portfolio Builder Assembled from verified work; public only if the student
+chooses.
+Verified rtefcts C11 Pssport → shreble pge A PH3
+2 Resume Intelligence A resume generted from verified dt nd kept current. Pssport; profile C11; model drfts wording Pssport → export A PH3
+2 Acdemic Performnce
+Intelligence
+Trends in mrks nd mstery; strong nd wek subjects. Mrks feed [REQUIRES SGSU DATA]
+; mstery
+C8 nd C1 Mrks import → dshbord A
+E
+PH2
+25 Attendnce Intelligence Attendnce by subject ginst the university rule, with 
+projection.
+Attendnce; policy
+[REQUIRES SGSU DATA]
+C10 rules Attendnce → lerts A
+E
+PH2
+2 Multilingul nd
+Accessibility
+Explntions in Hindi or mixed Hindi-English, red-loud,
+voice input, cptions.
+Lnguge preference C12 Any content → preferred form B PH2
+27 Student Growth Timeline The journey cross semesters. Needs t lest two
+semesters of dt.
+Historicl evidence C8 nd C11 History → portfolio nrrtive A PH3
+28 AI Student Success
+Engine
+Rnks the next best ction cross cdemics, skills nd
+creer. Rules first; lerned rnking lter.
+Everything bove C All evidence → dshbord B MVP
+--- PAGE ---
+19AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 10 · PART II
+Layer 4 — University Intelligence
+The institutionl view. It dds no new dt of its own. Its vlue comes entirely from ggregting wht Lyers 1 to  hve lredy
+recorded, under stricter ccess rules.
+RESTORED VIEW: STUDENT PROGRESS AND COHORTS
+The first brinstorm listed student progress nlytics
+under this lyer; the numbered list lost it. It returns s
+ view inside fetures 1 nd 5 cohort progression nd
+retention in ggregte, with nmed-student detil
+reserved for mentors.
+AGGREGATES BY DEFAULT
+Administrtors see groups, not people. Any view below
+ minimum group size is suppressed. Nmed drill-
+down exists for defined roles nd purposes nd every
+use is logged. Section 20 sets the rules.
+THE FEATURE MOST LIKELY TO STOP THE PROJECT
+Feture  is techniclly simple nd orgnistionlly the
+hrdest in the document. If fculty believe the pltform
+exists to rnk them, they will not use Lyers 1 nd 2,
+nd Lyer  will hve no dt. It needs  written
+chrter before it is built.
+# FEATURE WHAT IT IS AND THE PROBLEM IT SOLVES DATA IT NEEDS POWERED BY BEFORE → AFTER CLASS PHASE
+1 University-Wide
+Acdemic Intelligence
+Performnce by deprtment, progrmme, semester,
+subject nd section, in ggregte.
+Mstery, coverge nd ttinment
+ggregtes
+C1 views with minimum group
+sizes
+Evidence → ledership decisions B PH3
+2 Curriculum Intelligence Finds outcomes tht re wek every time they re tught,
+prerequisite chins tht fil, nd skills industry sks for
+tht no course covers. Produces proposls for the Bord of
+Studies.
+Attinment history; prerequisite grph;
+industry skill dt
+[REQUIRES SGSU DATA]
+C1 nd C11; model drfts the
+evidence summry
+Recurring gps → curriculum
+proposl
+C
+E
+LONG
+ Institutionl Skill-Gp
+Intelligence
+Skills tht re strong or wek cross  progrmme or
+grduting btch.
+Skill Pssports in ggregte C11 ggregtion Pssports → trining plns B PH3
+ Fculty Performnce
+nd Teching
+Intelligence
+Course-level teching outcomes: coverge, ttinment,
+lerning evidence. Compred in context, never s 
+rnking.
+Coverge nd ttinment by course C1 under  fculty-greed chrter Attinment → support nd
+development
+B PH3
+5 Deprtment Intelligence The hed of deprtment's view: progress, difficult
+subjects, gps, trends, where to intervene.
+Deprtment-scoped ggregtes C1 Evidence → deprtment ction B PH3
+ Accredittion nd
+Acdemic Reporting
+Course-outcome nd progrmme-outcome ttinment
+computed from ssessment dt, with the evidence file
+ssembled.
+Outcome mppings; ssessment
+results; report formts
+[REQUIRES SGSU DATA]
+C10, deterministic; export templtes Assessments → self-ssessment
+report sections
+B
+E
+PH3
+7 University Knowledge
+Grph
+Students, techers, subjects, outcomes, skills, projects,
+opportunities nd roles s one connected model.
+Core entities nd reltions C1 nd reltionl model; grph
+queries in PostgreSQL
+Foundtion → every cross-entity
+question
+B MVP
+8 Institutionl Decision
+Support
+"Which subjects hve the highest lerning gps?" sked in
+plin lnguge nd nswered from governed dt with the
+query shown.
+Semntic lyer over ggregtes C, nlyst person; text-to-query
+ginst pproved views only
+Question → chrt nd explntion C PH3
+--- PAGE ---
+20AI-Native University Platform · Product & Architecture Blueprint · v1.0
+# FEATURE WHAT IT IS AND THE PROBLEM IT SOLVES DATA IT NEEDS POWERED BY BEFORE → AFTER CLASS PHASE
+ University AI
+Governnce
+Approved models nd sources, policy modes, permissions,
+udit log, usge nd qulity reports.
+AI interction logs; policy settings C1 nd AI gtewy Policy → every AI cll B MVP
+10 Resource nd
+Intervention Intelligence
+Where extr fculty time, lbs, workshops or remedil
+clsses re needed, from evidence.
+Gp ggregtes; resource dt
+[REQUIRES SGSU DATA]
+C1 Gps → resourcing decisions B
+ LONG
+11 Grdute Outcome
+Intelligence
+Links lerning dt to internships, plcements nd creers
+to test whether progrmmes produce the intended
+cpbilities.
+Plcement nd lumni outcomes
+[REQUIRES SGSU DATA]
+C11 nd C1 Yers of dt → progrmme
+review
+E
+ LONG
+--- PAGE ---
+21AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 11 · PART II
+Cross-Layer Connections: The Intelligence Loop
+The brief's centrl exmple follows one wek concept from  clssroom quiz to  curriculum
+recommendtion. This section shows the mechnism tht crries it, nd wht ech lyer
+sends to every other.
+1 · CORE
+Curriculum Grph
+Topic nd outcomes
+selected
+→
+2 · LAYER 1
+Prepre
+AI drfts the Lesson
+Document
+→
+3 · LAYER 1
+Approve nd publish
+Techer vlidtes;
+version fixed
+→
+4 · LAYER 2
+Tech nd check
+Slides, polls, questions →
+5 · CORE
+Evidence Store
+Every response, tgged
+to n outcome
+↑ ↓
+10 · LAYER 4
+Curriculum chnge
+Proposl with evidence ←
+9 · LAYER 4
+Aggregte
+Sme gp cross
+sections nd terms
+←
+8 · LAYER 1
+Techer feedbck
+Re-tech crd for next
+lesson
+←
+7 · LAYER 3
+Student ctions
+Recp nd prctice per
+student
+←
+6 · CORE
+Lerner Model
+Mstery per student
+nd outcome
+Figure   The intelligence loop. Steps 5 nd  re the Pltform Core. No lyer tlks to nother directly; ech publishes events nd reds the
+shred model, which is wht keeps the loop intct when  lyer is chnged or dded.
+The brief's example, as the system executes it
+STEP WHAT THE PERSON SEES WHAT THE PLATFORM DOES EVENT OR DATA WRITTEN
+1 Techer picks B.Tech CSE 
+Artificil Intelligence  Neurl
+Networks
+Lods the topic's outcomes nd
+prerequisites from C1; retrieves pproved
+sources
+lesson.draft_requested
+2 A drft lesson ppers; techer
+edits two slides nd pproves
+Genertes the Lesson Document; records
+edits; freezes the version
+lesson.approved, lesson.published
+3 Lesson opens on the bord;
+students join by QR
+Cretes the session; mrks presence session.started, attendance.marked
+4 Students nswer  five-
+question check
+Scores ech response; tgs it to n outcome
+nd, if wrong,  misconception
+response.submitted → lerning events
+5 Techer's console shows
+bckpropgtion t 1%
+Updtes mstery per student nd outcome;
+computes the clss distribution
+mastery.updated, gap.detected
+6 Ech student who missed it
+receives  recp nd three
+prctice items
+Selects content nd items for the wek
+outcome nd the specific misconception
+recommendation.created (student)
+7 Techer Studio shows "Re-
+tech bckpropgtion" with 
+drfted ten-minute segment
+Cretes  techer recommendtion linked to
+the next scheduled lesson
+recommendation.created (techer)
+8 Hed of deprtment sees the
+outcome flgged in two
+sections
+Aggregtes the sme outcome cross
+sections
+Aggregte view refreshed
+9 Den's office sees  recurring
+gp nd its wek prerequisite
+Compres terms; wlks the prerequisite
+grph to the chin rule in first-yer
+mthemtics
+Curriculum proposl drfted for committee
+--- PAGE ---
+22AI-Native University Platform · Product & Architecture Blueprint · v1.0
+What each layer gives every other
+FROM ↓ TO → TEACHER STUDIO SMART CLASSROOM STUDENT AND CAREER
+UNIVERSITY
+INTELLIGENCE
+Techer Studio — Approved lesson version,
+checks, ctivities, policy
+mode
+Notes, prctice items,
+ssignments, AI-use rules
+Coverge pln, outcome
+mpping, review record
+Smrt Clssroom Session report,
+misconceptions,
+unnswered questions, pce
+ginst pln
+— Clss summry, own
+responses, ttendnce
+Sessions delivered, live
+ttinment, prticiption in
+ggregte
+Student nd Creer De-identified topics of
+confusion, prctice results,
+ssignment submissions
+Rediness for the next
+lesson's prerequisites
+— Skill Pssports in ggregte,
+progression, opportunity
+uptke
+University
+Intelligence
+Curriculum updtes, policy
+settings, deprtment
+priorities
+Clssroom policy, pproved
+models nd sources
+Approved opportunities, role
+profiles, ttendnce nd
+integrity rules
+—
+All of these trvel through the Pltform Core s events or s reds of shred tbles. The tble describes mening, not point-to-point
+integrtions.
+--- PAGE ---
+23AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 12 · PART III
+System Architecture
+A modulr monolith on one PostgreSQL dtbse, with bckground workers,  rel-time hub
+nd  single AI gtewy. It is the smllest rchitecture tht stisfies the brief, nd it cn be
+split into services lter long boundries tht re drwn now.
+CLIENTS
+All web. No native
+app in the first two
+phases.
+Techer web pp
+Desktop-first. Lecture
+Builder, review, insights.
+Bord view nd console
+Full-screen browser on the
+bord; console on the
+techer's phone or lptop.
+Student web pp
+Phone-first, instllble,
+works on poor networks.
+Admin web pp
+Dshbords, governnce,
+dt opertions.
+EDGE
+CDN nd firewll
+Sttic ssets, rte limiting,
+bot protection.
+API
+REST under /v1, described
+by OpenAPI.
+Rel-time
+WebSocket for clss
+sessions; server-sent
+events for stremed AI
+text.
+Identity provider
+OpenID Connect; university
+single sign-on.
+APPLICATION
+One deployable;
+modules with
+enforced
+boundaries.
+identity
+users, roles, consent
+curriculum
+grph, mppings
+content
+lessons, versions,
+ssets
+knowledge
+ingest, retrieve
+ssistnt
+persons, tools
+ssessment
+items, delivery,
+scoring
+session
+live clss stte
+evidence
+event intke
+lerner
+mstery, gps, risk
+recommend
+ctions, plns
+ttinment
+coverge, outcomes
+skills
+pssport, roles
+nlytics
+ggregtes, queries
+governnce
+policy, udit
+integrtions
+ERP, SSO, exports
+WORKERS
+Asynchronous;
+scale
+independently.
+AI jobs
+Lesson genertion,
+ingestion, bulk
+trnsformtions.
+Event consumers
+Mstery updtes, gp
+detection,
+recommendtions.
+Schedulers
+Revision, reminders,
+reports, retention.
+Rel-time hub
+Session fn-out through
+Redis pub/sub.
+AI GATEWAY
+Hosted model APIs
+Resoning, fst, speech, imge,
+embedding; routed per function.
+Self-hosted models
+Embeddings, rernker, clssifiers; n
+open-weight fllbck model.
+Controls
+Policy, redction, schems,
+modertion, trcing, budgets.
+DATA
+PostgreSQL
+Row-level security
+per tennt; vectors;
+full text.
+Redis
+Sessions, presence,
+queues.
+Object storge
+Files, medi,
+exports.
+Event strem
+Outbox to Redis
+Strems; Kfk-
+clss lter.
+Anlytics
+Mterilised views;
+columnr store lter.
+OPERATIONS
+Trcing
+OpenTelemetry end
+to end.
+AI observbility
+Prompt, model, cost,
+qulity per cll.
+Secrets
+Mnged vult; no
+keys in code.
+Bckups
+Point-in-time
+recovery; tested
+restores.
+CI/CD
+Tests, migrtions,
+stged relese.
+Figure   System rchitecture. One ppliction nd one dtbse keep  smll tem productive; workers nd the rel-time hub re seprted
+becuse their lod pttern differs from request-response trffic.
+Architecture decisions
+DECISION CHOICE WHY REVISIT WHEN
+Service shpe Modulr monolith A smll tem cnnot operte fifteen services. Module
+boundries nd n internl event bus give the sme
+seprtion without the opertionl cost.
+A module needs to scle or
+deploy independently
+--- PAGE ---
+24AI-Native University Platform · Product & Architecture Blueprint · v1.0
+DECISION CHOICE WHY REVISIT WHEN
+Dtbse PostgreSQL only The curriculum is reltionl; lesson blocks fit JSON
+columns; vectors fit pgvector. One dtbse mens
+one bckup, one security model nd joins between
+evidence nd curriculum.
+Vectors exceed severl
+million, or nlytics slows
+trnsctions
+Document dtbse Not used A second store for content would brek the join
+between  block nd its outcome.
+No expected trigger
+Rel-time WebSocket hub with Redis
+pub/sub
+A clss is 0 to 120 devices on one topic; this is well
+within  single hub.
+Thousnds of concurrent
+sessions
+Events Trnsctionl outbox, then 
+strem
+Gurntees tht n nswer sved is n event
+published, with no seprte broker to run t first.
+Multiple universities or
+hevy nlytics consumers
+Long AI jobs Queue with idempotent steps nd
+sved progress
+Lesson genertion tkes tens of seconds nd must
+survive retries nd  closed browser tb.
+Workflows need humn
+steps lsting dys; dopt 
+durble workflow engine
+Tenncy tenant_id on every row with row-
+level security
+Costs little now; mkes  second university 
+configurtion tsk insted of  rewrite.
+A tennt requires physicl
+isoltion
+Hosting region A cloud region in Indi Keeps personl dt in-country by defult nd
+reduces ltency. Model clls my still leve the region;
+Section 21 covers this. [REQUIRES SGSU DATA]
+University policy requires
+on-premises hosting
+Synchronous or asynchronous
+A request is nswered synchronously only if  person is
+witing nd the work tkes under bout two seconds.
+Everything else is  job: lesson genertion, ingestion,
+mstery reclcultion, reports. Stremed ssistnt
+nswers sit between the two: the request returns
+immeditely nd text rrives over server-sent events.
+Environments
+Locl, stging nd production from the strt, with
+seeded dummy dt in the first two. Production dt is
+never copied down. The demonstrtor runs on stging-
+grde infrstructure; the pilot must not.
+--- PAGE ---
+25AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 13 · PART III
+Data Architecture and Database Model
+The brief lists 7 entities to investigte. They re orgnised here into nine domins,
+corrected where two nmes men one thing, nd extended with the entities tht rel
+workflows need but the list omits.
+IDENTITY AND ORGANISATION
+Tennt · User · Role · RoleAssignment ·
+Deprtment · Consent · StudentProfile ·
+FcultyProfile
+ACADEMIC STRUCTURE
+Progrm · Brnch · AcdemicTerm ·
+Semester · Course · Section · Enrollment
+· TechingAssignment · TimetbleSlot ·
+Room
+CURRICULUM GRAPH
+Unit · Topic · LerningOutcome ·
+PrerequisiteEdge · CourseOutcome ·
+ProgrmOutcome · OutcomeMpping
+CONTENT
+Lesson · LessonVersion · Block · Asset ·
+KnowledgeDocument · Chunk ·
+SourceCittion
+CLASSROOM
+ClssSession · SessionEvent ·
+Attendnce · StudentQuestion
+ASSESSMENT
+Item · ItemOption · Misconception ·
+Assessment · Rubric · Submission ·
+Response · Grde
+EVIDENCE AND LEARNER
+LerningEvent · MsteryStte ·
+Recommendtion · RiskFlg · StudyPln
+SKILLS AND CAREER
+Skill · OutcomeSkillMp · CreerRole ·
+RoleSkillRequirement · SkillEvidence ·
+Project · Certifiction · Compny ·
+Opportunity · Appliction
+AI AND GOVERNANCE
+AIInterction · PromptVersion ·
+ModelConfig · PolicySetting · AuditLog ·
+AnlyticsEvent · EvlRun
+Figure 5  Entity domins. Nmes in bold re dditions to the brief's list. Ech domin is owned by one ppliction module; other modules red
+it through tht module's interfce.
+Corrections to the brief's entity list
+BRIEF ENTITY HOW IT IS MODELLED
+Student, Fculty, Administrtor One User with role ssignments nd  profile tble per kind. A person cn hold more thn one role, for exmple
+ techer who is lso  hed of deprtment.
+Lecture, Question Nmed Lesson nd Item here. A lesson my spn more thn one clss hour; n item my be  question,  tsk
+or  prompt.
+Subject nd Course One entity, Course:  subject s offered in  progrmme nd semester. A Section is  group of students tking
+it in  term with  techer.
+Clssroom Split into Room ( physicl plce) nd ClssSession ( lesson version tught to  section t  time). Most
+fetures concern the session.
+PPT, Notes, Lecture Mteril Renderings Asset) of  LessonVersion. They re generted from blocks nd never edited independently.
+Quiz, Assignment Kinds of Assessment, ech  set of Items with settings. A live poll is n Assessment with one item.
+Student Performnce Not stored s n entity. It is derived from Grde, Response nd MsteryStte.
+AI Source SourceCittion:  link from  generted block or nswer to the Chunk it used.
+Lerning Event, Anlytics Event Kept seprte. Lerning events re cdemic evidence with long retention; nlytics events re product
+telemetry with short retention.
+Key relationships
+RELATIONSHIP CARDINALITY WHY IT MATTERS
+Progrm  Course  Unit  Topic →
+LerningOutcome
+1  mny t
+ech step
+The spine. Every other domin ttches to it.
+LerningOutcome  LerningOutcome
+PrerequisiteEdge)
+mny : mny Enbles gp trcing nd lerning pths. My cross courses nd semesters.
+LerningOutcome  CourseOutcome →
+ProgrmOutcome OutcomeMpping)
+mny : mny,
+weighted
+Accredittion ttinment is computed long this chin.
+--- PAGE ---
+26AI-Native University Platform · Product & Architecture Blueprint · v1.0
+RELATIONSHIP CARDINALITY WHY IT MATTERS
+Course  Section  Enrollment  User 1  mny : mny Determines wht  student my see nd retrieve.
+Lesson  LessonVersion  Block; Block ↔
+LerningOutcome
+1  mny; mny
+: mny
+A block's tgs re wht mke coverge nd nlytics possible.
+Item  LerningOutcome; ItemOption →
+Misconception
+mny : mny;
+mny  1
+Lets  wrong nswer be explined, not only counted.
+ClssSession  LessonVersion, Section,
+TimetbleSlot
+mny  1 ech Fixes which version ws ctully tught to whom.
+Response  Item, User, ClssSession or
+Assessment
+mny  1 ech The rw mteril of evidence.
+LerningEvent  User, LerningOutcome, source
+record
+mny  1 ech One schem for ll evidence, whtever produced it.
+MsteryStte  User, LerningOutcome 1 per pir The lerner model's output; red by ll four lyers.
+LerningOutcome  Skill OutcomeSkillMp);
+CreerRole  Skill
+mny : mny Connects the syllbus to creers. Needs curtion.
+[REQUIRES SGSU DATA]
+KnowledgeDocument  Chunk; Chunk  Topic 1  mny; mny
+: mny
+Scopes retrievl to  course nd topic.
+Core tables, sketched
+learning_outcome(id, tenant_id, topic_id, code, 
+statement,
+  bloom_level, status)
+block(id, lesson_version_id, seq, type, content jsonb,
+  outcome_ids[], source_chunk_ids[], origin, 
+review_state)
+item(id, tenant_id, type, stem, difficulty, bloom_level,
+  outcome_ids[], review_state, origin)
+learning_event(id, tenant_id, student_key, outcome_id,
+  verb, object_type, object_id, score, max_score,
+  duration_ms, misconception_id, source_type, weight,
+  session_id, occurred_at)
+mastery_state(student_key, outcome_id, estimate,
+  evidence_weight, state, last_event_at, updated_at)
+chunk(id, document_id, text, embedding vector,
+  topic_ids[], trust_tier, visibility, embargo_until,
+  language, locator)
+Rules that apply to every table
+Tennt isoltion. Every row crries tenant_id; row-
+level security enforces it in the dtbse, not only in
+ppliction code.
+Pseudonymous nlytics. Evidence nd mstery use
+ student_key, not the user identifier. The mpping
+lives in the identity module nd is joined only for
+uthorised, nmed views.
+Immutble evidence. Lerning events nd udit logs
+re ppend-only. Corrections re new events.
+Versioned content. A published lesson version is
+never chnged; edits crete  new version.
+Origin recorded. Blocks nd items store whether they
+were written by  person, generted, or generted
+nd edited, nd who pproved them.
+Retention by clss of dt. Ech tble belongs to 
+retention clss set in governnce Section 21.
+--- PAGE ---
+27AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 14 · PART III
+The Learning Evidence and Mastery Model
+Ten fetures in the brief detect wekness, nd the dministrtor's exmple question sks
+which subjects hve the highest lerning gps. All of them depend on one clcultion. This
+section defines it, becuse without  shred definition "0% struggle with bckpropgtion"
+hs no mening.
+Figure   From  single response to n ction. Steps 2 to  run in the Pltform Core within seconds of the response.
+The event
+PRODUCT DESIGN  Every piece of evidence is one record
+with the sme shpe, modelled on the widely used
+ctor-verb-object pttern of the xAPI lerning-record
+stndrd so tht it cn be exported or exchnged lter.
+{ "actor":   "student_key:7f3a…",
+  "verb":    "answered",
+  "object":  { "type": "item", "id": "itm_2041" },
+  "outcome": "CS501-U4-T3-LO4",
+  "result":  { "score": 0, "max": 1,
+               "duration_ms": 41200,
+               "misconception": "mc_chain_rule" },
+  "context": { "source": "class_check",
+               "weight": 0.5, "session": "ses_0912",
+               "section": "5A" },
+  "time":    "2026-10-07T10:42:13+05:30" }
+Evidence is not all equal
+RECOMMENDATION  Strting weights, to be clibrted ginst
+exmintion results fter the first semester.
+SOURCE WEIGHT REASONING
+Invigilted test or exm item 1.0 Controlled conditions
+Grded clss quiz in lock
+mode
+0.8 Timed, supervised
+Rubric-mrked ssignment 0. Authorship less certin
+Live concept check or poll 0.5 Low stkes; some guessing
+Self-pced prctice 0. Unsupervised; repeted
+ttempts
+"I m lost" tp; tutor help
+request
+0.1 A signl of difficulty only
+The estimate and the four states
+PRODUCT DESIGN  For ech student nd outcome the model keeps n estimte between 0 nd 1 nd  mesure of how
+much evidence supports it. The estimte is  weighted verge of scores, djusted for item difficulty, in which older
+evidence counts for less ( strting hlf-life of 0 dys). It is delibertely simple. A techer cn be shown exctly which
+nswers produced  stte, which is not true of  neurl knowledge-trcing model, nd it works from the first quiz.
+STATE RULE MEANING FOR THE STUDENT AND TEACHER
+Lerning Evidence weight below the minimum
+(strting vlue 1.2 for exmple one
+grded quiz item nd one live check)
+Too little evidence to judge. Shown s "in progress", never s  wekness.
+Wek Enough evidence, estimte below 0. Hs ttempted this nd is not yet getting it right. Triggers prctice nd, t
+clss level,  techer prompt.
+Known Enough evidence, estimte 0. to 0.85 Cn do stndrd problems. Appers in spced revision.
+Mstered Estimte bove 0.85, including hrder
+items, nd confirmed gin fter t
+lest two weeks
+Relible nd retined. Counts s skill evidence.
+1 · CAPTURE
+Response
+A poll nswer, quiz
+item, submission,
+exm mrk, or
+prctice ttempt
+→
+2 · NORMALISE
+Lerning event
+Tgged to n
+outcome; given 
+source type nd
+weight
+→
+3 · ESTIMATE
+Mstery stte
+Per student nd
+outcome: estimte,
+evidence weight, stte
+→
+4 · DETECT
+Gps nd risk
+Clss-level gps;
+prerequisite trcing;
+mentor flgs
+→
+5 · ACT
+Recommendtions
+To the student, the
+techer nd, in
+ggregte, the
+university
+--- PAGE ---
+28AI-Native University Platform · Product & Architecture Blueprint · v1.0
+The same model at five levels
+Student: stte per outcome, with the evidence behind
+it.
+Session: shre of respondents correct per outcome,
+live.
+Section: distribution of sttes per outcome. A
+gap.detected event fires when t lest 0% of
+students with enough evidence re Wek nd t lest
+ten hve responded.
+Course nd progrmme: the sme outcome
+compred cross sections nd terms;  gp tht
+recurs is  curriculum signl.
+University: outcomes rolled up through the course-
+outcome nd progrmme-outcome mppings.
+Rules that keep it honest
+No stte is ssigned from  single response.
+Every stte shows its evidence count; low-evidence
+views re mrked.
+A techer cn override  stte with  reson; the
+override is itself n event.
+Students cn see why  stte ws ssigned nd wht
+would chnge it.
+Thresholds nd weights re configurtion, reviewed
+ech semester ginst exm outcomes.
+Predictive risk models re not ttempted until two to
+three semesters of dt exist. D
+--- PAGE ---
+29AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 15 · PART III
+Knowledge Pipeline and RAG Architecture
+The pltform must nswer from the university's own mteril nd sy where ech nswer
+cme from. Retrievl-ugmented genertion does this. Its qulity depends less on the model
+thn on ingestion, metdt nd ccess control, which is where most of the design effort
+goes.
+INGESTION · RUNS WHEN A SOURCE IS ADDED OR CHANGED
+QUERY · RUNS ON EVERY GROUNDED REQUEST
+Figure 7  The two hlves of retrievl. Access control is step 2 of the query, before ny text reches  model. A student cnnot be shown wht
+ws never retrieved.
+Sources, trust tiers and who may retrieve them
+SOURCE (FROM THE BRIEF) TRUST TIER DEFAULT VISIBILITY HANDLING
+University syllbus, course
+structure, regultions, policies
+1 · Officil Everyone in the tennt Authorittive for scope. Imported once per revision, signed
+off by the deprtment. [REQUIRES SGSU DATA]
+Approved lessons, officil
+notes, fculty mteril
+2 · Fculty-
+pproved
+Enrolled students once
+published; drfts fculty-only
+Enters the index t pprovl. Erlier versions re retired, not
+deleted.
+Question ppers, ssignments,
+nswer keys
+2 · Fculty-
+pproved
+Fculty-only until n embrgo
+dte; keys never student-
+visible
+Kept in  seprte prtition so tht no query on  student's
+behlf cn rech it.
+Approved textbooks  · Approved
+reference
+Per licence Copyrighted books re ingested only with  licence tht
+permits it. Otherwise the syllbus cites them nd the
+pltform links out. [REQUIRES SGSU DATA]
+Lecture trnscripts nd
+session timelines
+2, fter techer
+review
+Enrolled students Unreviewed trnscripts re serchble by the techer only.
+Creer informtion, pproved
+industry resources
+ · Approved
+reference
+All students Mintined by the plcement office; dted, with expiry.
+AI-generted content  · Generted Not indexed Becomes tier 2 only when  techer pproves it.
+Unpproved output is never  source for lter nswers.
+What each chunk carries
+Tennt · document nd version · course nd topic identifiers ·
+trust tier · visibility · embrgo dte · lnguge · loctor (pge,
+slide or question number) · content hsh ·  one-line context
+heder tht sys wht document nd section the text cme
+from.
+Technology choices
+SOURCE-DERIVED  Published comprisons this yer plce
+pgvector s  sound defult below roughly five to ten
+million vectors, with dedicted engines such s Qdrnt,
+Wevite or Milvus hed beyond tht. Open models
+such s BGEM produce dense nd sprse vectors in
+one pss cross more thn 100 lnguges; mnged
+lterntives include Gemini Embedding, Voyge nd
+1
+Register
+Owner, course,
+trust tier,
+visibility, licence,
+embrgo dte
+→
+2
+Prse
+Text, slides with
+notes, tbles,
+code; OCR for
+scns nd
+hndwriting
+→
+3
+Chunk
+By structure:
+section, slide,
+question. Prent
+nd child kept
+→
+4
+Enrich
+Context heder;
+topic nd
+outcome tgs;
+lnguge
+→
+5
+Embed
+Dense nd
+sprse vectors →
+6
+Index
+PostgreSQL
+vectors, full text,
+metdt
+1
+Request
+User, role,
+course, current
+lesson or slide
+→
+2
+Access filter
+Tennt,
+enrolment,
+visibility,
+embrgo, pplied
+in the query
+→
+3
+Hybrid retrievl
+Semntic nd
+keyword, fused →
+4
+Rernk
+Top 0 reduced
+to 8 →
+5
+Generte
+Answer with 
+cittion per clim →
+6
+Verify nd lbel
+Cittions
+checked; tier
+shown; gps
+declred
+--- PAGE ---
+30AI-Native University Platform · Product & Architecture Blueprint · v1.0
+Reducing hallucination
+Answer only from retrieved text for cdemic
+questions; if nothing relevnt is found, sy so nd
+offer  generl explntion tht is clerly lbelled s
+not from course mteril.
+Require  cittion for ech fctul sentence; 
+second pss checks tht the cited chunk supports it
+nd removes or flgs wht fils.
+Prefer higher tiers when sources conflict, nd show
+the conflict to techers.
+Tret retrieved text s dt. Instructions found inside
+documents re never followed.
+Compute, do not generte: numeric nswers in
+mthemtics nd code output come from  clcultor
+or sndbox tool.
+Cohere Embed. For rernking, Cohere Rernk nd
+Voyge rernk re the common mnged choices nd
+BGE rernker v2-m or QwenRernker the open ones.
+RECOMMENDATION  Strt with PostgreSQL nd pgvector, 
+multilingul embedding model so tht  question typed in
+mixed Hindi-English finds English mteril, nd 
+rernker. As  plnning ssumption, 00 courses t
+bout 2,000 chunks ech is 0. million chunks, fr inside
+the comfortble rnge. Strting prmeters: prose
+chunks of 00 to 00 tokens; one slide with its notes s
+one chunk; one question s one chunk.
+Measuring it
+For ech pilot course, the techer nd tem write bout
+50 questions with the pssges tht nswer them. Every
+chnge to chunking, embedding, prompt or model is
+scored ginst this set for retrievl recll, cittion
+ccurcy nd groundedness before relese.
+--- PAGE ---
+31AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 16 · PART III
+AI Architecture: Orchestration and the Question
+of Agents
+The brief proposes seven AI gents nd sks whether they re needed. Two re. The other
+five re better built s workflows or plin services, which re cheper, fster, testble nd
+esier to govern.
+The test
+RECOMMENDATION  An gent, mening  model tht decides its own next step in  loop with tools, is justified only when the
+steps cnnot be known in dvnce. Where the steps re known,  fixed workflow of model clls with vlidted inputs
+nd outputs is more relible, nd ech step cn be evluted on its own.
+PROPOSED AGENT VERDICT WHAT IT SHOULD BE WHY
+Techer Content
+Agent
+Workflow A fixed pipeline: retrieve sources → outline →
+generte blocks in prllel → check ginst
+outcomes nd sources → vlidte schem →
+present for review.
+The steps never vry. A pipeline gives
+predictble time, per-block regenertion
+nd stepwise evlution.
+Assessment Agent Workflow Generte items per outcome nd level → generte
+distrctors with misconception tgs → verify the
+key by solving independently → de-duplicte
+ginst the item bnk.
+Independent nswer verifiction is  step
+tht must lwys run, not one  model
+my choose to skip.
+Clssroom
+Assistnt
+Single
+grounded cll
+One retrievl nd one stremed response, with
+two or three tools (digrm, code run, find
+exmple).
+Ltency. A loop of severl model turns is
+too slow in front of  clss.
+Student Tutor Agent,
+bounded
+A converstionl ssistnt tht chooses mong
+tools: retrieve from course, red the student's
+mstery, fetch prctice items, run code, check n
+nswer.
+The pth depends on wht the student
+sys. Bounded by  tool llow-list, turn
+limits nd the item's policy mode.
+Lerning Anlytics
+Agent
+Service, no
+model
+Deterministic clcultion in the lerner nd
+ttinment modules. A model writes the plin-
+lnguge summry of results it is given.
+Numbers tht drive decisions bout
+people must be reproducible.
+Creer Agent Workflow Mtching by skills grph nd rules;  model
+explins the mtch nd drfts the rodmp text.
+Recommendtions must be trceble to
+dt, not to  model's generl
+impressions of the job mrket.
+University
+Intelligence Agent
+Agent,
+bounded
+Plns  query ginst pproved ggregte views,
+runs it, inspects the result, refines, nd explins
+with the query shown.
+Open-ended questions need itertion.
+Bounded to red-only governed views
+with minimum group sizes.
+The AI gateway
+PRODUCT DESIGN  No module clls  model directly. Every cll psses through one gtewy tht pplies the sme eight
+steps. This is the mechnism behind the brief's "university controls".
+Figure 8  The pth of every model cll. Step 8, evlution, runs offline: smpled clls re scored ginst the golden sets nd reviewed by
+people.
+1
+Envelope
+Function,
+tennt, role,
+policy mode,
+context
+references
+→
+2
+Policy
+Is this
+function
+llowed for
+this role nd
+mode?
+→
+3
+Minimise
+Strip or
+pseudonymise
+personl dt
+not needed
+for the tsk
+→
+4
+Compose
+Versioned
+prompt nd
+output
+schem
+→
+5
+Route
+Primry
+model;
+fllbck on
+error or
+timeout
+→
+6
+Vlidte
+Schem,
+modertion,
+cittion check
+→
+7
+Record
+Trce, cost,
+qulity
+signls, udit
+entry
+--- PAGE ---
+32AI-Native University Platform · Product & Architecture Blueprint · v1.0
+Why the gateway is not optional
+SOURCE-DERIVED  Google's model documenttion, red this
+month, lists five Gemini models s shut down, including
+the Gemini  Pro preview, nd mrks others s legcy.
+xAI's lists  model retirement in My 202. A product
+tht nmes  model in forty plces in its code will brek
+severl times  yer.
+PRODUCT DESIGN  With  gtewy, the function-to-model
+tble is configurtion. Chnging  model is n entry in
+tht tble, gted by the evlution set. It is lso the
+single plce to enforce the university's llow-list,
+mesure cost nd keep the udit tril.
+Structured output everywhere
+Every genertive function returns dt vlidted ginst
+ schem, not free text:  lesson is  list of typed blocks;
+n item hs  stem, options, key, outcome nd
+misconception tgs. Invlid output is retried or rejected
+before  person sees it.
+Fine-tuning
+RECOMMENDATION  None is plnned for the first three
+phses. Retrievl, good prompts, schems nd exmples
+cover every function in the brief. Fine-tuning needs dt
+SGSU does not yet hve, nd ties the product to one
+model version. Two lter cndidtes re smll
+clssifiers: misconception tgging of open nswers, nd
+question-to-outcome tgging, both trined on techer-
+corrected exmples the pltform will ccumulte.
+Safety beyond accuracy
+Prompt injection: uploded files nd web pges re
+untrusted input; tools vilble to  cll re limited to
+wht tht function needs.
+Student wellbeing: the tutor does not ct s 
+counsellor. Signs of distress route to  humn support
+pth the university defines. [REQUIRES SGSU DATA]
+Modertion: ll student-generted text shown to 
+clss is filtered first.
+Over-relince: the tutor sks before it tells, nd
+prctice items re nswered without the tutor before
+feedbck.
+--- PAGE ---
+33AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 17 · PART III
+AI Model Landscape and Decision Matrix
+Cost is not the constrint in this phse, so ech function is mtched to  model on qulity, ltency, modlity, lnguge coverge
+nd dt hndling. Every choice hs  nmed fllbck, nd every choice is  tble entry in the gtewy, not  line of code.
+READ THIS FIRST
+Line-ups were verified ginst vendor documenttion in the first week of October 202 nd will hve chnged by the time the pilot strts; ll four mjor vendors relesed or
+retired models within the pst six months. A note on neutrlity: this blueprint ws drfted with the help of n Anthropic model, nd tht vendor ppers mong the
+recommendtions. The picks below re strting defults, not conclusions. Phse 0 includes  blind comprison on SGSU mteril, described fter the mtrix, nd its result
+should override this tble.
+Providers, as they stand
+PROVIDER CURRENT LINE-UP SOURCE-DERIVED WHERE IT IS STRONG FOR THIS PRODUCT CAUTIONS
+Google Gemini) Gemini .8 Flsh (stble); Gemini .1 Pro (preview); .5 Flsh-Lite.
+Speech: .8 Live, .5 Trnscribe, .8 Flsh TTS, .5 Live Trnslte
+(preview, 70 lnguges). Imges: Nno Bnn Pro nd 2.1.
+Embedding: Gemini Embedding, Embedding 2 (multimodl, preview).
+The widest ntive multimodl input (documents, imges, udio,
+video) nd  complete speech stck from one vendor. Strong fit
+for uplod-nd-understnd, live clss fetures nd high-volume
+fst tsks.
+The top resoning model is still lbelled preview. Frequent
+retirements. The free tier my use dt to improve products;
+only the pid tier or the cloud pltform is cceptble.
+OpenAI GPT Astr (flgship), GPT.1 Sol (blnced), GPT Lun (high
+volume), ech bout 1M tokens of context. Speech: GPTLive 1,
+GPTReltime 2.1, gpt-trnscribe. Imges: GPTImge 2.5.
+Three cler tiers; mture structured output nd tool clling; strong
+voice. A nturl independent verifier nd fllbck for uthoring.
+Stndrd API retention pplies unless zero retention is
+greed in contrct.
+Anthropic Clude) Clude Fble 5.1 (most demnding resoning), Opus 5.5 (the
+vendor's suggested defult), Sonnet 5.5 (speed with cpbility),
+Hiku .5 (fstest). 1M tokens of context on the first three.
+Long, structured, source-grounded writing nd tool use; fits
+lesson uthoring, ssessment writing nd tutoring.
+No first-prty speech, imge-genertion or embedding
+models, so it cnnot be the only vendor.
+xAI Grok) Grok .7, 500k tokens of context; voice API; imge nd video
+genertion; built-in web nd X serch; file collections.
+A cpble generl model with live serch. No dvntge specific to curriculum-grounded teching; X
+serch is not relevnt here. Included in the comprison, not
+selected s  primry.
+Srvm AI Indi) Srs v speech-to-text 2 lnguges, code-mixed mode); Bulbul
+v text-to-speech 11 lnguges); Srvm-Trnslte 22 Indin
+lnguges); Srvm Vision document extrction.
+Built for Indin lnguges, ccents nd mixed Hindi-English
+speech, which is how mny clssrooms ctully sound.
+Must be tested on rel clssroom udio. Generl resoning is
+not its purpose.
+Open-weight models
+(vi Hugging Fce,
+self-hosted)
+Embeddings: BGEM, QwenEmbedding. Rernkers: BGE rernker
+v2-m, QwenRernker. Speech nd generl cht models from
+severl fmilies.
+Dt stys inside the university's environment; no per-cll fee;
+the bsis for ny offline or sovereign deployment.
+The tem must run the hrdwre. For uthoring, qulity
+remins below the hosted frontier.
+--- PAGE ---
+34AI-Native University Platform · Product & Architecture Blueprint · v1.0
+Function-by-function decisions
+FUNCTION
+PRIMARY
+RECOMMENDATION WHY INPUT → OUTPUT CONNECTS TO REAL TIME RAG
+FINE-
+TUNE FALLBACK
+Lecture genertion Clude Opus 5.5 Qulity-criticl nd synchronous. Long
+structured output ginst  strict schem with
+mny retrieved sources in context.
+Topic, outcomes, sources, level →
+Lesson Document blocks with tgs
+nd cittions
+L1  review
+workspce
+No; 00 s
+job
+Yes No GPT.1 Sol; then
+Gemini .1 Pro
+Question genertion Clude Opus 5.5 to write;
+GPT.1 Sol to verify
+The nswer key is checked by  different
+vendor's model solving the item independently,
+so the two do not shre the sme error.
+Lesson, outcome, level → items with
+key, distrctors, misconception tgs
+L17  item bnk No Yes Lter Swp roles; Gemini
+.1 Pro
+Summristion nd
+notes
+Gemini .8 Flsh High volume, fst, nd reds slide imges
+directly. Trnsforms pproved content only.
+Approved lesson or session timeline
+→ notes, summry, revision sheet
+L15, L218, L5,
+L
+Ner; 515 s Given No Clude Sonnet 5.5
+Presenttion
+genertion
+No seprte model Slides re  rendering of the Lesson Document.
+Digrms come from the uthoring model s
+code; export uses  PPTX librry.
+Lesson Document → deck in
+browser; PPTX
+L1  clssroom Yes No No Not pplicble
+Course Q&A student
+tutor
+Clude Sonnet 5.5 Interctive speed with enough depth to explin;
+follows policy modes; uses tools.
+Question, course scope, mstery →
+cited nswer, hint or prctice
+L, L7 
+evidence
+Yes; under 
+s
+Yes No GPT.1 Sol
+Course Q&A live
+clss ssistnt
+Gemini .8 Flsh Lowest ltency mtters most in front of  clss. Techer prompt, slide context →
+explntion, exmple, digrm code
+L2, L211 Yes; under 
+s
+Yes No Clude Hiku .5;
+GPT Lun
+Retrievl: embedding
+nd rernk
+BGEM nd BGE rernker,
+self-hosted
+Every query nd ll course text psses through
+this step; keeping it in-house limits exposure.
+Multilingul, dense nd sprse.
+Text → vectors; cndidtes →
+rnked list
+C  every
+grounded cll
+Yes; 00 ms Core No Gemini Embedding;
+Cohere Rernk
+Document prsing
+nd OCR
+Text extrction first;
+Gemini .8 Flsh for scns
+Most files hve rel text nd need no model. A
+multimodl model reds scns, hndwriting
+nd slide imges.
+PDF, PPTX, DOCX, imges →
+structured text with loctors
+L1  knowledge
+bse
+No No No Srvm Vision for
+Indic scripts
+Multilingul
+explntion
+The tutor model itself;
+Srvm-Trnslte for
+documents
+Frontier models explin well in Hindi nd mixed
+Hindi-English. Forml document trnsltion is 
+seprte job.
+Answer or document → preferred
+lnguge
+L2, L22 Yes Yes No Gemini .8 Flsh
+Speech-to-text Srvm Srs v Code-mixed clssroom speech is the hrd
+cse; this model hs  mode for it.
+Clssroom udio → timed trnscript L217, L225, L22 Lter No No Gemini .5
+Trnscribe; gpt-
+trnscribe
+Text-to-speech Srvm Bulbul v Nturl Indin-English nd Hindi voices,
+including mixed text.
+Notes or nswer → udio L2 Ner No No Gemini .8 Flsh
+TTS
+Digrm genertion Authoring or fst model
+emitting digrm code
+Lbels re exct becuse the digrm is
+rendered from code, not drwn by n imge
+model.
+Concept  Mermid, SVG or plot
+code → rendered figure
+L1, L21 Yes Mybe No Other tier
+Illustrtive imges Nno Bnn Pro Documented for ccurte text in imges. Used
+only where n illustrtion helps; techer
+pproves ech.
+Prompt → imge L1, L21 Ner No No GPTImge 2.5
+Code explntion nd
+coding help
+Clude Sonnet 5.5 with 
+sndbox
+Explntions re checked by ctully running
+the code. Hint-only in grded lbs.
+Code, error, tsk → explntion,
+hint, test result
+L227, L Yes Yes No GPT.1 Sol
+--- PAGE ---
+35AI-Native University Platform · Product & Architecture Blueprint · v1.0
+FUNCTION
+PRIMARY
+RECOMMENDATION WHY INPUT → OUTPUT CONNECTS TO REAL TIME RAG
+FINE-
+TUNE FALLBACK
+Recommendtion
+engine
+No model for rnking Rules nd the mstery model decide;  fst
+model only words the reson. Reproducible nd
+uditble.
+Mstery, dedlines, prerequisites →
+rnked ctions
+C  dshbords Ner No Lter Rules only
+Skill mpping Clude Opus 5.5 proposes;
+fculty pprove
+A one-time mpping of outcomes to  skills
+txonomy; t run time it is  lookup.
+Outcomes, txonomy → proposed
+links
+C11 Btch Yes No GPT.1 Sol
+Creer
+recommendtions
+Grph mtching; fst
+model explins
+Must trce to dt the plcement office
+mintins.
+Pssport, role profile, opportunities
+→ mtches with resons
+L18 to L21 Ner Yes No Rules only
+Anlytics No model Attinment nd ggregtes re deterministic
+queries. A model my nrrte results it is given.
+Evidence → ggregtes C10, C1 Btch No No Not pplicble
+Administrtive
+questions
+Clude Opus 5.5 s 
+bounded gent
+Plns, runs nd refines queries over pproved
+views nd shows the query.
+Question → query → chrt nd
+explntion
+L8 Ner; 100
+s
+Schem No GPT.1 Sol
+Clssifiction nd
+modertion
+Gemini .5 Flsh-Lite Smll, fst, high-volume decisions: grouping
+questions, tgging, sfety screening.
+Short text → lbel L2, L27, L1 Yes No Lter GPT Lun; Clude
+Hiku .5
+Live trnsltion nd
+voice tutor
+Gemini .5 Live Trnslte;
+Gemini .8 Live
+Cndidtes only. Both depend on room udio
+nd belong to Phse  or lter.
+Speech → trnslted speech or
+cptions
+L22 Yes Mybe No GPTLive 1; GPT
+Reltime-Trnslte
+RAG column: "Given" mens the source text is supplied to the model, not serched for; "Core" mrks the retrievl step itself. Fine-tune column: "Lter" mrks  cndidte for  smll trined clssifier or
+rnker once the pltform hs produced the trining dt.
+The Phase 0 comparison
+Build  test set from two SGSU topics: 10 lesson requests, 0
+item requests, 100 student questions with reference pssges.
+Run ech cndidte through the gtewy with identicl
+prompts nd sources.
+Two techers score outputs blind for ccurcy, level,
+usefulness nd edit effort.
+Record ltency nd filure rtes. Set the routing tble from the
+results.
+What the matrix implies commercially
+Two generl-model vendors plus one for Indin-lnguge
+speech, with open models for retrievl. Using  second vendor to
+verify the first is  qulity control, nd it lso mens no single
+outge or price chnge stops teching.
+Access route
+Severl of these models re lso offered through the mjor cloud
+pltforms. Clling them there cn bring regionl processing
+controls nd one dt-processing greement for hosting nd
+models together. Which models re vilble in n Indin region
+must be confirmed when contrcting. [REQUIRES SGSU DATA]
+--- PAGE ---
+36AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 18 · PART III
+API Architecture
+One versioned HTTP API for resources, one WebSocket chnnel per clss session, server-
+sent events for stremed AI output, nd n internl event strem between modules. The API
+is the only wy ny client reches the pltform.
+DOMAIN REPRESENTATIVE ENDPOINTS NOTES
+Identity GET /v1/me · GET /v1/me/consents · POST /v1/admin/role-
+assignments
+Tokens issued by the identity provider; the API
+vlidtes nd pplies scope.
+Curriculum GET /v1/courses/{id}/tree · GET /v1/outcomes/{id} · POST
+/v1/curriculum/imports
+Imports re jobs with  humn sign-off step.
+Content POST /v1/lessons · POST /v1/lessons/{id}/generate · PATCH
+/v1/blocks/{id} · POST /v1/blocks/{id}/regenerate · POST
+/v1/lesson-versions/{id}/approve · POST /v1/lesson-
+versions/{id}/publish
+Genertion returns  job. Approvl nd publishing
+write to the udit log.
+Knowledge POST /v1/documents · GET /v1/documents/{id}/status · POST
+/v1/search
+Serch is internl to the ssistnt in most flows;
+exposed for techer source lookup.
+Assistnt POST /v1/assistant/messages (strems) · GET
+/v1/assistant/threads/{id}
+Person nd policy mode re set by the server from
+context, never by the client.
+Assessment POST /v1/items · POST /v1/assessments · POST
+/v1/assessments/{id}/responses · POST /v1/submissions
+Responses crry n idempotency key so  retry on 
+poor network is not counted twice.
+Clssroom POST /v1/sessions · POST /v1/sessions/{id}/join · WS
+/v1/sessions/{id}/live · GET /v1/sessions/{id}/report
+The WebSocket crries slide, poll, question nd
+presence messges.
+Lerner GET /v1/me/mastery · GET /v1/sections/{id}/mastery · GET
+/v1/me/recommendations
+Section views return nmed students only to the
+techer of record nd mentors.
+Skills nd creer GET /v1/me/passport · GET /v1/roles/{id}/gap · GET
+/v1/opportunities
+Opportunities re written by the plcement office only.
+Anlytics GET /v1/analytics/attainment · POST /v1/analytics/ask · POST
+/v1/reports
+Aggregte endpoints enforce  minimum group size
+on the server.
+Governnce GET /v1/audit · PUT /v1/policies/{key} · PUT
+/v1/ai/routes/{function}
+Model routing nd policy re dt, chnged through
+the API with n udit entry.
+Integrtions POST /v1/integrations/roster/sync · POST
+/v1/integrations/marks/import · GET /v1/exports/attendance
+File import first; direct ERP connection when n
+interfce is confirmed. [REQUIRES SGSU DATA]
+Conventions
+Versioning: /v1 in the pth; dditive chnges only
+within  version.
+Authentiction: short-lived berer tokens from
+OpenID Connect; tennt nd roles in clims; scope
+re-checked on the server for every cll.
+Long work: returns 202 with  job identifier; progress
+by polling or event strem.
+Lists: cursor pgintion; filters by course, section,
+outcome.
+Errors: one problem formt with  stble code nd 
+trce identifier.
+Limits: per-user nd per-role rte limits; seprte,
+tighter limits on AI endpoints.
+Contrct: the OpenAPI document is the source of
+truth; client types re generted from it.
+A generation job
+POST /v1/lessons/les_301/generate
+{ "topic_id": "CS501-U4-T3",
+  "duration_min": 50, "level": "intermediate",
+  "style": ["conceptual", "example-heavy"],
+  "source_document_ids": ["doc_88", "doc_91"] }
+202 Accepted
+{ "job_id": "job_5521", "status": "running",
+  "events": "/v1/jobs/job_5521/events" }
+event: block.ready   → one block, validated
+event: job.completed → lesson_version_id
+Standards to adopt when integration begins
+RECOMMENDATION  OneRoster for roster nd timetble exchnge;
+LTI 1. if SGSU runs or dopts  lerning mngement system;
+xAPI-shped sttements for evidence export; QTI for item-bnk
+portbility; Open Bdges for verifible skill credentils; nd, for
+Indi, the Acdemic Bnk of Credits nd DigiLocker for credit
+--- PAGE ---
+37AI-Native University Platform · Product & Architecture Blueprint · v1.0
+nd credentil exchnge. Versions nd pplicbility should be
+checked t the time. [REQUIRES SGSU DATA]
+Messages on the class-session channel
+MESSAGE SENT BY RECEIVED BY PURPOSE
+slide.goto Console Bord, students Move every client to  block. Crries only the block identifier; content is
+lredy cched.
+check.open / check.close Console Bord, students Strt nd stop  poll or concept check, with  server-side dedline.
+check.answer Student Server One response with n idempotency key. Acknowledged individully.
+check.result Server Console; bord on
+relese
+Live counts while open; the full distribution when closed. Students see
+results only when the techer releses them.
+question.post /
+question.vote
+Student Console Ask or upvote. Psses modertion before it is shown.
+signal.lost Student Server A privte "I m lost" tp, counted per block.
+assist.push Console Bord Show n ssistnt result the techer hs ccepted.
+presence.update Server Console Joined count nd connection qulity.
+mode.set Console Students Switch between follow, free, nd lock modes.
+state.sync Server Any client The full current stte, sent on join nd on reconnect so  dropped phone
+recovers in one messge.
+--- PAGE ---
+38AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 19 · PART III
+Event Architecture and Real-Time Flow
+The lyers sty independent becuse they communicte through events. This section lists
+the events, shows one clss hour s it moves through the system, nd sets the delivery
+rules.
+Event catalogue
+EVENT PRODUCED BY CONSUMED BY CARRIES
+lesson.approved content knowledge (index s tier 2, governnce
+(udit)
+Lesson version, pprover, edit summry
+lesson.published content session (redy to tech), recommend (student
+prep), ttinment (plnned coverge)
+Version, section, slot, bundled ssets
+session.started / ended session ttendnce, content (summry job), lerner
+(close session window), recommend
+Session, lesson version, section, times
+slide.changed session ttinment (tught mrker), rel-time hub Block, outcome tgs, time
+question.asked session ssistnt (group similr), content (summry),
+lerner (soft signl)
+Text, block, nonymity flg
+response.submitted ssessment evidence (normlise) Item, option, score, durtion, source
+evidence.recorded evidence lerner (updte mstery) The lerning event of Section 1
+mastery.updated lerner recommend, skills (evidence), nlytics Student key, outcome, estimte, stte
+gap.detected lerner recommend (techer crd), nlytics, notify Section, outcome, shre wek, top
+misconceptions
+recommendation.created recommend notify; dshbords Audience, ction, reson, evidence links
+submission.received /
+graded
+ssessment evidence, notify Assignment, rubric scores per outcome
+marks.imported integrtions evidence (s exm items or outcome scores) Course, ssessment, per-student mrks
+[REQUIRES SGSU DATA]
+skill.evidence_added skills nlytics; pssport Skill, level, source rtefct
+risk.flagged lerner notify (mentor only), governnce (udit) Student key, rule, evidence summry
+ai.call_completed AI gtewy governnce, nlytics (cost nd qulity) Function, model, ltency, tokens, checks
+pssed
+policy.changed governnce ll modules (refresh), udit Key, old nd new vlue, ctor
+--- PAGE ---
+39AI-Native University Platform · Product & Architecture Blueprint · v1.0
+One class hour, end to end
+WHEN TEACHER CONSOLE BOARD STUDENT DEVICES SESSION ENGINE EVIDENCE AND
+LEARNER AI GATEWAY
+Day −1 Approves nd
+publishes lesson
+Receive "prepre"
+note with two
+prerequisite items
+Plnned
+coverge
+recorded
+Lesson
+genertion job
+00:00 Strts session Lods cched
+lesson; shows
+QR
+Scn nd join Cretes session;
+trcks presence
+session.started
+Attendnce
+mrked
+00:05 Advnces slides Follows within
+00 ms
+Follow; tp "lost" or
+sk
+Fn-out to ll
+clients
+slide.changed
+Outcome mrked
+tught
+00:18 Sees grouped
+questions; sks for
+n nlogy
+Shows nlogy
+when techer
+tps
+Three similr
+questions sked
+Queues nd
+groups
+question.asked
+Grouping;
+stremed nswer
+00:30 Lunches concept
+check
+Shows item,
+then result chrt
+Answer in 0
+seconds
+Collects
+responses
+response.submitted
+Events written;
+mstery updted
+mastery.updated
+00:32 Crd: "1% on
+outcome . Re-
+explin, discuss, or
+continue?"
+Clss distribution
+computed
+Drfts lterntive
+explntion
+00:45 Runs five-item exit
+quiz in lock mode
+Timer Answer; tutor
+suspended
+Shuffled items
+per student
+Evidence t
+higher weight
+gap.detected
+00:50 Ends session; opens
+report
+Closes Receive summry
+nd own results
+Closes; timeline
+stored
+session.ended
+Recommendtions
+creted
+Clss summry;
+per-student recp
+Evening Re-tech crd with
+drfted segment
+Prctice set on wek
+outcome
+Aggregtes
+refreshed for
+deprtment view
+Remedil drft
+Figure   A fifty-minute clss s events. The bord nd student devices never cll the AI gtewy; only the techer's ctions nd bckground
+jobs do, which keeps the clss running if  model is slow or unvilble.
+Delivery rules
+Outbox: n event is written in the sme dtbse
+trnsction s the chnge tht cused it, then
+published. A sved nswer cnnot fil to become n
+event.
+At lest once, idempotent: consumers my see n
+event twice nd must give the sme result.
+Ordered per session nd per student: enough for
+mstery to be correct without globl ordering.
+Replyble: mstery cn be rebuilt from the evidence
+store when weights or rules chnge.
+Three speeds
+Rel time, under one second: slide sync, poll open
+nd close, presence, question queue.
+Ner rel time, under ten seconds: mstery updte,
+live clss distribution, suggestion crds.
+Btch, hourly or nightly: deprtment nd university
+ggregtes, ttinment reports, revision schedules,
+retention jobs.
+Putting  clcultion in the slowest clss tht still serves its user
+is the min lever on both cost nd relibility.
+--- PAGE ---
+40AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 20 · PART III
+Identity, Authentication and Access Control
+Access is decided by role nd by scope together:  techer is  techer of prticulr
+sections,  hed of deprtment of one deprtment. The rules below re enforced in the API
+nd gin in the dtbse.
+Authentication
+Single sign-on with the university's emil identity
+through OpenID Connect. Which suite SGSU uses
+decides the connector. [REQUIRES SGSU DATA]
+Fllbck: one-time code to the registered university
+emil for ccounts outside single sign-on.
+Multi-fctor required for every stff nd
+dministrtive role.
+Sessions: ccess tokens of bout 15 minutes; rotting
+refresh tokens in secure cookies;  visible list of
+ctive devices with remote sign-out.
+Bord devices never hold  personl login. A bord
+shows  piring code; the techer clims it from the
+console for one session.
+Service ccounts with nrrow scopes for
+integrtions; keys rotted.
+Authorisation
+Role sys wht kind of ction is possible. Scope sys
+on which tennt, deprtment, course, section or
+person.
+Scope comes from dt, not from mnul grnts:
+enrolment gives  student  course;  teching
+ssignment gives  techer  section.
+Defence in depth: policy check in the API, row-level
+security in PostgreSQL, visibility filter in retrievl.
+Aggregte by defult bove the level of the techer
+nd mentor.
+Brek-glss ccess to nmed records for defined
+purposes (sfety, forml integrity cses,  dt-
+subject request) needs  reson, is time-limited, nd
+notifies the governnce officer.
+Permission matrix
+RESOURCE STUDENT TEACHER
+HEAD OF
+DEPT.
+DEPT.
+ADMIN
+ACADEMIC
+ADMIN
+UNIVERSITY
+ADMIN
+SUPER
+ADMIN
+Own profile, mstery,
+pssport
+Full Own profile Own profile Own profile Own profile Own profile Own profile
+Published course content Enrolled
+courses
+Own courses Deprtment Deprtment
+(titles)
+All Titles only —
+Lesson drfts nd privte
+librry
+— Own; shred
+with them
+By request of
+uthor
+— — — —
+Item bnk nd nswer keys — Own courses Deprtment — Red — —
+Live session control Join Own sections Observe by
+invittion
+— — — —
+Nmed student mstery Self Own sections Deprtment,
+logged
+— Brek-glss Brek-glss —
+Student tutor converstions Self Grouped topics
+only
+— — Brek-glss — —
+Section nd course
+ggregtes
+Own
+position in
+clss,
+optionl
+Own Deprtment — All All —
+Course-level teching
+nlytics
+— Own Deprtment,
+under chrter
+— All, under
+chrter
+Aggregtes —
+Curriculum grph Red Propose Edit
+deprtment
+Dt entry Approve Red —
+Roster, sections, timetble Own Own sections Deprtment Edit
+deprtment
+Red Red Import tools
+--- PAGE ---
+41AI-Native University Platform · Product & Architecture Blueprint · v1.0
+RESOURCE STUDENT TEACHER
+HEAD OF
+DEPT.
+DEPT.
+ADMIN
+ACADEMIC
+ADMIN
+UNIVERSITY
+ADMIN
+SUPER
+ADMIN
+Risk flgs — Own sections,
+limited
+— — — — —
+AI policy, model routing — Per-item
+modes
+— — Set policy Red Configure
+Audit log Own ccess
+history
+— — — Red Red Red
+Users, roles, tennts — — — Deprtment
+ccounts
+— Assign dmin
+roles
+Full
+Risk flgs go in full only to the mentor role proposed in Section . Super dmin opertes the pltform nd by design hs no routine
+ccess to cdemic or personl content.
+Audit trail
+Recorded for every role: sign-in nd sign-out, role chnges, pprovls nd publishing, ccess to nmed student
+records bove techer level, exports, policy nd model-routing chnges, nd brek-glss use. Entries re ppend-only,
+kept seprte from ppliction dt, nd reviewble by the governnce officer. Students cn see who ccessed their
+nmed record outside routine teching.
+--- PAGE ---
+42AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 21 · PART III
+Security, Privacy and Data Protection
+The pltform holds the lerning records of people t the strt of their creers, some of them
+under 18. This section sets the controls, nd reds Indi's dt-protection lw s  design
+requirement.
+What the law now requires
+DIGITAL PERSONAL DATA PROTECTION ACT 2023 AND RULES 2025 SOURCE-DERIVED
+The Rules were notified by the Ministry of Electronics nd Informtion Technology in mid-November 2025 with 
+phsed strt: most opertive duties pply 18 months fter notifiction, which is round My 2027. Published
+summries describe duties to give cler notice nd obtin consent, limit retention, pply security sfegurds nd
+report breches. A child is  person under 18; processing  child's dt needs verifible prentl consent, nd
+trcking, behviourl monitoring nd trgeted dvertising directed t children re restricted. The Rules give
+eductionl institutions n exemption tht is limited to eductionl ctivities nd the sfety of enrolled children.
+Cross-border trnsfer is permitted subject to restrictions the government my notify.
+Wht this mens here. SGSU is the dt fiduciry. Whoever opertes the pltform, the cloud host nd ech model
+vendor re processors cting on its instructions, nd need contrcts tht sy so. Some first-yer students will be
+17, so the under-18 rules pply to  rel prt of the user bse. The exemption for eductionl ctivity is nrrow nd
+should be confirmed by counsel before the pilot. This section is  design input, not legl dvice.
+[REQUIRES SGSU DATA]
+Privacy by design
+REQUIREMENT IN THE
+BRIEF HOW THE PLATFORM MEETS IT
+Dt minimistion Collect only wht  feture uses. The AI gtewy removes nmes, roll numbers nd contct detils from prompts
+unless the tsk needs them; most tsks need only  pseudonymous key. No biometric, cmer or loction-trcking
+dt is collected.
+Encryption TLS for ll trffic. Encryption t rest for the dtbse, object storge nd bckups, with mnged keys. Identity dt
+in  seprte schem with stricter ccess.
+Access control Role nd scope Section 20, row-level security, visibility filters in retrievl, ggregte-by-defult, minimum group
+sizes.
+Consent A lyered notice t first sign-in stting purposes in plin lnguge, in English nd Hindi. Seprte, optionl consent
+for nything beyond core teching: lecture udio, public portfolio, reserch use. A gurdin flow for students under
+18. Consent records re versioned nd withdrwble.
+Retention Ech clss of dt hs  period set by the university (proposed schedule below). Deletion jobs run utomticlly nd
+re udited.
+Audit logs Append-only, seprte from ppliction dt, covering ccess to nmed records, exports nd configurtion.
+Student dt protection Tutor converstions privte to the student. Risk flgs to mentors only. No sle, dvertising or profiling for non-
+eductionl purposes. Students cn view, correct nd export their dt nd rise  grievnce.
+Fculty privcy Drfts re privte until shred or pproved. Teching nlytics re shown to the techer first, to the hed of
+deprtment under  written chrter, nd never s public rnkings. Clssroom udio is off unless the techer enbles
+it.
+AI interction privcy Interctions re logged for qulity nd sfety with  pseudonymous key nd  short retention period. Stff review
+uses smpled, de-identified records.
+Model-provider dt
+policies
+Pid API or cloud-pltform ccess only. Contrct terms must stte no trining on university dt,  defined retention
+period (zero retention where offered) nd processing loction. SOURCE-DERIVED  Mjor vendors stte tht pid API
+dt is not used for trining by defult; retention periods differ by vendor nd by model.
+University governnce A nmed dt-protection nd AI-governnce owner; n AI llow-list;  register of processing ctivities;  brech
+response pln with roles nd timelines.
+--- PAGE ---
+43AI-Native University Platform · Product & Architecture Blueprint · v1.0
+Proposed retention schedule [REQUIRES SGSU DATA]
+DATA PROPOSED PERIOD
+Acdemic record: grdes,
+ttinment
+Per university regultions
+Lerning events nd mstery Progrmme durtion plus one
+yer; then de-identified
+Tutor converstions 12 months, or until the student
+deletes them
+AI cll logs with content 0 dys
+Lecture udio, if enbled One semester
+Session timelines Two yers, for course
+improvement
+Audit logs Per university policy; not less
+thn three yers
+Uploded files While the owner keeps them, or
+until the course is retired
+Security controls
+Appliction: input vlidtion, output encoding, strict
+content security policy, dependency nd secret
+scnning in the build.
+AI-specific: retrieved content treted s untrusted;
+lest-privilege tools; output filters; rte limits; red-
+tem prompts in the evlution set.
+Uplods: type nd size checks, mlwre scn,
+processing in n isolted worker.
+Code execution: sndboxed continers with no
+network, strict time nd memory limits.
+Infrstructure: privte networking for dt stores,
+lest-privilege roles, infrstructure s code, ptched
+bse imges.
+Assurnce: n independent penetrtion test before
+the pilot nd yerly fter; restore tests ech qurter.
+Incident response:  written pln,  contct tree nd
+ brech-notifiction procedure consistent with the
+Rules.
+--- PAGE ---
+44AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 22 · PART III
+Responsible AI and Academic Integrity
+A university dopting AI in teching is mking two promises: tht the AI will not quietly do the
+students' lerning for them, nd tht it will not mke decisions bout people tht people
+should mke. This section turns both into mechnisms.
+Academic integrity
+SOURCE-DERIVED  As of August 202, published reviews describe no single ntionl stndrd in Indi for student use of
+genertive AI in coursework; the University Grnts Commission's plgirism regultions nd  lter circulr re red s
+treting undisclosed AI-generted content s  plgirism risk, nd fuller guidelines re reported to be in preprtion.
+At lest one ntionl institute's 202 guidelines dvise ginst using utomted AI-detection s the primry bsis for 
+finding. The design below follows tht direction: policy nd process first, detection lst.
+AI-USE MODE WHAT THE STUDENT MAY DO WHAT THE TUTOR DOES TYPICAL USE
+Open Use the tutor nd ny pproved AI
+freely
+Full explntions, worked exmples,
+feedbck on drfts
+Prctice, revision, explortion
+Assisted Use AI nd disclose how Hints, questions nd critique; no
+complete solutions; logs  disclosure
+note with the submission
+Assignments, projects, lb work
+Restricted Use AI only for clrifying the tsk Explins the brief nd concepts;
+declines to work on the tsk itself
+Grded ssignments testing 
+specific skill
+Closed No AI Unvilble; student view locked for
+the durtion
+Quizzes, tests, viv
+Controls that do not depend on detecting AI
+The techer sets the mode on ech ssessment; the
+pltform enforces it for its own tutor nd prints it on
+the brief.
+Process evidence: drft history, time on tsk, nd for
+coding work the sequence of runs.
+Short orl checks on  smple of submissions,
+scheduled by the pltform.
+Item vrints nd per-student shuffling in clss.
+Assessment design guidnce for techers: tsks tied
+to clss discussion, locl dt or the student's own
+erlier work.
+Integrtion with the university's existing similrity
+checker. [REQUIRES SGSU DATA]
+Detector scores, if used t ll, re  prompt for 
+converstion nd never evidence by themselves.
+Integrity of the platform's own AI
+Every AI-generted element is lbelled until  techer
+pproves it.
+Techers see the shre of  lesson tht is unedited AI
+output before publishing.
+Answer keys re verified independently before n
+item cn be used for mrks.
+AI my drft feedbck on student work;  techer
+confirms ny mrk.
+No utomted decision ffects  grde,  progression
+or  disciplinry mtter.
+Responsible AI commitments
+PRINCIPLE COMMITMENT MECHANISM
+Humn oversight People decide bout people. Approvl gtes; recommendtions with evidence; no
+utomtic cdemic ctions.
+Trnsprency Users know when they re deling with AI nd wht it used. AI lbels; cittions; source tiers; "why m I seeing this" on
+every recommendtion.
+Contestbility Anyone cn chllenge wht the system sys bout them. Student view of evidence behind ech stte; techer
+override; grievnce route.
+--- PAGE ---
+45AI-Native University Platform · Product & Architecture Blueprint · v1.0
+PRINCIPLE COMMITMENT MECHANISM
+Firness The system should not disdvntge groups. Review of risk-flg nd recommendtion rtes cross
+sections nd progrmmes ech semester; plin-lnguge
+nd multilingul ccess.
+Proportionlity No more monitoring thn teching needs. No cmers, emotion nlysis or keystroke surveillnce;
+soft signls crry little weight.
+Sfety Hrmful content does not rech  clss or  student. Modertion in nd out; restricted tools; escltion pth for
+distress.
+Accountbility Someone owns ech policy nd ech model. AI governnce committee; llow-list; chnge log; qurterly
+qulity report.
+A FACULTY CHARTER, BEFORE LAYER 4
+RECOMMENDATION  Agree in writing with fculty representtives wht teching nlytics will nd will not be used for:
+support nd course improvement, yes; rnking, pprisl scores nd public comprison, no. Techers see their
+own dt first. Without this, Lyers 1 nd 2 will be used s little s possible, nd every lyer bove them will hve
+nothing to work with.
+--- PAGE ---
+46AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 23 · PART III
+Scalability, Reliability and Offline Operation
+The lod of one university is modest. The demnding requirements re different:  clss
+must not stop becuse the internet or  model did, nd the design must not need rework
+when  second university rrives.
+Sizing, on stated assumptions
+RECOMMENDATION  SGSU's rel numbers re not yet known; these re generous plnning ssumptions, with quots nd
+budgets per role in the gtewy so tht misuse cnnot run up  bill. [REQUIRES SGSU DATA]
+QUANTITY ASSUMPTION CONSEQUENCE
+Students nd techers on the pltform 5,000 nd 250 Smll by web stndrds.
+Clss sessions running t the busiest hour 0, of 0 students ech About ,00 live connections; one rel-time hub with  stndby
+is mple.
+Responses during  poll 0 within 20 seconds per
+session
+Under 200 writes per second even if every session polls t
+once.
+Lerning events per dy About 115,000 ,00  
+clsses  8 responses)
+Tens of millions of rows  yer; well within prtitioned
+PostgreSQL.
+Lesson genertion jobs per dy About 500 A smll worker pool; provider rte limits mtter most.
+Tutor questions per dy About 25,000 The min AI volume; cching of course context nd  fst-tier
+model keep it responsive.
+STAGE SCALE SHAPE WHAT CHANGES
+Pilot Two courses, bout 200
+users
+One ppliction instnce, mnged
+PostgreSQL, Redis, one worker
+Nothing; this is the strting point.
+University One tennt, bout 5,000
+users
+Two to four ppliction instnces, red
+replic, utoscled workers, stndby rel-
+time hub
+Prtition the evidence tble; move hevy
+reports to the replic.
+Severl
+universities
+Mny tennts, 50,000 or
+more users
+Rel-time hub nd AI workers s seprte
+services;  streming pltform; columnr
+nlytics;  dedicted vector engine if
+needed
+Per-tennt keys nd optionl per-tennt
+dtbses; regionl deployments.
+Reliability
+Teching hours re wht count. Proposed trget for
+the pilot: .5% vilbility of clssroom functions
+during timetbled hours, mesured seprtely from
+the rest.
+AI is n enhncement. If every model is unvilble,
+slides, polls, questions, ttendnce nd notes still
+work. The gtewy flls bck per function; ech AI
+feture hs  degrded stte nd sys so.
+Recovery. Proposed: no more thn 15 minutes of dt
+loss nd four hours to restore, with point-in-time
+recovery nd tested restores.
+Releses outside teching hours, with  one-step
+rollbck.
+Poor connectivity and offline
+SITUATION BEHAVIOUR
+Slow network The student join pge is kept under bout 200 KB.
+Text first, imges on demnd. Answers queue on
+the device nd retry with idempotency keys.
+Bord loses
+internet
+The lesson pck is cched on the bord before
+clss. Slides, timers nd techer notes continue. A
+bnner shows tht live fetures re pused.
+Cmpus Wi-Fi
+down, phones
+on mobile dt
+Sessions continue if the techer's console hs ny
+connection; the bord follows the console over the
+sme route.
+No
+connectivity in
+the room
+Phse  option, if the room survey shows  need: 
+smll computer on the room's network runs the
+session loclly nd syncs lter. C E
+Student
+studying
+without dt
+Notes nd the current prctice set re stored on
+the device. Answers sync lter. The tutor needs 
+connection nd sys so.
+--- PAGE ---
+47AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 24 · PART III
+Technology Stack
+The brief lists cndidte technologies nd sks for wht is best for this product, not for
+confirmtion. Most of the cndidtes re right. One is not, nd severl gps re filled.
+LAYER RECOMMENDED ALTERNATIVES CONSIDERED REASONING
+Web front end Next.js with Rect nd TypeScript;
+Tilwind CSS; n ccessible
+component librry
+A single-pge Rect pp without 
+frmework
+One codebse for four pps with shred
+components. Server rendering keeps the
+student pp fst on wek phones.
+Student mobile Instllble web pp Ntive Android pp No pp-store cycle; one codebse. Revisit if
+push notifictions or offline needs outgrow
+the browser.
+Lesson nd deck A custom block renderer; Mermid
+for digrms; KTeX for
+mthemtics;  PPTX export librry
+Generting PowerPoint files directly The deck must be live, synchronised nd
+regenerble per slide. A file cnnot be.
+Whitebord, code An embedded open-source cnvs;
+ browser code editor;  sndboxed
+runner
+Building these from scrtch Mture components exist; check licence
+terms before commercil use.
+Bck end Python with FstAPI nd Pydntic NestJS on Node.js AI, dt nd evlution work is Python-
+ntive; one lnguge for API, workers nd
+nlysis. NestJS suits  TypeScript-only
+tem but would still need  Python AI service.
+Dtbse PostgreSQL with pgvector nd row-
+level security
+MongoDB;  seprte vector dtbse Reltionl curriculum, JSON content nd
+vectors in one plce. MongoDB is not
+recommended: it dds  second store nd
+loses the joins the product depends on.
+Cche, queues,
+rel time
+Redis;  Python tsk queue;
+WebSockets
+Kfk from dy one;  hosted rel-time
+service
+Enough for one university. A streming
+pltform is dded t multi-tennt scle.
+AI ccess A gtewy module (thin custom
+lyer or n open-source proxy) over
+vendor SDKs
+Clling vendor SDKs from ech module Routing, policy, logging nd fllbck in one
+plce Section 1.
+Orchestrtion Plin code with typed schems; 
+light grph librry only for the tutor
+nd nlyst
+A hevy gent frmework throughout Workflows re ordinry functions.
+Frmeworks dd indirection without benefit
+for fixed pipelines.
+Retrievl Own pipeline on PostgreSQL; open
+embedding nd rernking models
+A hosted retrievl product Access control inside the query nd per-
+chunk metdt re hrd to gurntee in 
+hosted blck box.
+AI observbility An open-source trcing nd
+evlution tool, self-hosted
+Vendor dshbords only Prompts, outputs nd scores sty under
+university control.
+Identity An open-source OpenID Connect
+server, or  mnged identity
+service
+Psswords in the ppliction dtbse Single sign-on, multi-fctor nd multi-tennt
+federtion without building them.
+Infrstructure Docker;  mnged continer
+service; mnged PostgreSQL;
+object storge; CDN; infrstructure
+s code
+Kubernetes from dy one; university
+servers
+A smll tem should not run  cluster. On-
+premises hosting only if policy requires it.
+[REQUIRES SGSU DATA]
+Monitoring nd
+testing
+OpenTelemetry with metrics, logs
+nd error trcking; unit, API nd
+browser tests; simulted-clss lod
+tests; the AI evlution set
+Logs nd mnul testing only Needed to meet the teching-hours trget. A
+0-student clss cn be simulted from the
+first sprint.
+AGAINST THE BRIEF'S CANDIDATE LIST
+Confirmed: Rect, Next.js, TypeScript, Tilwind; FstAPI; PostgreSQL; Redis; Docker; cloud deployment; object
+storge; CDN; monitoring nd logging. Not recommended: MongoDB. Deferred: Kubernetes, Kfk,  dedicted
+vector dtbse, ntive mobile pps. Added: n identity provider, n AI gtewy, n evlution hrness,  code
+sndbox, nd  tsk queue.
+--- PAGE ---
+48AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 25 · PART III
+UX Structure and User Journeys
+The brief proposes nvigtion for three roles nd invites improvement. The structures below
+put ech person's most frequent ction one tp wy.
+STUDENT · PHONE-FIRST
+Today · Courses · Practice · Skills ·
+Me
+Tody: clsses, wht is due, three
+next ctions.
+Courses: per course: lessons, notes,
+ssignments, results, progress.
+Prctice: wek outcomes, revision
+due, quizzes.
+Skills: pssport, rodmp,
+opportunities, portfolio.
+Me: profile, ttendnce, privcy,
+lnguge.
+Tutor is  button on every screen,
+opening in the context of tht screen.
+Chnge: nine top-level entries in the
+brief become five, which fit  phone.
+TEACHER · DESKTOP TO PREPARE, PHONE
+TO TEACH
+Home · Courses · Classroom ·
+Library · Insights
+Home: tody's clsses, reviews
+pending, re-tech crds.
+Courses: per course: pln nd
+coverge, lessons, ssessments,
+students.
+New lesson is the primry button
+everywhere; it opens the Lecture
+Builder.
+Clssroom: strt or resume  session;
+pst session reports.
+Librry: own nd shred lessons,
+items, ctivities.
+Insights: ttinment by outcome
+cross own sections.
+Chnge: "Techer Studio" nd "Lecture
+Builder" were two entries for one
+ctivity.
+ADMINISTRATION · BY ROLE
+Overview · Curriculum · Outcomes ·
+People · Governance · Reports
+Overview: gps, trends, interventions
+for the user's scope.
+Curriculum: grph, mppings, chnge
+proposls.
+Outcomes: ttinment, skills,
+ccredittion evidence.
+People: deprtments, sections,
+rosters (opertionl roles only).
+Governnce: AI policy, models,
+consent, udit.
+Ask:  question box on every nlytic
+screen.
+Chnge: contents depend on role nd
+scope, not  fixed ten-item menu.
+Design rules
+Three next ctions, not thirty metrics. Insight leds
+to ction in one tp.
+AI is visible nd interruptible. Lbelled, stoppble,
+editble block by block.
+The console is for one hnd. Nothing in clss needs
+typing.
+Accessible by defult. Current web ccessibility
+guidelines; English nd Hindi interfce from the pilot;
+honest empty sttes.
+Three journeys
+TEACHER · ONE LESSON
+STUDENT · ONE TOPIC
+HEAD OF DEPARTMENT · ONE MONTH
+Select
+Course, topic;
+outcomes
+lredy ttched
+→
+Shpe
+Durtion, level,
+style; dd own
+files
+→
+Review
+Edit, regenerte
+blocks; check
+sources
+→
+Approve nd
+publish
+Deck, notes, quiz
+to section
+→
+Tech
+Console, bord,
+checks →
+Reflect
+Session report;
+re-tech crd
+Prepre
+Two prerequisite
+items the evening
+before
+→
+Attend
+Join by QR;
+nswer checks;
+sk
+→
+Review
+Summry, own
+nswers, flgged
+outcome
+→
+Prctise
+Trgeted set;
+tutor on request →
+Retin
+Spced items in
+lter weeks →
+Record
+Mstery
+becomes skill
+evidence
+Scn
+Coverge nd
+ttinment by
+course
+→
+Spot
+Outcome wek in
+severl sections →
+Understnd
+Prerequisite
+chin;
+misconceptions
+→
+Act
+Remedil
+session; shred
+lesson
+→
+Follow up
+Attinment fter
+intervention →
+Report
+Evidence into
+ccredittion file
+--- PAGE ---
+49AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 26 · PART IV
+What Can Actually Be Built
+The brief sks for  relistic verdict on every mbitious feture. The registers in Sections 7 to
+10 crry  clss for ech of the 8. This section gives the totls, then looks hrd t the
+fetures where mbition nd relity re furthest prt.
+LAYER A  NOW
+B
+MODERATE
+C
+ADVANCED D  R&D
+E  NEEDS
+SGSU F  FUTURE
+1 · Techer Studio 20  11 — — — —
+2 · Smrt Clssroom 0 11 1  — — —
+ · Student nd Creer 28 11 15 — — 2 —
+ · University Intelligence 11 — 8 2 — 1 —
+All 8, by primry clss 1 50 5 0  0
+Two redings of this tble would be wrong. The first is tht 81 of 8 fetures re esy. Clss is given for ech feture in
+its redefined, first-version form; severl hve  lter form in clss D. The second is tht only three depend on the
+university. Fourteen fetures crry  clss E dependency once secondry dependencies re counted, nd every
+intelligence feture depends on evidence tht only rel clsses produce.
+Where ambition and reality are furthest apart
+FEATURE CLASS
+WHY IT IS HARDER THAN IT
+LOOKS REALISTIC FIRST VERSION WHAT THE FULL VERSION NEEDS
+Understnding
+Detection L2
+B The phrse invites cmer-bsed
+emotion reding, which is
+unrelible, invsive nd leglly
+exposed.
+Correctness, timing, "lost" tps
+nd question volume per outcome.
+Nothing more. This is the full
+version.
+Live Adptive
+Teching L221
+C A wrong suggestion in front of 
+clss costs the techer's trust t
+once. Signls from one poll re
+noisy.
+Crds with the numbers nd three
+options; the techer decides.
+A semester of dt to tune
+thresholds; evidence of which
+interventions work.
+Erly Risk Detection
+L20
+B  →
+D
+Prediction needs history tht does
+not exist, nd  flse flg hrms 
+student.
+Trnsprent rules, flgs to 
+mentor, never  penlty.
+Two to three semesters of
+outcomes;  firness review; 
+cler owner.
+Adptive Engine nd
+Lerning Pth L8,
+L
+B  →
+D
+Optiml sequencing is  reserch
+problem. The prerequisite grph
+must be curted by people.
+Weighted-verge mstery; pth
+from prerequisites nd stte.
+Clibrted models; n experiment
+frmework to compre sequences.
+Mistke Intelligence
+L1
+B  /
+C
+Esy for multiple choice if
+distrctors re tgged when written;
+hrd for free text nd code.
+Tgged distrctors; model
+clssifiction of short nswers,
+reviewed.
+A clssifier trined on techer-
+corrected exmples.
+Lecture Recording
+nd Multilingul
+Cptions L217, L2
+2
+C E Room coustics, mixed Hindi-
+English, severl spekers. Also
+consent nd storge.
+Summry from the session
+timeline without udio.
+Microphones;  tested speech
+model;  retention policy.
+AI Visul Genertor
+L21
+B  /
+C
+Imge models misdrw technicl
+digrms nd mislbel them.
+Digrms s code, rendered
+exctly; imges for illustrtion
+only.
+Reviewed librries of subject
+visuls.
+Generted
+Simultions L21
+C A model cn write n interctive
+widget, but n unchecked one my
+tech something flse.
+Code runner nd  curted
+simultion librry.
+Review tooling nd  techer-
+pproved widget store.
+Assignment feedbck
+L1
+B Automted mrking of long nswers
+is not dependble enough to ssign
+mrks.
+Rubric-bsed drft feedbck for
+the techer to confirm.
+Evidence of greement with
+techers over mny scripts.
+--- PAGE ---
+50AI-Native University Platform · Product & Architecture Blueprint · v1.0
+FEATURE CLASS
+WHY IT IS HARDER THAN IT
+LOOKS REALISTIC FIRST VERSION WHAT THE FULL VERSION NEEDS
+Curriculum
+Intelligence L2
+C E Needs yers of ttinment nd 
+dependble source for wht
+industry requires.
+Recurring-gp nd prerequisite-
+chin reports from internl
+evidence.
+Licensed or prtner job-skills dt;
+Bord of Studies process.
+Decision Support in
+plin lnguge L8
+C A fluent wrong number is worse
+thn no number.
+Questions nswered only from
+pproved views, with the query
+shown.
+A mintined semntic lyer; 
+tested question set.
+Fculty Teching
+Intelligence L
+B The technology is simple; trust is
+not.
+Self-view for techers; course-
+level views under  chrter.
+Fculty greement nd
+governnce.
+Creer mpping nd
+opportunities L20,
+L21
+E Without the plcement office's dt
+this produces generic dvice.
+A role-nd-skills structure with
+dummy dt.
+Live plcement-cell dt nd n
+owner.
+Grdute Outcome
+Intelligence L11
+E Outcomes rrive yers fter
+teching.
+Schem nd consent in plce from
+dy one.
+Severl grduting btches.
+Deliberately not built
+Fcil emotion or ttention nlysis;
+continuous monitoring of students or
+techers; utomtic cdemic penlties;
+AI-text detection s proof of misconduct;
+unreviewed AI content shown to  clss.
+Some of these re techniclly possible.
+None is dependble or pproprite.
+The real constraints, in order
+First, fculty willingness to use Lyers 1
+nd 2. Second, structured curriculum
+dt with outcomes. Third, clssroom
+devices nd connectivity. Fourth,
+integrtion with existing university
+systems. Model cpbility comes fter
+ll four.
+The cold start
+In the first semester there is no history.
+Everything lbelled "intelligence" must
+give vlue from the first quiz with rules
+lone. Fetures tht need  trined
+model wit until the pltform hs
+produced the dt to trin it.
+--- PAGE ---
+51AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 27 · PART IV
+Gap Analysis: What We Are Currently Missing
+The four lyers describe wht users will see. This section lists wht the brief does not yet contin nd the project cnnot succeed
+without, in the formt requested: problem, why it mtters, solution, development requirement, dt requirement, priority.
+PROBLEM WHY IT MATTERS SOLUTION DEVELOPMENT REQUIREMENT DATA REQUIREMENT PRIORITY
+TECHNICAL
+No shred core is defined
+beneth the four lyers
+Ech lyer would build its own ssistnt,
+quiz engine nd nlytics; numbers
+would disgree
+The Pltform Core of Section 5, built before ny
+lyer
+Core modules: identity, curriculum,
+content, evidence, AI gtewy
+Curriculum tree for two courses P0
+No cnonicl lesson formt A generted file cnnot be reviewed per
+block, versioned, synchronised or
+nlysed
+The Lesson Document: typed blocks with outcome
+tgs nd sources
+Block schem, editor, renderer,
+exporters
+— P0
+No definition of mstery or
+"wek"
+Ten fetures nd every dshbord
+depend on it
+The evidence nd mstery model of Section 1 Event intke, mstery job, reply tool Weights nd thresholds greed
+with fculty
+P0
+Rel-time design for clss is
+unspecified
+Slide sync nd polls for 0 phones on
+wek Wi-Fi is the riskiest engineering in
+the demo
+WebSocket hub, smll pylods, idempotent
+nswers, simulted-clss lod test
+Session engine; lod-test hrness Clssroom network fcts
+[REQUIRES SGSU DATA]
+P0
+PRODUCT
+Entities for running  university
+re bsent: term, section,
+enrolment, teching ssignment,
+timetble
+Without them nothing knows who
+teches whom, when
+Add the bold entities of Section 1 Schem nd dmin screens; import tools Rosters, sections, timetble
+[REQUIRES SGSU DATA]
+P0
+Lbs nd prcticl courses re
+brely covered
+B.Tech nd BCA re lb-hevy; lecture-
+only fetures miss hlf the teching
+Lb mode: coding tsks, test-cse mrking, run
+history s evidence
+Sndbox, uto-mrking, lb-sheet block
+type
+Lb syllbus nd mnuls
+[REQUIRES SGSU DATA]
+P1
+No mentor, plcement or
+governnce roles
+Risk flgs, creer dt nd DPDP duties
+hve no owner
+Add the three roles of Section  Roles, scopes, screens Nmed people t SGSU
+[REQUIRES SGSU DATA]
+P1
+No techer-ssist for mrking Mrking is  lrge shre of techer time
+nd the brief is silent on it
+Rubric-bsed drft feedbck, confirmed by the
+techer
+Rubric model; feedbck workflow Smple rubrics nd mrked
+scripts [REQUIRES SGSU DATA]
+P2
+USER EXPERIENCE
+Fculty doption is ssumed If preprtion is not clerly fster on first
+use, nothing downstrem hs dt
+Ten-minute first lesson; onbording with the
+techer's own topic; two fculty chmpions per
+deprtment
+Onbording flow; usge nd edit-rte
+mesures
+Bseline preprtion time from
+pilot techers
+P0
+Students re on phones with
+limited dt
+A desktop-style design fils in the
+clssroom
+Phone-first instllble web pp; smll pges;
+queued nswers
+Front-end performnce budget; offline
+cche
+Device nd network survey
+[REQUIRES SGSU DATA]
+P0
+--- PAGE ---
+52AI-Native University Platform · Product & Architecture Blueprint · v1.0
+PROBLEM WHY IT MATTERS SOLUTION DEVELOPMENT REQUIREMENT DATA REQUIREMENT PRIORITY
+Empty screens in the first weeks "Intelligence" with no evidence looks
+broken
+Dignostic quiz per course t the strt; honest
+empty sttes
+Dignostic genertor; empty-stte
+designs
+Prerequisite outcomes per course P1
+No feedbck route on AI nswers Errors go unreported nd trust erodes Report nd rte on every AI output; review queue
+for techers
+Feedbck cpture; trige screen — P1
+DATA
+The syllbus exists s
+documents, not structured
+outcomes
+The join key of the whole pltform does
+not exist yet
+Model-ssisted import, then sign-off by ech hed
+of deprtment
+Import tool with review screen Syllbus, outcomes, course-
+outcome mppings
+[REQUIRES SGSU DATA]
+P0
+No prerequisite links between
+outcomes
+Gp trcing nd lerning pths cnnot
+work
+Fculty curte links per course, strting from model
+suggestions
+Grph editor Fculty time: roughly two hours
+per course
+P1
+No skills txonomy or outcome-
+to-skill mp
+The creer hlf of Lyer  hs nothing
+to stnd on
+Adopt n estblished txonomy nd ntionl
+qulifiction levels; mp outcomes with model
+proposls nd fculty pprovl
+Txonomy import; mpping tool Choice of txonomy; plcement
+office input
+[REQUIRES SGSU DATA]
+P1
+No history Predictive fetures nd trends re
+impossible t lunch
+Rules first; import pst mrks if vilble; store
+everything for lter
+Mrks import Pst results by course nd
+outcome if they exist
+[REQUIRES SGSU DATA]
+P1
+AI
+No evlution method Qulity is sserted, not mesured; every
+model chnge is  gmble
+Golden sets per function; blind techer scoring;
+regression runs
+Evlution hrness in CI Fifty questions nd reference
+pssges per pilot course
+P0
+Model nd vendor churn Nmed models re retired within months Gtewy with routing s configurtion nd 
+fllbck per function
+AI gtewy — P0
+Answer keys nd generted
+fcts cn be wrong
+A wrong key in  grded quiz is  forml
+error
+Independent verifiction; techer pprovl; lbels
+until pproved
+Verifier step; review sttes — P0
+Usge could run wy A loop or misuse cn exhust  budget
+in hours
+Quots, budgets, cching, lerts Metering in the gtewy Agreed monthly ceilings P1
+UNIVERSITY INTEGRATION
+Existing systems re unknown:
+ERP, lerning mngement
+system, emil suite, ttendnce,
+exmintion
+Rosters, timetble, mrks nd sign-on ll
+depend on them
+File import first; connectors once interfces re
+known
+Import pipelines; integrtion module System inventory nd export
+smples
+[REQUIRES SGSU DATA]
+P0
+Exmintion mrks live outside
+the pltform
+They re the strongest evidence nd the
+bsis of ccredittion
+Mrks import mpped to outcomes through the
+question pper blueprint
+Import with outcome mpping Question-wise mrks or pper
+blueprints
+[REQUIRES SGSU DATA]
+P1
+Accredittion formt is not
+specified
+Reports must mtch wht the university
+ctully files
+Configurble outcome sets nd report templtes Attinment clcultor; templtes Trget ccredittion body nd
+formts
+[REQUIRES SGSU DATA]
+P2
+SECURITY
+--- PAGE ---
+53AI-Native University Platform · Product & Architecture Blueprint · v1.0
+PROBLEM WHY IT MATTERS SOLUTION DEVELOPMENT REQUIREMENT DATA REQUIREMENT PRIORITY
+AI-specific threts re not
+ddressed
+Uploded files cn crry instructions; n
+ssistnt cn lek restricted content
+Untrusted-content hndling, lest-privilege tools,
+ccess filter in retrievl, red-tem tests
+Gtewy gurdrils; retrievl filter; tests — P0
+Answer keys nd ppers before
+n exm
+A lek is  serious incident Seprte prtition, embrgo dtes, no student-pth
+ccess
+Prtitioned index; ccess tests Exm clendr
+[REQUIRES SGSU DATA]
+P0
+No independent security review A student tem will miss things Externl penetrtion test before the pilot Budget nd remedition time — P1
+DEPLOYMENT
+Clssroom hrdwre is
+unverified
+Bord browsers, microphones nd Wi-Fi
+decide wht is possible
+Survey two rooms; test the bord view on the rel
+device
+Comptibility fixes Bord model, browser, network
+[REQUIRES SGSU DATA]
+P0
+No owner fter the student tem
+moves on
+A pltform without n opertor decys
+within  semester
+Nme n operting owner t SGSU; document
+runbooks; keep the stck conventionl
+Runbooks, monitoring, hndover An ccountble unit t SGSU
+[REQUIRES SGSU DATA]
+P1
+LEGAL AND PRIVACY
+Dt-protection roles, notices
+nd under-18 hndling re
+undefined
+Legl exposure for the university; duties
+fll due round My 2027
+Section 21 fiduciry nd processor contrcts,
+lyered consent, gurdin flow, retention schedule
+Consent service; retention jobs; dt-
+subject request tooling
+Legl review; pproved notice
+text [REQUIRES SGSU DATA]
+P0
+No institutionl AI-use policy Techers nd students do not know
+wht is permitted
+Adopt the four modes of Section 22 s university
+policy
+Policy settings; lbels on ssessments Acdemic council decision
+[REQUIRES SGSU DATA]
+P0
+Copyright in textbooks nd third-
+prty mteril
+Ingesting licensed books without
+permission is infringement
+Ingest only owned, licensed or open mteril; link
+out otherwise
+Licence field on every source Librry licences
+[REQUIRES SGSU DATA]
+P1
+SCALABILITY
+Single-university ssumptions in
+the design
+A second university would need 
+rewrite
+Tennt identifier nd row-level security from the
+first tble
+Tenncy in schem nd tests — P1
+Anlytics on the trnsctionl
+dtbse
+Hevy reports will slow clsses s dt
+grows
+Mterilised views now; replic, then columnr
+store
+Reporting on  replic — P2
+--- PAGE ---
+54AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 28 · PART IV
+The MVP: One Closed Loop
+The smllest version tht proves the ide is not  subset of fetures. It is one complete
+circuit of the intelligence loop, thin t every point, for one topic in one course. If the loop
+closes on stge, the pltform hs been demonstrted; if ny link is fked, it hs not. In this
+thin form the demonstrtor touches  of the 8 fetures.
+Figure 10  The demonstrtor's eight steps. Steps ,  nd  use the udience's own phones, which is wht mkes the loop visibly rel.
+In scope
+Sign-in for three seeded roles: techer, student,
+cdemic dmin.
+Curriculum tree for one dummy course with outcomes
+nd two prerequisite links.
+Lecture Builder: generte  Lesson Document; edit
+nd regenerte  block; sources shown; pprove;
+publish.
+Uplod one PDF nd see it used nd cited.
+Student notes rendered from the pproved lesson.
+Assessment: five outcome-tgged multiple-choice
+items with misconception-tgged options, key
+verified.
+Clssroom: bord view, techer console, QR join,
+slide sync, one live poll, nonymous questions, exit
+quiz in lock mode, ttendnce from joins.
+Live ssistnt on the console: "explin more simply",
+pushed to the bord.
+Evidence store nd mstery model; clss distribution
+per outcome; gp detection.
+Student view: summry, own nswers, mstery
+sttes,  trgeted prctice set, grounded tutor.
+Techer view: session report nd re-tech crd with
+ drfted segment.
+Admin view: one ggregte tile cross two sections;
+AI cll log with model, cost nd checks.
+Out of scope, and said so
+ERP, timetble nd mrks integrtion (seeded dt
+insted).
+Audio recording, speech nd live trnsltion.
+Whitebord, simultions, group mode.
+Creer fetures beyond one illustrtive Skill Pssport
+entry.
+Study plnner, spced revision, lerning pth.
+Accredittion reports; plin-lnguge nlytics.
+Offline hub; multi-tennt dministrtion.
+What is seeded, to be stated on stage
+The curriculum, the roster, nd  second section's
+results (so the dmin tile hs something to ggregte)
+re dummy dt. Everything the udience does on their
+phones is live, nd every number on screen fter tht
+point is computed from their nswers.
+Acceptance test
+With 0 phones in  room on ordinry Wi-Fi: lesson drft
+in under 0 seconds; slide sync under hlf  second;
+quiz results on the console within five seconds of
+closing; ech phone showing  recp specific to its own
+wrong nswers within 0 seconds; the dmin tile
+updted within  minute. A screen recording is kept s 
+fllbck if the venue network fils.
+Build plan for the demonstrator
+RECOMMENDATION  An estimte for  tem of five or six working prt-time longside studies, using AI coding ssistnce,
+nd ssuming no dependency on SGSU systems. It is  pln for  demonstrtor, not for production.
+1
+Crete
+Techer
+selects
+topic; AI
+genertes
+the lesson
+→
+2
+Approve
+Techer
+edits one
+slide,
+pproves,
+publishes
+→
+3
+Tech
+Bord
+shows
+lesson;
+udience
+joins by QR
+→
+4
+Check
+Poll nd
+five-item
+quiz
+→
+5
+Anlyse
+Mstery
+per
+outcome;
+gp
+detected
+→
+6
+Personlise
+Ech phone
+gets its own
+recp nd
+prctice
+→
+7
+Feed bck
+Techer
+sees re-
+tech crd
+with drft
+→
+8
+Aggregte
+Admin tile
+shows the
+gp cross
+sections
+--- PAGE ---
+55AI-Native University Platform · Product & Architecture Blueprint · v1.0
+WEEKS BUILD AI WORK PROOF AT THE END
+12 Repository, environments, schem for
+core entities, sign-in, seeded curriculum
+nd roster
+Gtewy skeleton; first lesson-genertion
+prompt nd block schem
+A lesson drft returned s vlid blocks
+for the dummy topic
+ Lecture Builder: block editor, regenerte,
+pprove, publish; PDF uplod nd
+ingestion
+Retrievl with cittions; item genertion
+with verifiction
+A techer goes from topic to published
+lesson with  cited source
+5 Session engine: bord view, console, QR
+join, slide sync, poll, questions
+Live ssistnt; question grouping A simulted clss of 0 clients stys in
+sync
+78 Quiz in lock mode; evidence intke;
+mstery job; session report; student recp
+nd prctice
+Recp nd remedil drfting; tutor with
+course scope
+The loop closes for one section
+10 Admin tile; AI log; polish; lod test;
+rehersl; fllbck recording
+Evlution set for the demo topic; prompt
+hrdening
+Acceptnce test pssed twice on venue-
+like Wi-Fi
+--- PAGE ---
+56AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 29 · PART IV
+Demonstration Scenario
+A scripted run of the closed loop using dummy SGSU-style dt. Every nme, code nd
+number below is invented for illustrtion nd is consistent with the mstery rules in Section
+1.
+SETTING DUMMY DATA
+B.Tech Computer Science nd Engineering, Semester 5 · Course CS501 Artificil Intelligence · Unit  Mchine
+Lerning · Topic . Neurl Networks · Section 5A, 0 enrolled · Techer: Dr. Meer Verm. Outcomes for the
+topic: LO1 describe  perceptron nd  multilyer network; LO2 compute  forwrd pss; LO choose n
+ctivtion function for  tsk; LO explin bckpropgtion with the chin rule nd compute one weight updte.
+Prerequisite of LO the chin rule for composite functions, from first-yer mthemtics.
+# WHERE WHAT HAPPENS WHAT IT SHOWS
+1 Techer Studio Dr. Verm signs in nd sees tody's clss. She chooses
+CS501  Unit   Neurl Networks. The four outcomes
+nd the prerequisite pper without ny uplod.
+The curriculum is lredy in the pltform L12.
+2 Lecture Builder She sets 50 minutes, intermedite, exmple-hevy,
+ttches her own eight-pge PDF, nd genertes. Blocks
+rrive one by one: objectives,  recp of the chin rule,
+perceptron, forwrd pss with  worked exmple,
+ctivtions, bckpropgtion, two ctivities, five quiz
+items.
+Genertion s structured blocks with outcome tgs L1,
+L1, L17.
+3 Review Ech block shows its sources: three cite her PDF by pge;
+one is mrked "generl knowledge, verify". She rewrites
+tht one, regenertes the bckpropgtion exmple with
+smller numbers, nd pproves.
+Source grounding nd techer control L110, L111.
+4 Publish One ction sends the deck, student notes nd exit quiz to
+Section 5A's 1000 slot.
+Preprtion to clssroom in one step L11.
+5 Clssroom The bord shows the lesson nd  QR code. 57 of 0
+students join; ttendnce is mrked. The outcome trcker
+shows four outcomes, none yet ticked.
+Session, presence, ttendnce L21, L25, L215, L222.
+6 Clssroom After ech of the first three outcomes she lunches  one-
+item concept check; the forwrd-pss check comes bck
+t 8%. Three students sk, nonymously, versions of
+"why sigmoid nd not  stright line?"; the console groups
+them. She sks the ssistnt for n nlogy nd pushes it
+to the bord.
+Live evidence, grouped questions, ssistnt under techer
+control L2 to L211.
+7 Clssroom The exit quiz runs in lock mode. Results on the console:
+LO1 88%, LO2 7%, LO 81%, LO 1%. The crd reds:
+"5 of 57 students 1% re wek on LO. Most common
+error 1 students): pplying the output error directly to
+hidden-lyer weights."
+The mstery model nd misconception tgs t clss level
+L2, L21, L1.
+8 Student phone Riy nswered both LO items wrong with tht sme error.
+Her summry shows LO1 to LO s Known nd LO s
+Wek, with  three-step recp of how the error flows bck
+through the hidden lyer nd three prctice items.
+Personl recp imed t the specific mistke L5, L8,
+L1.
+9 Student phone She sks the tutor why the hidden-lyer grdient needs
+the next lyer's weights. The nswer cites slide  nd
+pge 5 of Dr. Verm's notes. She gets two of three
+prctice items right. LO stys Wek t 0.2 nd the
+screen explins tht grded evidence will decide.
+Grounded tutoring;  model tht does not fltter L, L
+7.
+10 Skill Pssport Riy's trget role is Mchine Lerning Engineer. "Neurl
+network fundmentls" shows three outcomes evidenced
+nd one pending. A suggested mini-project ppers: build
+nd trin  two-lyer network in NumPy.
+Lerning connected to skills nd  concrete next step L
+17, L1.
+--- PAGE ---
+57AI-Native University Platform · Product & Architecture Blueprint · v1.0
+# WHERE WHAT HAPPENS WHAT IT SHOWS
+11 Techer Studio Tht evening Dr. Verm's home screen shows  re-tech
+crd for Thursdy:  drfted ten-minute segment on the
+chin rule through one hidden unit, with two new check
+items. She ccepts it into the next lesson.
+The loop reches the next lecture L11.
+12 Admin The cdemic dmin's overview shows: "Bckpropgtion
+CS501 LO wek for 58% of 11 students cross 2 of 2
+sections. Relted prerequisite, chin rule (first-yer
+mthemtics): 52% t Known or better." A drft note for
+the Bord of Studies suggests  two-hour bridge before
+Unit .
+Aggregtion nd  curriculum signl with its evidence L
+1, L2.
+TEACHER CONSOLE · SESSION REPORT 5-A
+LO1 Network structure 88%
+LO2 Forwrd pss 7%
+LO Activtion choice 81%
+LO Bckpropgtion 1%
+5 of 57 wek on LO. Top error: output error
+pplied directly to hidden weights 1.
+Re-tech · Another exmple · Remedil set ·
+Move on
+STUDENT · AFTER CLASS RIYA
+LO1 · LO2 · LO Known
+LO Bckpropgtion Wek
+Wht went wrong: you updted  hidden-
+lyer weight with the output error. The error
+hs to pss bck through the next lyer's
+weights first.
+Next: -step recp 2 min) ·  prctice items ·
+Ask the tutor
+Bsed on 2 quiz nswers tody. Source: slide
+; notes p. 5.
+ADMIN · OVERVIEW TILE CSE SEM 5
+Recurring gp: Bckpropgtion
+CS501 · LO · 2 of 2 sections
+Section 5A 1% wek
+Section 5B 5% wek
+Both 11 students) 58% wek
+Linked prerequisite: chin rule, first-yer
+mthemtics, 52% Known or better.
+View evidence · Drft note for Bord of
+Studies
+Figure 11  Three screens from the scenrio, one per lyer boundry, ll reding the sme evidence. Content is illustrtive dummy dt.
+Arithmetic behind the figures: 50, 2 nd  of 57 correct on LO1 to LO; 25 nd 22 of 57 on the two LO items, verging 1%; 22
+students hd both right, so 5 fll below the 0. threshold. LO1 to LO ech hve  live check nd  quiz item, which meets the
+minimum evidence weight. Section 5B is seeded t 1 of 57 wek; 5  1   of 11 is 58%. Riy's estimte fter prctice, ignoring
+decy nd difficulty: two grded items t weight 0.8 scoring 0, three prctice items t weight 0. scoring 1, 1, 0, giving 0.8  2.8  0.2.
+--- PAGE ---
+58AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 30 · PART IV
+Development Roadmap
+Nine phses, s the brief sets them out, overlpped the wy  rel tem would run them. Durtions re indictive nd ssume 
+core tem from Phse 1 nd university dt rriving in the first two months.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+Phse 0 · Reserch nd dt 2 MONTHS
+Demonstrtor (thin slice of 1 MVP
+Phse 1 · Core pltform CORE
+Phse 2 · AI Techer Studio LAYER 1
+Phse  · Smrt Clssroom LAYER 2
+Phse  · Student Intelligence LAYER 3A
+Phse 5 · Creer Intelligence LAYER 3B
+Phse  · University Intelligence LAYER 4
+Phse 7 · Integrtion nd pilot PILOT 1 · TWO COURSES PILOT 2 · ONE DEPARTMENT
+Phse 8 · Scle UNIVERSITY, THEN OTHERS
+Milestones. Month  conference demonstrtor. Month 7 first pilot semester begins. Month 12 pilot review nd decision to proceed. Month 1 deprtment rollout. Month 18 university rediness review. Month 2 redy for  second
+institution.
+Figure 12  Indictive timeline in months. Pilots re ligned to semesters; the rel clendr should replce month numbers once SGSU's cdemic dtes re known.
+PHASE FEATURES DEPENDENCIES APIS DATABASE FRONT END BACK END AI TESTING OUTPUT
+0 · Reserch
+nd dt
+None shipped. Clssroom
+nd device survey; system
+inventory; syllbus
+collection; AI-use policy
+drft; model comprison
+Access to the
+Den's office,
+heds of
+deprtment, IT
+— Drft schem;
+curriculum import
+formt
+Clickble prototype of
+three journeys
+Import script for
+syllbus
+Phse 0 model
+comprison; first
+golden set
+Prototype tests
+with five
+techers
+Dt pck;
+signed-off
+outcomes for
+two courses;
+routing tble
+v1
+1 · Core
+pltform
+Identity, roles nd scopes;
+curriculum grph; content
+store; evidence intke; AI
+gtewy; udit; notifictions
+Phse 0 dt; sign-
+on detils
+Identity, curriculum,
+content,
+governnce
+Core entities with
+tenncy nd row-
+level security
+App shell; role-bsed
+nvigtion; dmin
+dt screens
+Modules, outbox, job
+queue
+Gtewy: routing,
+schems, logging
+Unit nd API
+tests; security
+bseline
+A pltform 
+lyer cn be
+built on
+2 · Techer
+Studio
+L11 to L11 in first form;
+then L115 to L118
+Core; curriculum for
+pilot courses
+Lessons, blocks,
+documents, items
+Lesson, version,
+block, document,
+chunk, item
+Lecture Builder,
+review workspce,
+librry
+Genertion pipeline;
+ingestion; publishing
+Authoring nd
+verifiction
+workflows; retrievl;
+evlution
+Techer
+usbility
+sessions;
+evlution
+regression
+Techers
+prepring
+rel lessons
+ · Smrt
+Clssroom
+L21 to L211, 15, 18, 1, 22,
+28; then 12 to 1, 1, 20, 21,
+2, 25, 27, 2
+Phse 2 lessons;
+clssroom
+hrdwre fcts
+Sessions,
+WebSocket,
+responses, reports
+Session, event,
+response,
+ttendnce
+Bord view, console,
+student join nd
+nswer
+Rel-time hub;
+session engine;
+mstery job
+Live ssistnt;
+summries; question
+grouping
+Simulted clss
+lod test; in-
+room trils
+Rel clsses
+run on the
+pltform
+--- PAGE ---
+59AI-Native University Platform · Product & Architecture Blueprint · v1.0
+PHASE FEATURES DEPENDENCIES APIS DATABASE FRONT END BACK END AI TESTING OUTPUT
+ · Student
+Intelligence
+L1 to L8, 1, 1, 28; then
+ to 12, 15, 1, 2 to 2
+Evidence from
+Phse ;
+prerequisite links
+Mstery,
+recommendtions,
+prctice, tutor
+Mstery stte,
+recommendtion,
+pln, submission
+Student pp: tody,
+courses, prctice,
+tutor
+Lerner model;
+recommender;
+scheduler
+Tutor gent; recp
+nd prctice
+genertion
+Tutor
+evlution;
+policy-mode
+tests
+Ech student
+sees nd
+closes gps
+5 · Creer
+Intelligence
+L17 to L2, 27 Skills txonomy;
+plcement dt
+Pssport, roles,
+opportunities
+Skill, mppings,
+role, evidence,
+opportunity
+Skills re; portfolio;
+resume
+Skills grph; mtching Outcome-to-skill
+mpping proposls;
+explntions
+Review with
+plcement
+office
+Skill
+Pssport for
+pilot students
+ · University
+Intelligence
+L1, , 5, , 8,  in full; 
+under chrter; 2, 10, 11 begun
+A semester of
+evidence; outcome
+mppings; chrter
+Anlytics, reports,
+sk, governnce
+Aggregtes,
+semntic lyer,
+report templtes
+Admin overview,
+outcomes,
+governnce
+Aggregtion jobs;
+ttinment clcultor
+Anlyst gent;
+nrrtive summries
+Reconcilition
+ginst mnul
+reports
+Attinment
+nd gp
+reports for 
+deprtment
+7 · Integrtion
+nd pilot
+Connectors: roster, timetble,
+mrks, ttendnce, sign-on;
+consent nd retention;
+support
+University systems
+nd owners
+Integrtions;
+exports
+Sync tbles;
+consent; retention
+clsses
+Consent nd privcy
+screens; support
+flows
+Sync jobs; dt-
+subject request tools
+Monitoring of qulity
+in live use
+Penetrtion
+test; pilot
+mesures of
+Section 2
+Evidence for
+ go or no-
+go decision
+8 · Scle All progrmmes; second
+tennt; dvnced fetures in
+clss C nd D
+Pilot outcome;
+operting owner;
+budget
+Public integrtion
+interfces
+Prtitioning; replic;
+nlytics store
+Tennt dministrtion;
+theming
+Service seprtion
+where needed;
+streming
+Trined clssifiers;
+clibrted mstery
+Lod nd
+filover tests;
+udits
+A pltform
+other
+universities
+cn dopt
+--- PAGE ---
+60AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 31 · PART IV
+Team Structure
+The roles  pltform of this scope eventully needs, nd n honest division between wht 
+student tem cn crry nd wht must be professionl.
+ROLE RESPONSIBILITY NEEDED FROM STUDENT TEAM CAN COVER?
+Product mnger Scope, priorities, pilot mesures, the fculty
+reltionship
+Phse 0 Yes, with  fculty mentor
+UI nd UX designer Three role journeys, the techer console, ccessibility Phse 0 Yes
+Front-end engineers
+2
+Four web pps, block editor, rel-time views Phse 1 Yes
+Bck-end engineers
+2
+Core modules, session engine, integrtions Phse 1 Yes, with review by n
+experienced engineer
+AI engineer Gtewy, prompts nd schems, retrievl, evlution Phse 1 Yes for the demonstrtor; senior
+guidnce for production
+Dt engineer Evidence pipeline, ggregtes, ttinment, imports Phse  Prtly
+DevOps nd
+relibility
+Environments, deployment, monitoring, bckups Phse 1, prt-time; Phse 7,
+dedicted
+Demonstrtor only
+QA nd test Test plns, simulted clsses, regression Phse 2 Yes
+Security Thret model, reviews, penetrtion test Phse 1 review; before pilot No. Externl specilist
+Dt protection nd
+legl
+Notices, contrcts, retention, under-18 hndling Phse 0 No. University counsel
+Acdemic subject
+experts
+Outcomes, prerequisite links, golden sets, review of
+generted content
+Phse 0, per pilot course No. Fculty time is the scrcest
+input
+Fculty chmpions First users; trining collegues Phse 2 Not pplicble
+Plcement office
+led
+Role profiles, opportunities, outcomes dt Phse 5 Not pplicble
+Operting owner t
+SGSU
+Runs the pltform fter hndover Before Phse 7 Not pplicble
+A starting team of six students
+One product led who lso owns the demo script nd the
+dt pck.
+One designer who lso builds front-end components.
+Two full-stck engineers: one on Techer Studio nd content,
+one on clssroom nd rel time.
+One AI engineer on gtewy, genertion, retrievl nd
+evlution.
+One engineer on evidence, mstery, nlytics nd testing.
+Supported by  fculty mentor, the pilot course techer s
+subject expert, nd  few hours  month from n experienced
+engineer for rchitecture nd code review.
+What a student team should not carry alone
+Production opertions with rel student dt.
+Security ssurnce nd the penetrtion test.
+Legl interprettion of dt-protection duties nd vendor
+contrcts.
+Continuity. Students grdute; the pln needs n owner t the
+university nd documenttion good enough for the next tem.
+RECOMMENDATION  Tret the demonstrtor s the student tem's
+deliverble nd the pilot s  joint project with the university's IT
+function.
+--- PAGE ---
+61AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 32 · PART IV
+Risks and Mitigations
+The risks most likely to stop or dmge the project, rnked by how erly they bite.
+RISK LIKELIHOODIMPACT MITIGATION OWNER
+Fculty do not dopt the
+Studio
+High Criticl Ten-minute first lesson; techer keeps full control; chmpions;
+chrter on nlytics; mesure edit effort nd fix wht cuses it
+Product led; Den's
+office
+Curriculum dt rrives lte
+or unstructured
+High High Strt Phse 0 with two courses only; import tool with review;
+dummy dt keeps the build moving
+Product led; heds of
+deprtment
+Scope: 8 fetures pursued
+t once
+High High One closed loop first; phse chips re binding; nothing enters 
+phse without n owner nd  mesure
+Product led
+A wrong AI nswer reches
+ clss or  grded item
+Medium High Approvl gte; cittions; verified keys; lbels; report button;
+evlution regression
+AI engineer; techers
+Privcy incident or non-
+complince
+Medium Criticl Minimistion; pseudonymous nlytics; contrcts; consent nd
+gurdin flow; penetrtion test; brech pln
+Governnce officer
+Clssroom network or
+hrdwre fils
+Medium High Room survey; cched lesson pck; queued nswers; grceful
+degrdtion; recorded fllbck for the demo
+Engineering; IT
+Model retired, repriced or
+degrded
+High Medium Gtewy; fllbck per function; evlution gte on every
+chnge; two vendors
+AI engineer
+Students len on AI in plce
+of thinking
+Medium High Policy modes; tutor sks before telling; prctice without help
+first; techer guidnce on ssessment design
+Acdemic dmin;
+techers
+Anlytics seen s
+surveillnce of techers or
+students
+Medium High Chrter; self-view first; ggregtes by defult; no cmers;
+visible ccess history
+Den's office
+Integrtion with university
+systems stlls
+Medium Medium File import s the permnent fllbck; integrtion is Phse 7, not
+ precondition
+Engineering; IT
+Tem turnover High Medium Conventionl stck; written decisions; onbording guide;
+university operting owner
+Fculty mentor
+Uncontrolled AI spend Low Medium Quots, budgets, lerts, cching AI engineer
+Bis in risk flgs or
+recommendtions
+Medium Medium Rules before models; periodic rte review; mentor s humn
+check; contestbility
+Governnce officer
+--- PAGE ---
+62AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 33 · PART IV
+Future Scope
+Directions tht become possible once the pltform hs run for severl semesters nd holds
+its own evidence. None should be strted before the pilot hs reported.
+Calibrated and predictive learner
+models
+Mstery weights tuned ginst
+exmintion outcomes; erly-risk
+prediction with firness review;
+sequencing experiments tht test which
+pth works for which student. D
+Voice in the classroom and for the
+tutor
+Live bilingul cptions, spoken
+questions,  voice tutor in Hindi nd
+other regionl lnguges, once room
+udio nd speech models re proven on
+site. C
+A department content commons
+Peer-reviewed lessons nd item bnks
+shred cross techers nd, lter,
+cross institutions, with ttribution nd
+qulity rtings.
+Verifiable credentials
+Skill Pssport entries issued s tmper-
+evident credentils tht employers cn
+check, ligned to ntionl credit nd
+qulifiction frmeworks.
+Curriculum co-design with industry
+Employers contribute role profiles nd
+review skill gps directly; curriculum
+proposls crry both internl ttinment
+nd externl demnd.
+Multi-university network
+Other institutions dopt the pltform s
+tennts. Anonymised benchmrks
+cross them show which outcomes re
+hrd everywhere nd which teching
+pproches help.
+Laboratories and simulations
+Virtul lbs for electronics, networks nd
+dtbses; reviewed, generted
+simultions; utomtic mrking of
+prcticl work.
+Sovereign and offline deployment
+Self-hosted open-weight models for
+institutions tht require ll processing on
+their own infrstructure, nd clssroom
+hubs for cmpuses with unrelible
+connectivity.
+Beyond B.Tech and BCA
+Other progrmmes need their own
+subject modes nd ssessment types:
+cse discussion for mngement, studio
+critique for design, prctice logs for
+voctionl courses.
+--- PAGE ---
+63AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 34 · PART IV
+Final Product Definition
+The summry sttements the brief sks for, written to be reused in  pitch,  proposl or the
+first pge of  specifiction.
+ONE-SENTENCE
+DEFINITION An AI-native academic platform in which every lesson, question, answer and
+skill is tied to the university's own learning outcomes, so that teaching, learning
+and graduate capability are measured by one system and each improves the
+next.
+PRODUCT VISION A techer selects  topic the university lredy defines nd, within minutes, pproves 
+complete lesson grounded in pproved sources. In clss, the bord, the console nd students'
+phones work s one, nd every nswer becomes evidence. By evening ech student hs
+prctice imed t wht they misunderstood, the techer knows wht to re-tech, nd the
+deprtment sees which outcomes re wek. Over semesters the sme evidence builds ech
+student's record of skills nd shows the university where its curriculum works. AI prepres
+nd nlyses; people decide.
+CORE DIFFERENTIATOR One lerning-outcome spine nd one evidence store beneth ll four lyers. A quiz nswer in
+ clssroom chnges  student's prctice,  techer's next lesson nd  curriculum report,
+becuse they re the sme dt.
+TARGET USERS Techers, students, heds of deprtment, cdemic dministrtors nd ledership, with
+mentors nd plcement officers in support. First B.Tech nd BCA t SGSU; then ll
+progrmmes; then other universities.
+VALUE PROPOSITION Techers prepre fster nd see the sme dy how ech clss understood ech outcome.
+Students get help tht knows their syllbus nd their own gps, nd leve with evidence of
+skills. Deprtments get ttinment continuously nd ccredittion evidence s  by-product.
+The university gets governed AI nd evidence for curriculum decisions.
+DIFFERENT FROM A
+NORMAL LMS
+A lerning mngement system stores files, dedlines nd mrks. This pltform knows wht
+the content teches, mesures whether it ws lerned, nd cts on the result. It cn sit beside
+such  system.
+DIFFERENT FROM AN AI
+TUTOR
+A tutor serves one student in isoltion, from generl knowledge. This one nswers from
+pproved mteril, knows the student's evidence, follows the techer's rules, nd its signls
+rech the techer nd the curriculum.
+DIFFERENT FROM AN AI
+COURSE PLATFORM
+A course genertor produces content once nd stops. Here genertion strts  loop: content
+is vlidted by  techer, tught, mesured, nd improved by the result.
+WHY A UNIVERSITY
+WOULD DEPLOY IT
+It cuts fculty's heviest recurring worklod nd produces outcome-ttinment evidence s 
+by-product of teching. SOURCE-DERIVED  The Ntionl Bord of Accredittion's self-
+ssessment formt sks for course-outcome nd progrmme-outcome ttinment with
+mpping mtrices; NAAC is moving to binry ccredittion with mturity levels (mnuls
+reported s not finl in August 202. It gives ledership control over AI tht is otherwise
+rriving unmnged. And for  university with "skills" in its nme,  verifible link between
+wht ws tught nd wht grdutes cn do is wht it most needs to show.
+THE ANSWER TO THE BRIEF'S QUESTION
+The four lyers become one pltform by shring three things:  curriculum grph tht tgs every rtefct with 
+lerning outcome, n evidence store tht records every response in one form, nd  governed gtewy for ll AI.
+Build those first, prove one closed loop, nd the 8 fetures become views of  system tht lredy works.
+--- PAGE ---
+64AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 35 · APPENDICES
+Appendix A — What Is Needed From SGSU
+Every plce in this document mrked s requiring university dt, collected into one request
+list. Items needed for the demonstrtor re few; items needed for the pilot re mny, nd the
+first two months should be spent obtining them.
+# ITEM NEEDED FOR PREFERRED FORM NEEDED BY
+1 Progrmme structure for B.Tech nd
+BCA brnches, semesters, courses,
+credits
+Curriculum grph Spredsheet or the scheme
+document
+Phse 0
+2 Syllbus for two pilot courses with
+units, topics nd stted outcomes
+Curriculum grph; lesson genertion;
+golden set
+Document; outcomes
+confirmed by the hed of
+deprtment
+Phse 0
+ Course-outcome to progrmme-
+outcome mppings, nd which
+outcome set the university follows
+Attinment nd ccredittion reports Existing mpping mtrices Phse 2
+ Existing teching mteril for the pilot
+courses tht fculty re willing to
+shre
+Knowledge bse Slides, notes, lb mnuls,
+with ownership noted
+Phse 0
+5 Pst question ppers nd, if
+vilble, question-wise mrks
+Item bnk; evidence; clibrtion Ppers; mrks spredsheets Phse 2
+ Inventory of current systems: ERP or
+student system, lerning
+mngement system, emil suite,
+ttendnce, exmintion, similrity
+checker
+Integrtion pln; sign-on List with vendor, version nd
+export options
+Phse 0
+7 Smple exports: roster, sections,
+timetble, ttendnce, mrks
+Import tools Files with rel structure nd
+dummy or msked vlues
+Phse 1
+8 Clssroom fcts for two rooms: bord
+mke nd browser, projector,
+microphones, Wi-Fi coverge, typicl
+student devices
+Bord view; offline design; udio fetures A one-hour survey Phse 0
+ Acdemic rules nd clendr:
+ttendnce requirement, ssessment
+structure, grding scheme,
+exmintion dtes
+Attendnce nd performnce fetures; pilot
+schedule; embrgo dtes
+Regultions nd clendr Phse 0
+10 Position on student use of AI in
+coursework
+Policy modes Acdemic council decision or
+interim guidnce
+Phse 0
+11 Dt-protection ownership: who is
+responsible, existing privcy notice,
+pproch for students under 18
+Consent, retention, contrcts Nmed person; documents Phse 0
+12 Hosting position: cloud permitted,
+preferred provider, ny on-premises
+requirement
+Infrstructure Decision from IT nd
+ledership
+Phse 0
+1 Licences held for textbooks nd
+digitl librries
+Wht my be ingested List from the librry Phse 2
+1 Plcement office dt: recruiters,
+roles, required skills, pst
+plcements, pproved opportunities
+Creer fetures Whtever exists; msked
+personl dt
+Phse 
+15 Fculty prticipnts: two pilot
+techers,  mentor, two chmpions
+per deprtment
+Pilot Nmes nd time lloction Phse 0
+1 An operting owner for the pltform
+fter hndover
+Sustinbility A nmed unit Before Phse 7
+17 Agreement on pilot success
+mesures nd bselines
+Go or no-go decision Short signed note Phse 0
+--- PAGE ---
+65AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 36 · APPENDICES
+Appendix B — Sources
+The documents behind sttements tgged s source-derived, red in the first week of
+October 202. Vendor pges describe the vendors' own products; legl nd ccredittion
+summries re secondry commentry nd should be checked ginst the primry texts
+before ny forml relince.
+AI models nd services
+Google AI for Developers, "Gemini API Models", pge updted 
+October 202.
+ai.google.dev/gemini-api/docs/models
+OpenAI, "Models", API documenttion.
+developers.openai.com/api/docs/models
+Anthropic, "Models overview", Clude Pltform documenttion.
+platform.claude.com/docs/en/models/overview
+xAI, "Models", developer documenttion, pge updted 21
+September 202.
+docs.x.ai/developers/models
+Srvm AI, "Models" nd "Building for Indin Lnguges", API
+documenttion.
+docs.sarvam.ai/api/getting-started/models
+docs.sarvam.ai/api-reference-docs/building-for-india
+Retrievl technology
+"Best vector dtbses for production RAG in 202", The Engineer's
+Guide.
+engineersguide.substack.com/p/best-vector-databases-rag
+"Best Vector Dtbses for RAG in 202" nd "Best Rernkers for
+RAG in 202", Future AGI.
+futureagi.com/blog/best-vector-databases-for-rag-2026
+futureagi.com/blog/best-rerankers-for-rag-2026
+"Best RAG Embedding Models", Openlyer, September 202.
+openlayer.com/blog/embedding-models-rag-retrieval
+"Best Rernkers for RAG in 202", Mixpeek, tested July 202.
+mixpeek.com/curated-lists/best-rerankers
+Provider dt hndling
+"Privcy mp for Clude, GPT, Gemini 202", Axoflow.
+axoflow.com/blog/privacy-map-for-claude-gpt-gemini-2026
+"AI provider trining dt policy 202", BetterClw.
+betterclaw.io/blog/ai-provider-training-data-policy-2026
+Dt protection in Indi
+"Govt notifies finl DPDP Rules; sets stggered rollout",
+Storybord18, 1 November 2025.
+storyboard18.com/digital/breaking-govt-notifies-final-dpdp-rules
+-sets-staggered-rollout-with-key-obligations-for-data-fiduciarie
+s-84201.htm
+EY Indi, "The Digitl Personl Dt Protection Act, 202 nd Rules
+2025", November 2025.
+ey.com/content/dam/ey-unified-site/ey-com/en-in/pdf/2025/11/ey-i
+ndia-dpdp-act-2023-and-rules-2025-pov.pdf
+Lkshmikumrn & Sridhrn, "Digitl Personl Dt Protection
+Rules, 2025 Incrementl tweks nd the wy hed", 17 November
+2025.
+lakshmisri.com/insights/articles/digital-personal-data-protectio
+n-rules-2025-incremental-tweaks-and-the-way-ahead
+RAYSolute, "DPDPA Complince for Schools nd Higher Eduction
+Institutions", current to August 202.
+raysolute.com/dpdpa-compliance-guide-schools.html
+Acdemic integrity nd AI
+IISER Pune, "Guidelines for Genertive AI usge", dopted 11 Mrch
+202.
+iiserpune.ac.in/storage/media-library/782fda7c-a253-4024-81f9-95
+c9f1745f2f.pdf
+RAYSolute, "Genertive AI Acdemic Integrity Policy Frmework for
+Schools nd Higher Eduction", August 202.
+raysolute.com/genai-academic-integrity-policy-schools.html
+Accredittion
+Ntionl Bord of Accredittion, self-ssessment report formt nd
+evlution guidelines for undergrdute engineering progrmmes
+Tier II.
+nbaind.org/Files/UG-Eng-SAR-Tier-II-Second-Cycle-18-1-24_Format_
+20240425170122.pdf
+"NAAC to roll out binry ccredittion system", Creers0, 12
+Februry 2025; RAYSolute, "NAAC Binry nd MBGL Rediness
+Studio", note dted 2 August 202.
+news.careers360.com/naac-revamps-accreditation-process-will-impl
+ement-maturity-based-grading-current-grades-until-april-may-2025
+raysolute.com/naac-binary-mbgl-studio.html
+The institution
+Creers0 nd Collegeduni listings for SCOPE Globl Skills
+University, Bhopl (public directory informtion only).
+careers360.com/university/scope-global-skills-university-bhopal
+collegedunia.com/university/64367-scope-global-skills-university
+-sgsu-bhopal
+Not from these sources
+The four-lyer structure nd ll 8 fetures come from the project
+brief nd the tem's notes. The Pltform Core, the mstery model,
+the rchitecture nd ll recommendtions re this document's own
+design. Interoperbility stndrds nmed in Section 18 re cited
+from generl professionl knowledge nd should be version-
+checked when integrtion begins.

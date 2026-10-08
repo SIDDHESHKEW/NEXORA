@@ -1,0 +1,263 @@
+SECTION 13 · PART III
+Data Architecture and Database Model
+The brief lists 7 entities to investigte. They re orgnised here into nine domins,
+corrected where two nmes men one thing, nd extended with the entities tht rel
+workflows need but the list omits.
+IDENTITY AND ORGANISATION
+Tennt · User · Role · RoleAssignment ·
+Deprtment · Consent · StudentProfile ·
+FcultyProfile
+ACADEMIC STRUCTURE
+Progrm · Brnch · AcdemicTerm ·
+Semester · Course · Section · Enrollment
+· TechingAssignment · TimetbleSlot ·
+Room
+CURRICULUM GRAPH
+Unit · Topic · LerningOutcome ·
+PrerequisiteEdge · CourseOutcome ·
+ProgrmOutcome · OutcomeMpping
+CONTENT
+Lesson · LessonVersion · Block · Asset ·
+KnowledgeDocument · Chunk ·
+SourceCittion
+CLASSROOM
+ClssSession · SessionEvent ·
+Attendnce · StudentQuestion
+ASSESSMENT
+Item · ItemOption · Misconception ·
+Assessment · Rubric · Submission ·
+Response · Grde
+EVIDENCE AND LEARNER
+LerningEvent · MsteryStte ·
+Recommendtion · RiskFlg · StudyPln
+SKILLS AND CAREER
+Skill · OutcomeSkillMp · CreerRole ·
+RoleSkillRequirement · SkillEvidence ·
+Project · Certifiction · Compny ·
+Opportunity · Appliction
+AI AND GOVERNANCE
+AIInterction · PromptVersion ·
+ModelConfig · PolicySetting · AuditLog ·
+AnlyticsEvent · EvlRun
+Figure 5  Entity domins. Nmes in bold re dditions to the brief's list. Ech domin is owned by one ppliction module; other modules red
+it through tht module's interfce.
+Corrections to the brief's entity list
+BRIEF ENTITY HOW IT IS MODELLED
+Student, Fculty, Administrtor One User with role ssignments nd  profile tble per kind. A person cn hold more thn one role, for exmple
+ techer who is lso  hed of deprtment.
+Lecture, Question Nmed Lesson nd Item here. A lesson my spn more thn one clss hour; n item my be  question,  tsk
+or  prompt.
+Subject nd Course One entity, Course:  subject s offered in  progrmme nd semester. A Section is  group of students tking
+it in  term with  techer.
+Clssroom Split into Room ( physicl plce) nd ClssSession ( lesson version tught to  section t  time). Most
+fetures concern the session.
+PPT, Notes, Lecture Mteril Renderings Asset) of  LessonVersion. They re generted from blocks nd never edited independently.
+Quiz, Assignment Kinds of Assessment, ech  set of Items with settings. A live poll is n Assessment with one item.
+Student Performnce Not stored s n entity. It is derived from Grde, Response nd MsteryStte.
+AI Source SourceCittion:  link from  generted block or nswer to the Chunk it used.
+Lerning Event, Anlytics Event Kept seprte. Lerning events re cdemic evidence with long retention; nlytics events re product
+telemetry with short retention.
+Key relationships
+RELATIONSHIP CARDINALITY WHY IT MATTERS
+Progrm  Course  Unit  Topic →
+LerningOutcome
+1  mny t
+ech step
+The spine. Every other domin ttches to it.
+LerningOutcome  LerningOutcome
+PrerequisiteEdge)
+mny : mny Enbles gp trcing nd lerning pths. My cross courses nd semesters.
+LerningOutcome  CourseOutcome →
+ProgrmOutcome OutcomeMpping)
+mny : mny,
+weighted
+Accredittion ttinment is computed long this chin.
+
+=== PAGE 26 ===
+26AI-Native University Platform · Product & Architecture Blueprint · v1.0
+RELATIONSHIP CARDINALITY WHY IT MATTERS
+Course  Section  Enrollment  User 1  mny : mny Determines wht  student my see nd retrieve.
+Lesson  LessonVersion  Block; Block ↔
+LerningOutcome
+1  mny; mny
+: mny
+A block's tgs re wht mke coverge nd nlytics possible.
+Item  LerningOutcome; ItemOption →
+Misconception
+mny : mny;
+mny  1
+Lets  wrong nswer be explined, not only counted.
+ClssSession  LessonVersion, Section,
+TimetbleSlot
+mny  1 ech Fixes which version ws ctully tught to whom.
+Response  Item, User, ClssSession or
+Assessment
+mny  1 ech The rw mteril of evidence.
+LerningEvent  User, LerningOutcome, source
+record
+mny  1 ech One schem for ll evidence, whtever produced it.
+MsteryStte  User, LerningOutcome 1 per pir The lerner model's output; red by ll four lyers.
+LerningOutcome  Skill OutcomeSkillMp);
+CreerRole  Skill
+mny : mny Connects the syllbus to creers. Needs curtion.
+[REQUIRES SGSU DATA]
+KnowledgeDocument  Chunk; Chunk  Topic 1  mny; mny
+: mny
+Scopes retrievl to  course nd topic.
+Core tables, sketched
+learning_outcome(id, tenant_id, topic_id, code, 
+statement,
+  bloom_level, status)
+block(id, lesson_version_id, seq, type, content jsonb,
+  outcome_ids[], source_chunk_ids[], origin, 
+review_state)
+item(id, tenant_id, type, stem, difficulty, bloom_level,
+  outcome_ids[], review_state, origin)
+learning_event(id, tenant_id, student_key, outcome_id,
+  verb, object_type, object_id, score, max_score,
+  duration_ms, misconception_id, source_type, weight,
+  session_id, occurred_at)
+mastery_state(student_key, outcome_id, estimate,
+  evidence_weight, state, last_event_at, updated_at)
+chunk(id, document_id, text, embedding vector,
+  topic_ids[], trust_tier, visibility, embargo_until,
+  language, locator)
+Rules that apply to every table
+Tennt isoltion. Every row crries tenant_id; row-
+level security enforces it in the dtbse, not only in
+ppliction code.
+Pseudonymous nlytics. Evidence nd mstery use
+ student_key, not the user identifier. The mpping
+lives in the identity module nd is joined only for
+uthorised, nmed views.
+Immutble evidence. Lerning events nd udit logs
+re ppend-only. Corrections re new events.
+Versioned content. A published lesson version is
+never chnged; edits crete  new version.
+Origin recorded. Blocks nd items store whether they
+were written by  person, generted, or generted
+nd edited, nd who pproved them.
+Retention by clss of dt. Ech tble belongs to 
+retention clss set in governnce Section 21.
+
+=== PAGE 27 ===
+27AI-Native University Platform · Product & Architecture Blueprint · v1.0
+SECTION 14 · PART III
+The Learning Evidence and Mastery Model
+Ten fetures in the brief detect wekness, nd the dministrtor's exmple question sks
+which subjects hve the highest lerning gps. All of them depend on one clcultion. This
+section defines it, becuse without  shred definition "0% struggle with bckpropgtion"
+hs no mening.
+Figure   From  single response to n ction. Steps 2 to  run in the Pltform Core within seconds of the response.
+The event
+PRODUCT DESIGN  Every piece of evidence is one record
+with the sme shpe, modelled on the widely used
+ctor-verb-object pttern of the xAPI lerning-record
+stndrd so tht it cn be exported or exchnged lter.
+{ "actor":   "student_key:7f3a…",
+  "verb":    "answered",
+  "object":  { "type": "item", "id": "itm_2041" },
+  "outcome": "CS501-U4-T3-LO4",
+  "result":  { "score": 0, "max": 1,
+               "duration_ms": 41200,
+               "misconception": "mc_chain_rule" },
+  "context": { "source": "class_check",
+               "weight": 0.5, "session": "ses_0912",
+               "section": "5A" },
+  "time":    "2026-10-07T10:42:13+05:30" }
+Evidence is not all equal
+RECOMMENDATION  Strting weights, to be clibrted ginst
+exmintion results fter the first semester.
+SOURCE WEIGHT REASONING
+Invigilted test or exm item 1.0 Controlled conditions
+Grded clss quiz in lock
+mode
+0.8 Timed, supervised
+Rubric-mrked ssignment 0. Authorship less certin
+Live concept check or poll 0.5 Low stkes; some guessing
+Self-pced prctice 0. Unsupervised; repeted
+ttempts
+"I m lost" tp; tutor help
+request
+0.1 A signl of difficulty only
+The estimate and the four states
+PRODUCT DESIGN  For ech student nd outcome the model keeps n estimte between 0 nd 1 nd  mesure of how
+much evidence supports it. The estimte is  weighted verge of scores, djusted for item difficulty, in which older
+evidence counts for less ( strting hlf-life of 0 dys). It is delibertely simple. A techer cn be shown exctly which
+nswers produced  stte, which is not true of  neurl knowledge-trcing model, nd it works from the first quiz.
+STATE RULE MEANING FOR THE STUDENT AND TEACHER
+Lerning Evidence weight below the minimum
+(strting vlue 1.2 for exmple one
+grded quiz item nd one live check)
+Too little evidence to judge. Shown s "in progress", never s  wekness.
+Wek Enough evidence, estimte below 0. Hs ttempted this nd is not yet getting it right. Triggers prctice nd, t
+clss level,  techer prompt.
+Known Enough evidence, estimte 0. to 0.85 Cn do stndrd problems. Appers in spced revision.
+Mstered Estimte bove 0.85, including hrder
+items, nd confirmed gin fter t
+lest two weeks
+Relible nd retined. Counts s skill evidence.
+1 · CAPTURE
+Response
+A poll nswer, quiz
+item, submission,
+exm mrk, or
+prctice ttempt
+→
+2 · NORMALISE
+Lerning event
+Tgged to n
+outcome; given 
+source type nd
+weight
+→
+3 · ESTIMATE
+Mstery stte
+Per student nd
+outcome: estimte,
+evidence weight, stte
+→
+4 · DETECT
+Gps nd risk
+Clss-level gps;
+prerequisite trcing;
+mentor flgs
+→
+5 · ACT
+Recommendtions
+To the student, the
+techer nd, in
+ggregte, the
+university
+
+=== PAGE 28 ===
+28AI-Native University Platform · Product & Architecture Blueprint · v1.0
+The same model at five levels
+Student: stte per outcome, with the evidence behind
+it.
+Session: shre of respondents correct per outcome,
+live.
+Section: distribution of sttes per outcome. A
+gap.detected event fires when t lest 0% of
+students with enough evidence re Wek nd t lest
+ten hve responded.
+Course nd progrmme: the sme outcome
+compred cross sections nd terms;  gp tht
+recurs is  curriculum signl.
+University: outcomes rolled up through the course-
+outcome nd progrmme-outcome mppings.
+Rules that keep it honest
+No stte is ssigned from  single response.
+Every stte shows its evidence count; low-evidence
+views re mrked.
+A techer cn override  stte with  reson; the
+override is itself n event.
+Students cn see why  stte ws ssigned nd wht
+would chnge it.
+Thresholds nd weights re configurtion, reviewed
+ech semester ginst exm outcomes.
+Predictive risk models re not ttempted until two to
+three semesters of dt exist. D
+
+=== PAGE 29 ===
+29AI-Native University Platform · Product & Architecture Blueprint · v1.0

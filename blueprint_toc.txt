@@ -1,0 +1,551 @@
+2026
+AI-Native University
+0
+FRONT MATTER
+01 Executive Summry 3
+02 Bckground, Problem nd Vision 4
+03 Trget Users 6
+04 Product Principles 7
+05 Product Architecture: Four Lyers on One Core 8
+06 Feture Consolidtion: 8 Fetures, 1 Cpbilities 10
+07 Lyer 1  AI Techer Studio 12
+08 Lyer 2  AI Smrt Clssroom 14
+09 Lyer   AI Student nd Creer Intelligence 17
+10 Lyer   University Intelligence 19
+11 Cross-Lyer Connections: The Intelligence Loop 21
+12 System Architecture 23
+13 Dt Architecture nd Dtbse Model 25
+14 The Lerning Evidence nd Mstery Model 27
+15 Knowledge Pipeline nd RAG Architecture 29
+16 AI Architecture: Orchestrtion nd the Question of
+17 AI Model Lndscpe nd Decision Mtrix 33
+18 API Architecture 36
+19 Event Architecture nd Rel-Time Flow 38
+20 Identity, Authentiction nd Access Control 40
+21 Security, Privcy nd Dt Protection 42
+22 Responsible AI nd Acdemic Integrity 44
+23 Sclbility, Relibility nd Offline Opertion 46
+24 Technology Stck 47
+25 UX Structure nd User Journeys 48
+26 Wht Cn Actully Be Built 49
+27 Gp Anlysis: Wht We Are Currently Missing 51
+28 The MVP One Closed Loop 54
+29 Demonstrtion Scenrio 56
+30 Development Rodmp 58
+31 Tem Structure 60
+32 Risks nd Mitigtions 61
+33 Future Scope 62
+34 Finl Product Definition 63
+35 Appendix A  Wht Is Needed From SGSU 64
+36 Appendix B  Sources 65
+0
+SECTION 01 · PART I
+1
+The learning outcome is the join key
+2
+The lesson is structured data, not a
+3
+One evidence store, one learner
+0
+SECTION 02 · PART I
+0
+Figure 1  The chin the brief describes. Ech stge reds from nd writes to the sme Pltform Core, which is wht lets the lst stge chnge
+1
+Prepre
+2
+Tech
+3
+Lern
+3
+Grow
+4
+Improve
+0
+SECTION 03 · PART I
+0
+SECTION 04 · PART I
+1. AI prepares, teacher validates, university controls,
+2. Evidence, not surveillance
+3. One platform
+4. Grounded by default
+5. Everything is tagged to a learning outcome
+6. Advice goes to a person who can act, with the reason
+0
+SECTION 05 · PART II
+1 Curriculum
+2 Lesson &
+5 Assessment
+7 Evidence Store
+8 Lerner Model
+10 Coverge &
+11 Skills Grph &
+12 Lnguge &
+0
+SECTION 06 · PART II
+89 Features, 14
+1 Curriculum Grph L12 Acdemic Librry · L My Course Spce · L7
+2 Lesson nd Content L1 Lecture Cretor · L1 Uplod · L15 Notes · L1
+8 Level control · L111 Review · L112
+18 Assets · L11
+17 Cpture · L218 Clss Summry ·
+5 Lecture Compnion · L Personlised Notes
+10 Source-Grounded AI · L2 Context-Awre AI ·
+7 Ask From My Course
+11
+Dynmic Explntion · L21 Visul Genertor · L21
+8 Decision Support
+5 Assessment Engine L17 Assessment Studio · L28 Polls · L210 Concept
+1 Live Mode · L22 Smrtbord · L25 QR Join · L2
+7 Anonymous Mode · L212
+15 Attendnce · L220 Offline · L22
+27 Subject Modes
+7 Evidence Store nd
+8 Lerner Model
+21 Live Adptive ·
+0 Risk Detection · L2
+8 Adptive Engine · L1
+15 Gp Detection · L2
+25 Attendnce · L27 Growth
+1 Techer Dshbord · L1 Student Dshbord ·
+10 Study Plnner · L11
+12 Spced Revision · L28
+10 Coverge nd
+15 Course Progress · L117 Complince · L222
+11 Skills Grph nd
+17 Pssport · L18 Skill Gp · L1 Rodmp ·
+20 Industry Mpping · L21 Opportunities · L22
+11 Grdute Outcomes
+12 Lnguge nd
+25 Accessibility · L22 Multilingul · L2
+20 Intelligence Loop · L1
+2 Curriculum Intelligence ·
+5 Deprtment
+10 Resource Intelligence
+0
+CORE CAPABILITY BRIEF FEATURES IT SERVES WHAT IS BUILT ONCE
+28 Integrity nd AI Sfety · L AI Governnce Roles, consent, policy modes, model llow-list, udit log.
+0
+SECTION 07 · PART II
+1 Techer Dshbord Tody's clsses, lessons witing review, nd clss lerts
+2 University Acdemic
+1 Curriculum Grph; model-
+5 AI Notes Genertor Techer notes, student notes, revision sheets, definitions
+7 AI Assessment Studio Questions of every type, ech linked Topic  Outcome →
+8 Difficulty nd Level
+10 Source-Grounded AI Distinguishes university, techer, pproved-reference nd
+11 Techer Review
+12 Version Control Drft, revised, finl nd previous-yer versions, so 
+15 Course Progress
+17 Acdemic Complince
+18 Reusble Teching
+20 Intelligence Loop Curriculum → preprtion → review → clssroom →
+11.
+Everything bove Events, evidence store, lerner
+0
+SECTION 08 · PART II
+1 Live Lecture Mode A session: one lesson version, one section, one time. The
+2 Smrtbord
+5 Student Connection Rotting QR code or clss code; students join with their
+7 Anonymous Question
+8 Live Polls Opinion or knowledge polls from the item bnk or written
+10 Instnt Concept Check One or two outcome-tgged items offered t checkpoints
+11 Dynmic Explntion Simpler wording, n nlogy or nother exmple on
+12 Interctive Whitebord A shred cnvs over or beside slides; strokes sved to
+15 Attendnce Integrtion Presence from the rotting code plus  device hertbet
+17 Lecture Recording nd
+18 Automtic Clss
+20 Emergency nd Offline
+21 Live Adptive Teching
+22 Lerning Objective
+25 Accessibility Mode Cptions, high contrst, text scling nd  screen-reder-
+27 Subject-Specific Modes Code mode with editor nd runner; mthemtics mode
+28 Acdemic Integrity nd
+0 Erly Lerning-Risk
+0
+SECTION 09 · PART II
+1 Personlised Dshbord Tody's clsses, wht is due, ttendnce, nd three next
+2 Acdemic Profile Degree, brnch, semester, subjects, history, interests,
+5 Lecture Compnion After clss: notes, summry, the student's own nswers,
+7 Ask From My Course Questions nswered from the student's enrolled courses,
+8 Adptive Lerning
+1 Mstery → plnner nd prctice B PH2
+10 AI Study Plnner A relistic weekly pln from clsses, dedlines, wek
+11 Smrt Revision System Wht to revise, when nd how deeply, hed of
+12 Spced Revision Returns erlier outcomes t widening intervls. Merged
+15 Knowledge Gp
+1 Wek outcome → bridge content B PH2
+17 Skill Pssport Skills with  level nd the evidence behind ech. Verified
+11 Mstery nd projects → portfolio,
+18 Skill Gp Engine Trget role profile minus current pssport, in priority order. Role profiles; pssport C11 Creer gol → rodmp B PH2
+20 Industry nd Compny
+11 Plcement dt → rodmp E PH3
+21 Internship nd
+22 Portfolio Builder Assembled from verified work; public only if the student
+11 Pssport → shreble pge A PH3
+25 Attendnce Intelligence Attendnce by subject ginst the university rule, with 
+12 Any content → preferred form B PH2
+27 Student Growth Timeline The journey cross semesters. Needs t lest two
+11 History → portfolio nrrtive A PH3
+28 AI Student Success
+0
+SECTION 10 · PART II
+1 University-Wide
+2 Curriculum Intelligence Finds outcomes tht re wek every time they re tught,
+5 Deprtment Intelligence The hed of deprtment's view: progress, difficult
+7 University Knowledge
+8 Institutionl Decision
+10 Resource nd
+11 Grdute Outcome
+0
+SECTION 11 · PART II
+1
+Prepre
+1
+Approve nd publish
+2
+Tech nd check
+4
+Curriculum chnge
+4
+Aggregte
+1
+Techer feedbck
+3
+Student ctions
+1 Techer picks B.Tech CSE 
+2 A drft lesson ppers; techer
+3 Lesson opens on the bord;
+4 Students nswer  five-
+5 Techer's console shows
+6 Ech student who missed it
+7 Techer Studio shows "Re-
+8 Hed of deprtment sees the
+9 Den's office sees  recurring
+0
+What each layer gives every other
+0
+SECTION 12 · PART III
+0
+DECISION CHOICE WHY REVISIT WHEN
+0
+SECTION 13 · PART III
+0
+RELATIONSHIP CARDINALITY WHY IT MATTERS
+1
+Lets  wrong nswer be explined, not only counted.
+0
+SECTION 14 · PART III
+0 Controlled conditions
+8 Timed, supervised
+5 Low stkes; some guessing
+1 A signl of difficulty only
+85 Cn do stndrd problems. Appers in spced revision.
+0
+The same model at five levels
+0
+SECTION 15 · PART III
+1
+Register
+2
+Prse
+3
+Chunk
+4
+Enrich
+5
+Embed
+6
+Index
+1
+Request
+2
+Access filter
+3
+Hybrid retrievl
+4
+Rernk
+5
+Generte
+6
+Verify nd lbel
+0
+Reducing hallucination
+0
+SECTION 16 · PART III
+1
+Envelope
+2
+Policy
+3
+Minimise
+4
+Compose
+5
+Route
+6
+Vlidte
+7
+Record
+0
+Why the gateway is not optional
+0
+SECTION 17 · PART III
+8 Flsh (stble); Gemini .1 Pro (preview); .5 Flsh-Lite.
+8 Live, .5 Trnscribe, .8 Flsh TTS, .5 Live Trnslte
+1.
+Embedding: Gemini Embedding, Embedding 2 (multimodl, preview).
+1 Sol (blnced), GPT Lun (high
+5.
+Three cler tiers; mture structured output nd tool clling; strong
+22 Indin
+0
+Function-by-function decisions
+5 Qulity-criticl nd synchronous. Long
+1 Sol; then
+1 Pro
+1 Sol to verify
+1 Pro
+8 Flsh High volume, fst, nd reds slide imges
+5
+Presenttion
+5 Interctive speed with enough depth to explin;
+1 Sol
+8 Flsh Lowest ltency mtters most in front of  clss. Techer prompt, slide context →
+11 Yes; under 
+8 Flsh for scns
+8 Flsh
+5
+Trnscribe; gpt-
+8 Flsh
+5
+Code explntion nd
+1 Sol
+0
+FUNCTION
+11 Btch Yes No GPT.1 Sol
+21 Ner Yes No Rules only
+8 Ner; 100
+1 Sol
+5 Flsh-Lite Smll, fst, high-volume decisions: grouping
+5
+Live trnsltion nd
+5 Live Trnslte;
+8 Live
+0
+SECTION 18 · PART III
+202 Accepted
+0
+SECTION 19 · PART III
+0
+One class hour, end to end
+1 Approves nd
+00 Strts session Lods cched
+05 Advnces slides Follows within
+18 Sees grouped
+30 Lunches concept
+32 Crd: "1% on
+45 Runs five-item exit
+50 Ends session; opens
+0
+SECTION 20 · PART III
+0
+RESOURCE STUDENT TEACHER
+0
+SECTION 21 · PART III
+18. This section sets the controls, nd reds Indi's dt-protection lw s  design
+2023 AND RULES 2025 SOURCE-DERIVED
+2027. Published
+18. Consent records re versioned nd withdrwble.
+0
+Proposed retention schedule [REQUIRES SGSU DATA]
+0
+SECTION 22 · PART III
+0
+PRINCIPLE COMMITMENT MECHANISM
+4
+RECOMMENDATION  Agree in writing with fculty representtives wht teching nlytics will nd will not be used for:
+0
+SECTION 23 · PART III
+250 Smll by web stndrds.
+500 A smll worker pool; provider rte limits mtter most.
+000 The min AI volume; cching of course context nd  fst-tier
+200 KB.
+0
+SECTION 24 · PART III
+0
+SECTION 25 · PART III
+0
+SECTION 26 · PART IV
+0
+Two redings of this tble would be wrong. The first is tht 81 of 8 fetures re esy. Clss is given for ech feture in
+0
+FEATURE CLASS
+2. Second, structured curriculum
+0
+SECTION 27 · PART IV
+0
+No cnonicl lesson formt A generted file cnnot be reviewed per
+0
+No definition of mstery or
+0
+Rel-time design for clss is
+0
+PRODUCT
+0
+Lbs nd prcticl courses re
+1
+No mentor, plcement or
+1
+No techer-ssist for mrking Mrking is  lrge shre of techer time
+2
+USER EXPERIENCE
+0
+Students re on phones with
+0
+PROBLEM WHY IT MATTERS SOLUTION DEVELOPMENT REQUIREMENT DATA REQUIREMENT PRIORITY
+1
+No feedbck route on AI nswers Errors go unreported nd trust erodes Report nd rte on every AI output; review queue
+1
+DATA
+0
+No prerequisite links between
+1
+No skills txonomy or outcome-
+1
+No history Predictive fetures nd trends re
+1
+AI
+0
+Model nd vendor churn Nmed models re retired within months Gtewy with routing s configurtion nd 
+0
+Answer keys nd generted
+0
+Usge could run wy A loop or misuse cn exhust  budget
+1
+UNIVERSITY INTEGRATION
+0
+Exmintion mrks live outside
+1
+Accredittion formt is not
+2
+SECURITY
+0
+PROBLEM WHY IT MATTERS SOLUTION DEVELOPMENT REQUIREMENT DATA REQUIREMENT PRIORITY
+0
+Answer keys nd ppers before
+0
+No independent security review A student tem will miss things Externl penetrtion test before the pilot Budget nd remedition time — P1
+0
+No owner fter the student tem
+1
+LEGAL AND PRIVACY
+2027
+Section 21 fiduciry nd processor contrcts,
+0
+No institutionl AI-use policy Techers nd students do not know
+0
+Copyright in textbooks nd third-
+1
+SCALABILITY
+1
+Anlytics on the trnsctionl
+0
+SECTION 28 · PART IV
+1
+Crete
+2
+Approve
+3
+Tech
+4
+Check
+5
+Anlyse
+6
+Personlise
+7
+Feed bck
+8
+Aggregte
+0
+WEEKS BUILD AI WORK PROOF AT THE END
+2 Repository, environments, schem for
+8 Quiz in lock mode; evidence intke;
+10 Admin tile; AI log; polish; lod test;
+0
+SECTION 29 · PART IV
+501 Artificil Intelligence · Unit  Mchine
+1 Techer Studio Dr. Verm signs in nd sees tody's clss. She chooses
+2 Lecture Builder She sets 50 minutes, intermedite, exmple-hevy,
+3 Review Ech block shows its sources: three cite her PDF by pge;
+4 Publish One ction sends the deck, student notes nd exit quiz to
+5 Clssroom The bord shows the lesson nd  QR code. 57 of 0
+6 Clssroom After ech of the first three outcomes she lunches  one-
+7 Clssroom The exit quiz runs in lock mode. Results on the console:
+8 Student phone Riy nswered both LO items wrong with tht sme error.
+9 Student phone She sks the tutor why the hidden-lyer grdient needs
+10 Skill Pssport Riy's trget role is Mchine Lerning Engineer. "Neurl
+11 Techer Studio Tht evening Dr. Verm's home screen shows  re-tech
+12 Admin The cdemic dmin's overview shows: "Bckpropgtion
+501 LO wek for 58% of 11 students cross 2 of 2
+1 Network structure 88%
+2 Forwrd pss 7%
+5.
+ADMIN · OVERVIEW TILE CSE SEM 5
+0
+SECTION 30 · PART IV
+24
+Phse 0 · Reserch nd dt 2 MONTHS
+1
+Phse  · Smrt Clssroom LAYER 2
+4
+Phse 7 · Integrtion nd pilot PILOT 1 · TWO COURSES PILOT 2 · ONE DEPARTMENT
+18
+Core; curriculum for
+0
+PHASE FEATURES DEPENDENCIES APIS DATABASE FRONT END BACK END AI TESTING OUTPUT
+27 Skills txonomy;
+2
+Evidence for
+0
+SECTION 31 · PART IV
+0 Yes, with  fculty mentor
+0 Yes
+1 Yes
+1 Yes, with review by n
+1 Yes for the demonstrtor; senior
+2 Yes
+0 No. University counsel
+2 Not pplicble
+5 Not pplicble
+7 Not pplicble
+0
+SECTION 32 · PART IV
+0
+SECTION 33 · PART IV
+0
+SECTION 34 · PART IV
+0
+SECTION 35 · APPENDICES
+1 Progrmme structure for B.Tech nd
+2 Syllbus for two pilot courses with
+5 Pst question ppers nd, if
+7 Smple exports: roster, sections,
+8 Clssroom fcts for two rooms: bord
+10 Position on student use of AI in
+11 Dt-protection ownership: who is
+18
+Consent, retention, contrcts Nmed person; documents Phse 0
+12 Hosting position: cloud permitted,
+15 Fculty prticipnts: two pilot
+17 Agreement on pilot success
+0
+SECTION 36 · APPENDICES
+21
+September 202.
+2026
+Dt protection in Indi
+17 November
+11 Mrch
+12
+Februry 2025; RAYSolute, "NAAC Binry nd MBGL Rediness

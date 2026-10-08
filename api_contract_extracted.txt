@@ -1,0 +1,147 @@
+# 11. COMPLETE API CONTRACT
+
+Base path `/api`, JSON, UTF-8, `Authorization: Bearer <jwt>` unless noted. Times are ISO-8601 UTC. Percentages are integers 0–100 (`pct`), estimates floats 0–1. Ids are integers. **Provenance fields:** every aggregate response carries `provenance: "LIVE" | "SEEDED" | "MIXED"` and (where useful) `seeded_note` so the UI can render `DEMONSTRATION DATA` chips.
+
+## 11.0 Conventions
+**Error envelope** `{ "error": { "code": "STRING", "message": "text", "details": [{"field":"x","issue":"y"}]?, "trace_id": "abc" } }` — codes in §9.8.
+**Status enums** `LessonStatus = DRAFT|REVIEWED|APPROVED|PUBLISHED` · `MasteryStatus = STRONG|DEVELOPING|WEAK`.
+**Shared types**
+```ts
+User        = { id, name, role: "STUDENT"|"TEACHER"|"ADMIN", student_id?, teacher_id?, section_id? }
+Outcome     = { id, code: "LO4", statement, kind: "OUTCOME"|"PREREQUISITE", prerequisite_ids: number[] }
+Block       = { id, seq, type: BlockType, title?, content: object, outcome_ids: number[], origin: "AI"|"EDITED", source_id? }
+Lesson      = { id, topic_id, title, status: LessonStatus, generation_mode: "LIVE"|"FALLBACK",
+                blocks: Block[], source: Source|null, unedited_ai_pct: number, approved_at?, published_at? }
+Source      = { id, title, citation, approved: boolean }
+StudentQuestion = { id, seq, stem, learning_outcome_id, options: {id,label,text}[] }   // never includes is_correct
+MasteryItem = { outcome: Outcome, percent, estimate, status: MasteryStatus, evidence_count,
+                prior_note: "Pre-class diagnostic (sample)", provenance: "MIXED" }
+SessionState = { id, status: "LIVE"|"ENDED", version, lesson: { id, title, slides: Block[] },
+                 section_id, current_slide_index, current_outcome_id|null,
+                 quiz: { status: "NOT_STARTED"|"OPEN"|"CLOSED", submitted_count, total_participants },
+                 active_poll: { id, status, question: StudentQuestion, counts?: Record<optionId,number> }|null,
+                 active_prompt: { id, text }|null, participants_count, join_url }
+```
+
+## 11.1 AUTH
+| ID | Method & path | Auth / role | Request | Success response | Errors | DB ops | AI | FE consumer (screen · feature) |
+|---|---|---|---|---|---|---|---|---|
+| A01 | POST `/api/auth/demo-login` | none | `{role:"TEACHER"\|"STUDENT"\|"ADMIN"}` | 200 `{access_token, token_type:"bearer", expires_in, user: User}` | 422 invalid role | R users/students/teachers; W audit_logs(LOGIN) | — | SC02 · F02 |
+| A02 | GET `/api/auth/me` | any | — | 200 `User` | 401 | R users | — | AppShell bootstrap · F02 |
+| A03 | POST `/api/auth/logout` | any | — | 204 | 401 | W audit_logs | — | AppShell · F02 |
+| SYS01 | GET `/api/config` | any | — | 200 `{thresholds:{strong:70,developing:50}, status_labels:{student:{WEAK:"Needs Attention",…},staff:{WEAK:"Weak",…}}, demo:{allow_audience_join,ai_mode:"LIVE"\|"FALLBACK_ONLY"}, university:"Scope Global Skills University (SGSU)"}` | 401 | R app_settings | — | all screens (badges) · F16 F39 |
+| SYS02 | GET `/api/health` | none | — | 200 `{status:"ok", db:true, ai:"configured"\|"fallback"}` | — | R (ping) | — | ops only (internal) |
+
+## 11.2 CURRICULUM (courses · topics · learning outcomes · sections)
+| ID | Method & path | Role | Request | Response | Errors | DB | FE consumer |
+|---|---|---|---|---|---|---|---|
+| C01 | GET `/api/courses` | any | — | 200 `[{id, code, name, programme, semester, sections:[{id,name,enrolled_count}], topic_count}]` | 401 | R courses, class_sections, topics | SC04, SC05 |
+| C02 | GET `/api/courses/{id}` | any | — | 200 `{…course, topics:[{id,title,seq,outcome_count}]}` | 404 | R courses, topics | SC04, SC05 |
+| C03 | GET `/api/topics/{id}` | any | — | 200 `{id, title, course_id, outcomes: Outcome[] (LO1–4), prerequisites: Outcome[] (P1,P2)}` | 404 | R topics, learning_outcomes, prerequisites | SC04, SC05, SC10 |
+| C04 | GET `/api/learning-outcomes?topic_id=&kind=` | any | query | 200 `Outcome[]` | 422 | R learning_outcomes | SC05, SC10, SC12 |
+| C05 | GET `/api/sections?course_id=` | TEACHER | query | 200 `[{id,name,course_id,enrolled_count}]` | 403 | R class_sections | SC04, SC06 |
+| S01 | GET `/api/sources?topic_id=` | any | query | 200 `Source[]` (approved only; citation fields only — `body_text` is never returned to clients) | — | R sources | SC05, SC17 |
+
+## 11.3 LESSONS & AI GENERATION & APPROVAL
+| ID | Method & path | Role | Request | Response | Errors | DB ops | AI | FE consumer |
+|---|---|---|---|---|---|---|---|---|
+| L01 | GET `/api/lessons?topic_id=&status=` | TEACHER (own); STUDENT sees PUBLISHED only | query | 200 `[{id,title,status,generation_mode,updated_at}]` | 403 | R lessons | — | SC05 empty/list, SC06 lesson select |
+| L02 | GET `/api/lessons/{id}` | TEACHER own / STUDENT published | — | 200 `Lesson` | 403/404 | R lessons, lesson_blocks, sources | — | SC05, SC06 |
+| L03 | POST `/api/lessons/generate` | TEACHER | `{topic_id, duration_min?:number(default 50), style?:string[]}` | 201 `Lesson` (status DRAFT) | 404 topic; 422; 429 | R topics, LOs, sources; W lessons, lesson_blocks, ai_interactions, audit_logs | `generate_lesson` (25 s → fallback) | SC05 · F05 |
+| L04 | PATCH `/api/lessons/{id}/blocks/{block_id}` | TEACHER own | `{title?:string, content:object}` | 200 `Block` (origin=EDITED) | 409 if lesson APPROVED/PUBLISHED; 422 | W lesson_blocks, audit_logs | — | SC05 · F06 |
+| L05 | POST `/api/lessons/{id}/blocks/{block_id}/regenerate` | TEACHER own | `{instruction?:string}` | 200 `Block` | 409 status; 429 | W lesson_blocks, ai_interactions | `generate_lesson(scope=block)` | SC05 · F06 |
+| L06 | POST `/api/lessons/{id}/review` | TEACHER own | — | 200 `Lesson` (REVIEWED) | 409 `INVALID_STATUS_TRANSITION` | W lessons, audit_logs | — | SC05 · F07 |
+| L07 | POST `/api/lessons/{id}/approve` | TEACHER own | — | 200 `Lesson` (APPROVED, `approved_at`) | 409 unless REVIEWED | W lessons (status, approved_by, content_hash), audit_logs | — | SC05 · F07 |
+| L08 | POST `/api/lessons/{id}/publish` | TEACHER own | — | 200 `Lesson` (PUBLISHED) | 409 unless APPROVED | W lessons, audit_logs | — | SC05 · F07 |
+
+**Generated lesson content schema (validator):** blocks in order `TITLE` · `OBJECTIVES` (one objective per LO) · `EXPLANATION` ×4 (one per LO, `outcome_ids=[loId]`) · `KEY_CONCEPTS` (list) · `EXAMPLE` (worked backpropagation example, tagged LO4) · `MISCONCEPTION` (tagged LO4; mentions "output error vs hidden-layer weight update") · `QUICK_CHECK` (question + answer, tagged LO4) · `SOURCE` (citation text must equal the approved source citation). Each block `content` is `{text}` or `{items:[…]}` or `{question,answer}`.
+
+## 11.4 SESSIONS · ATTENDANCE · CLASSROOM
+| ID | Method & path | Role | Request | Response | Errors | DB ops | FE consumer |
+|---|---|---|---|---|---|---|---|
+| SE01 | POST `/api/sessions/start` | TEACHER own section | `{lesson_id, section_id}` | 201 `{session_id, join_url, state: SessionState}` | 409 `LESSON_NOT_PUBLISHED`; 403 scope; 404 | R lessons; W sessions (ends prior LIVE one), audit_logs | SC06 |
+| SE02 | POST `/api/sessions/{id}/join` | STUDENT (own section) | — (or `{display_name}` if `ALLOW_AUDIENCE_JOIN`) | 200 `{state: SessionState}` (idempotent) | 409 `SESSION_NOT_LIVE`; 403 scope | W session_participants (upsert), sessions.version++ | SC11 |
+| SE03 | GET `/api/sessions/{id}` | TEACHER own / STUDENT participant | — | 200 `SessionState` (student view strips keys; teacher view adds `poll.counts`, `participants:[{id,name,joined_at,quiz_submitted}]`) | 403/404 | R sessions, polls, participants | SC06, SC11 (polling fallback + restore) |
+| SE04 | POST `/api/sessions/{id}/slide` | TEACHER own | `{action:"NEXT"\|"PREV"\|"GOTO", index?:number}` | 200 `SessionState` | 409 not live; 422 index out of range | W sessions (index, version++) | SC06 |
+| SE05 | POST `/api/sessions/{id}/prompts` | TEACHER own | `{text: string(1–280)}` | 201 `{id,text}` | 409; 422 | W session_prompts, sessions.active_prompt_id, version++ | SC06 |
+| SE06 | POST `/api/sessions/{id}/quiz/start` | TEACHER own | — | 200 `SessionState` (quiz OPEN) | 409 `SESSION_NOT_LIVE`; 409 no participants | W sessions, audit_logs | SC06 |
+| SE07 | POST `/api/sessions/{id}/quiz/close` | TEACHER own | — | 200 `{state, summary:{submitted, class_pct_by_outcome[], weak_outcomes[]}}` | 409 not open | W sessions, audit_logs; triggers class gap evaluation + `warm_reteach` | SC06 |
+| SE08 | POST `/api/sessions/{id}/end` | TEACHER own | — | 200 `{session_id, status:"ENDED"}` | 409 | W sessions (ENDED, ended_at) | SC06 |
+| SE09 | GET `/api/sessions/{id}/report` | TEACHER own | — | 200 `{session, attendance:{present,total}, polls:[{question,pct_correct}], quiz:{submitted, pct_by_outcome[]}, provenance}` | 403/404 | R participants, polls, responses | SC06 → SC08 |
+| SE10 | GET `/api/sessions/active` | STUDENT | — | 200 `{session_id, join_url}` | 404 `NO_ACTIVE_SESSION` | R sessions by student's section | SC11 |
+| WS | WS `/ws/sessions/{id}?token=` | TEACHER own / STUDENT participant | server→client only | messages in §15.3 | close 4401 unauthenticated / 4403 scope | R sessions | SC06, SC11 |
+
+## 11.5 POLLS
+| ID | Method & path | Role | Request | Response | Errors | DB | FE |
+|---|---|---|---|---|---|---|---|
+| P01 | POST `/api/polls` | TEACHER own session | `{session_id, question_id}` (question purpose=POLL or EXIT_QUIZ item; tagged to a LO) | 201 `{poll_id, question: StudentQuestion}` | 409 not live; 404 | W polls; closes any open poll; sessions.active_poll_id | SC06 |
+| P02 | POST `/api/polls/{id}/respond` | STUDENT participant | `{option_id, idempotency_key}` | 200 `{accepted:true}` | 409 `ALREADY_ANSWERED` (returns original); 409 poll closed; 422 option not in question | W responses, learning_events (LIVE_POLL, w 0.5), mastery (recompute LO) | SC11 |
+| P03 | POST `/api/polls/{id}/close` | TEACHER own | — | 200 `{poll_id, status:"CLOSED"}` | 409 | W polls, sessions.version++ | SC06 |
+| P04 | GET `/api/polls/{id}/results` | TEACHER own (live counts); STUDENT after close | — | 200 `{question_id, correct_option_id (only if CLOSED), counts:{optionId:n}, total, pct_correct}` | 403 | R responses | SC06, SC11 |
+
+## 11.6 QUESTIONS · ASSESSMENTS · QUIZZES · RESPONSES · EVIDENCE
+| ID | Method & path | Role | Request | Response | Errors | DB ops | AI | FE |
+|---|---|---|---|---|---|---|---|---|
+| Q01 | GET `/api/questions?topic_id=&purpose=` | TEACHER | query | 200 `[{id,seq,stem,learning_outcome_id,purpose,options:[{id,label,text,is_correct,misconception:{tag,label}|null}],explanation}]` | 403 | R questions, options, misconceptions | — | SC07, SC06 (poll picker) |
+| Q02 | POST `/api/quiz/submit` | STUDENT self | `{context:"EXIT_QUIZ"\|"PRACTICE", session_id? (EXIT_QUIZ), set_id? (PRACTICE), idempotency_key, answers:[{question_id, option_id, duration_ms?}]}` | 200 `QuizResult` below | 409 `QUIZ_NOT_OPEN`; 422 (not all questions, foreign question/option, duplicates); 409 duplicate → 200 with `duplicate:true` and stored result | **one transaction:** W responses, learning_events, mastery, recommendations, session_participants.quiz_submitted_at; then events/WS | — (recap job async) | SC11, SC12 |
+| Q03 | GET `/api/quiz/result?session_id=\|set_id=` | STUDENT self | query | 200 `QuizResult` (stored) or 404 | 404 | R responses, learning_events, mastery | — | SC11 refresh, SC12 |
+
+```ts
+QuizResult = { duplicate: boolean, context, score: {correct, total},
+  items: [{question_id, learning_outcome_id, selected_option_id, correct_option_id, is_correct, explanation, misconception?: {tag,label}}],
+  mastery_before?: MasteryItem[], mastery: MasteryItem[],     // all 4 LOs after update
+  gaps: [{outcome_id, code:"LO4", percent:41, status:"WEAK", misconception:{tag,label,description}}],
+  provenance: "LIVE" }
+```
+
+## 11.7 MASTERY · EVIDENCE · RECOMMENDATIONS · STUDENT INTELLIGENCE
+| ID | Method & path | Role | Request | Response | Errors | DB | FE |
+|---|---|---|---|---|---|---|---|
+| M01 | GET `/api/students/{id}/mastery` | STUDENT self (TEACHER of own section: allowed) | — | 200 `{student:{id,name}, overall_percent, overall_status, items: MasteryItem[], provenance:"MIXED"}` | 403 `FORBIDDEN_SCOPE` | R mastery, learning_outcomes | SC10, SC12, SC14 |
+| M02 | GET `/api/students/{id}/recommendations` | STUDENT self | — | 200 `[{id,type,outcome:{id,code,statement},title,what_happened,why_seen,steps:[{kind:"RECAP"\|"PRACTICE"\|"TUTOR",label,detail?}],recap_status,recap_text?,mastery_percent,status}]` | 403 | R recommendations | SC10, SC12 |
+| M03 | GET `/api/students/{id}/evidence?outcome_id=` | STUDENT self | query | 200 `[{occurred_at, source_type, question_stem, selected, correct, is_correct, weight, misconception?}]` (live events only; also `prior_note`) | 403 | R learning_events | SC10 ("why am I seeing this") |
+| SK01 | GET `/api/students/{id}/skills` | STUDENT self | — | 200 `{profile:"AI/ML Learning Profile", skills:[{name,level:"NEEDS_PRACTICE"\|"DEVELOPING"\|"STRONG"\|"RECOMMENDED_NEXT",source:"DERIVED"\|"SEEDED"}], evidence:[{label,detail}], career_direction:"AI/ML Engineer", recommended_next_skill:"Deep Learning", provenance:"MIXED"}` | 403 | R student_skills, mastery, outcome_skills | SC14, SC10 |
+
+## 11.8 PRACTICE · AI TUTOR
+| ID | Method & path | Role | Request | Response | Errors | DB | AI | FE |
+|---|---|---|---|---|---|---|---|---|
+| PR01 | POST `/api/practice/generate` | STUDENT self | `{outcome_id}` | 201 `{set_id, outcome, generation_mode, questions: StudentQuestion[3]}` | 422; 429 | W questions, options, practice_sets, ai_interactions | `generate_practice_questions` | SC12 |
+| PR02 | GET `/api/practice/{set_id}` | STUDENT owner | — | 200 same as PR01 (+status) | 403/404 | R | — | SC12 |
+| PR04 | POST `/api/practice/assign` | TEACHER | `{section_id, outcome_id}` | 200 `{assigned_count}` | 403; 409 no weak students | W recommendations (PRACTICE_ASSIGNED), practice_sets(ASSIGNED, fallback bank) for each WEAK student (named + live) | — | SC09 |
+| T01 | POST `/api/tutor/ask` | STUDENT | `{question: string(1–500), outcome_id?}` | 200 `{answer, topic:"Backpropagation", source:"Neural Networks — Course Material", label:"Grounded in approved course material", mode:"LIVE"\|"FALLBACK"}` | 423 `QUIZ_IN_PROGRESS`; 429; 422 | W ai_interactions | `generate_tutor_response` | SC13 |
+
+## 11.9 TEACHER INTELLIGENCE
+| ID | Method & path | Role | Request | Response | DB / logic | FE |
+|---|---|---|---|---|---|---|
+| TI01 | GET `/api/teacher/dashboard` | TEACHER | — | 200 `{course:{id,name}, topic:{id,title}, outcomes:Outcome[], last_session:{id,started_at,participants,quiz_submitted}|null, class_mastery:[{outcome_id,code,percent,status,warning}], weak_outcomes:[{outcome_id,code,percent,weak_count,respondents}], recommendations:[…TI04 shape], provenance:"MIXED"}` | composes TI02+TI04 | SC03 |
+| TI02 | GET `/api/classes/{section_id}/insights` | TEACHER own section | — | 200 `{section, respondents, live_participants, outcomes:[{outcome_id,code,statement,class_mastery_percent,status,warning:boolean,distribution:{strong,developing,weak},weak_count,weak_share_pct,top_misconception:{tag,label,count}|null}], support_summary:{outcome_id,code,students_needing_support:35,text:"35 students need support on LO4"}, provenance:"MIXED", seeded_note}` | §14.5 aggregation | SC08, SC03 |
+| TI03 | GET `/api/classes/{section_id}/evidence?outcome_id=` | TEACHER own | query | 200 `{outcome, option_distribution:[{question_id,stem,options:[{label,text,count,is_correct,misconception?}]}], top_misconceptions:[{label,count}], students:[{name, percent, status, is_seeded}], note:"Seeded students are demonstration data"}` | R learning_events, mastery, students | SC08, SC09 |
+| TI04 | GET `/api/classes/{section_id}/recommendations` | TEACHER own | — | 200 `[{id,type:"RETEACH",outcome,title:"Re-teach Backpropagation",why:"Low mastery detected from today's exit quiz.",suggested_action:"10-minute conceptual recap",suggested_approach:"Use a simple worked example showing how error propagates from output to hidden layers.",facts,segment?:ReteachSegment,actions:["GENERATE_SEGMENT","VIEW_EVIDENCE","ASSIGN_PRACTICE"]}]` | R recommendations | SC09, SC03 |
+| TI05 | POST `/api/classes/{section_id}/reteach` | TEACHER own | `{outcome_id}` | 200 `ReteachSegment = {title, duration_min:10, outline:[{minute_range,activity}], worked_example:{setup,steps[],takeaway}, check_items:[{stem,options[],answer}] (2), generation_mode}` | W recommendations.payload, ai_interactions · AI `generate_reteach_segment` | SC09 |
+
+## 11.10 UNIVERSITY INTELLIGENCE · GOVERNANCE · AUDIT
+| ID | Method & path | Role | Request | Response | DB / logic | FE |
+|---|---|---|---|---|---|---|
+| AD01 | GET `/api/admin/overview` | ADMIN | — | 200 `{total_students:114, active_courses:1, outcomes_tracked:4, weak_outcomes:1, sections:2, provenance:"MIXED", seeded_note}` | counts over students, courses, LOs; weak = outcomes with combined weak share ≥ 40 % | SC15 |
+| AD02 | GET `/api/admin/gaps` | ADMIN | — | 200 `[{outcome:{code:"LO4",statement,course:"Artificial Intelligence"}, recurring:true, sections:[{name:"5-A",weak_share_pct:61,respondents:57},{name:"5-B",weak_share_pct:54,respondents:57}], combined_weak_share_pct:58, total_respondents:114, prerequisites:[{code:"P2",name:"Chain Rule",developing_or_better_pct:52}], why_this_matters:"The same learning outcome is weak across multiple sections.", suggested_actions:["Review teaching material","Review prerequisite coverage","Consider additional remedial content"], provenance:"MIXED"}]` | §14.6 recurring rule; **no student data** | SC15, SC16 |
+| AD03 | GET `/api/admin/analytics` | ADMIN | `?outcome_id=` optional | 200 `{mastery_by_outcome:[{code,combined_mean_pct}], section_comparison:[{section,outcome_code,weak_share_pct}], weak_distribution:[{outcome_code,strong,developing,weak}], prerequisites:[…]}` | aggregate | SC16 |
+| AD04 | POST `/api/admin/recommendation` | ADMIN | `{outcome_id}` | 200 `{id,text,mode:"LIVE"\|"FALLBACK",facts}` | W recommendations(ACADEMIC), ai_interactions · AI `generate_academic_recommendation` | SC15 |
+| G01 | GET `/api/governance/policy` | ADMIN | — | 200 `{ai_mode:"Academic Assistant", sources:"Approved Course Material", data:"Demonstration Dataset", model:"Configured AI Provider", model_name, usage_policy:[string], approved_sources: Source[]}` | R app_settings, sources | SC17 |
+| G02 | GET `/api/governance/logs?type=ai\|audit&limit=50` | ADMIN | query | 200 `ai: [{timestamp,user,role,function,model,status}]` / `audit: [{timestamp,user,role,action,entity}]` | R ai_interactions / audit_logs | SC17 |
+
+## 11.11 DEMO & SYSTEM
+| ID | Method & path | Role | Response | Logic | FE |
+|---|---|---|---|---|---|
+| D01 | POST `/api/demo/reset` | TEACHER or ADMIN | 200 `{reset:true, seed_version}` | Delete dynamic rows (lessons, blocks, sessions, participants, polls, prompts, non-seeded responses/events, practice sets + generated questions, recommendations, ai_interactions, non-seed audit); reset `mastery` to priors/seed; reseed stats; audit `DEMO_RESET`; **never** drops users/curriculum/questions | SC18, top bar |
+| D02 | GET `/api/demo/state` | any | 200 `{steps:[{n:1..8,key,label,done:boolean,detail}], current_step:n, loop:{teach,learn,assess,understand,personalize,support_teacher,inform_university,improve:boolean}}` derived **only from DB state** (lesson PUBLISHED exists → TEACH; session LIVE/ENDED → LEARN; live student quiz submitted → ASSESS; mastery exists with live evidence → UNDERSTAND; practice set or gap rec → PERSONALIZE; RETEACH rec seen/generated → SUPPORT TEACHER; admin gaps computed with live evidence → INFORM UNIVERSITY) | SC18, `IntelligenceLoop` |
+| D03 | POST `/api/demo/autofill-quiz` (P1) | STUDENT | 200 `QuizResult` | Calls the **same** `assessment.service.submit` with the scripted answers (Q1–Q3 correct, Q4–Q5 the misconception options); requires quiz OPEN; audit tagged `autofill`; response flagged `"scripted": true` | SC18 |
+
+## 11.12 AI GATEWAY (internal — no HTTP route; explicit "internal/background service")
+`backend/services/ai_gateway.py` exposes: `generate_lesson(topic, outcomes, source, scope, instruction)`, `generate_explanation(outcome, misconception, source)`, `generate_practice_questions(outcome, misconceptions, source, n=3)`, `generate_tutor_response(question, outcome, source)`, `generate_reteach_segment(outcome, facts, source)`, `generate_academic_recommendation(facts)`. Detail in §13. Consumers: L03, L05, `fill_recap` job, PR01, T01, TI05, AD04.
+
+## 11.13 Seeded value examples used by tests and the FE (for mock-first development)
+`GET /api/students/{riya}/mastery` after the scripted quiz → items LO1 `{percent:88,status:"STRONG"}`, LO2 `{74,"STRONG"}`, LO3 `{81,"STRONG"}`, LO4 `{41,"WEAK"}`, `overall_percent:71`. `GET /api/classes/{5A}/insights` → LO1 88 / LO2 74 / LO3 81 / LO4 41 (`warning:true`), `students_needing_support:35`, `weak_share_pct:61`. `GET /api/admin/gaps` → 5-A 61, 5-B 54, combined 58.
+
+
+---
+

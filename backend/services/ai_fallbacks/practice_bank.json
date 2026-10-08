@@ -1,0 +1,83 @@
+[
+  {
+    "stem": "When computing gradients for a hidden layer in backpropagation, which mathematical entity scales the propagated error signal?",
+    "options": [
+      {
+        "label": "A",
+        "text": "The derivative of the hidden neuron's activation function and outgoing weights",
+        "is_correct": true
+      },
+      {
+        "label": "B",
+        "text": "The output error applied directly without considering outgoing layer weights",
+        "is_correct": false,
+        "misconception": "mc_output_error_hidden_weights"
+      },
+      {
+        "label": "C",
+        "text": "The raw input feature values multiplied by the learning rate alone",
+        "is_correct": false
+      },
+      {
+        "label": "D",
+        "text": "The sum of all biases across the entire network architecture",
+        "is_correct": false
+      }
+    ],
+    "explanation": "Backpropagation scales the propagated error by both the outgoing layer weights and the local activation derivative via the chain rule."
+  },
+  {
+    "stem": "Why must the chain rule be applied in reverse order (from output back to input) during neural network training?",
+    "options": [
+      {
+        "label": "A",
+        "text": "Because hidden layer losses can only be determined after downstream errors have been computed",
+        "is_correct": true
+      },
+      {
+        "label": "B",
+        "text": "Because hidden-layer weights receive identical updates directly from the output loss",
+        "is_correct": false,
+        "misconception": "mc_output_error_hidden_weights"
+      },
+      {
+        "label": "C",
+        "text": "Because forward propagation is non-differentiable in modern deep networks",
+        "is_correct": false
+      },
+      {
+        "label": "D",
+        "text": "Because gradient descent only converges when weights are updated in descending order of layer index",
+        "is_correct": false
+      }
+    ],
+    "explanation": "Each layer's gradient depends on the gradients of the succeeding layers, requiring reverse traversal."
+  },
+  {
+    "stem": "In a two-hidden-layer network, how does an error at the output layer affect the weights between the input and first hidden layer?",
+    "options": [
+      {
+        "label": "A",
+        "text": "It passes sequentially through the weights and derivative terms of layer two and layer one",
+        "is_correct": true
+      },
+      {
+        "label": "B",
+        "text": "It bypasses the second hidden layer and applies the output error directly to layer one weights",
+        "is_correct": false,
+        "misconception": "mc_output_error_hidden_weights"
+      },
+      {
+        "label": "C",
+        "text": "It sets the gradient of the first layer to zero unless all activations are linear",
+        "is_correct": false
+      },
+      {
+        "label": "D",
+        "text": "It directly overwrites the learning rate for the earliest layer weights",
+        "is_correct": false
+      }
+    ],
+    "explanation": "The error must be multiplied backward sequentially across intermediate layer weights according to multivariate chain rule expansion."
+  }
+]
